@@ -2,7 +2,8 @@ Package: ecoSynthesis
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+    person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
+           comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395"))
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -11,5 +12,8 @@ RoxygenNote: 7.3.3
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis
+URL: https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis, https://ecosystem-indicators-workflows.github.io/ecoSynthesis/
 BugReports: https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis/issues
+Imports: 
+    dplyr,
+    tidyr
