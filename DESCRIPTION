@@ -17,3 +17,4 @@ BugReports: https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis/issue
 Imports: 
     dplyr,
     tidyr
+Config/Needs/website: rmarkdown
