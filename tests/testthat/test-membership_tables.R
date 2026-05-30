@@ -22,3 +22,12 @@ result2 <- membership_table(
 test_that("variants of column selection produce same results", {
   expect_equal(result1, result2)
 })
+
+filtered_table <- dplyr::filter(input_table, efg1 %in% "T1.3" | efg2 %in% "T1.3" )
+result1 <- membership_table(input_table, "re1", c("efg1","efg2"), c("memb1","memb2"),
+    target="T1.3")
+result2 <- membership_table(filtered_table, "re1", c("efg1","efg2"), c("memb1","memb2"))
+
+test_that("filtering by target code works as expected", {
+  expect_equal(result1, result2)
+})
