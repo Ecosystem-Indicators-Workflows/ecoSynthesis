@@ -2,8 +2,12 @@ Package: ecoSynthesis
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
-           comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395"))
+    c(person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
+           comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395")),
+    person("Elliot", "Gould", "elliot.gould@unsw.edu.au", role = c("aut"), 
+    comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-6585-538X"))
+    #TODO Raj to insert author deets here
+    )
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 Encoding: UTF-8
