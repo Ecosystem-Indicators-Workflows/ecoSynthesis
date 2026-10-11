@@ -1,19 +1,20 @@
 Package: ecoSynthesis
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
-    c(person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
+Authors@R: c(
+    person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
            comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395")),
-    person("Elliot", "Gould", "elliot.gould@unsw.edu.au", role = c("aut"), 
-    comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-6585-538X"))
-    #TODO Raj to insert author deets here
-    )
+    person("Elliot", "Gould", , "elliot.gould@unsw.edu.au", role = "aut",
+           comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-6585-538X"))
+  )
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 URL: https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis,
     https://ecosystem-indicators-workflows.github.io/ecoSynthesis/
 BugReports: 
     https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis/issues
+Depends: 
+    R (>= 4.1)
 Imports: 
     cli,
     dplyr,
@@ -24,10 +25,8 @@ Imports:
     withr
 Suggests: 
     testthat (>= 3.0.0)
+Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
+Config/usethis/last-upkeep: 2026-10-09
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-Config/usethis/last-upkeep: 2026-10-09
-Config/roxygen2/version: 8.1.0
-Depends: 
-    R (>= 4.1)
