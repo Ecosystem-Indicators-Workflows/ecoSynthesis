@@ -19,7 +19,7 @@ Imports:
     dplyr,
     glue,
     lifecycle,
-    rlang,
+    rlang (>= 1.1.0),
     tidyr,
     withr
 Suggests: 
