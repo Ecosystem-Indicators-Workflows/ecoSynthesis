@@ -9,3 +9,4 @@
 ^[.]?air[.]toml$
 ^\.vscode$
 ^README\.qmd$
+^codecov\.yml$
