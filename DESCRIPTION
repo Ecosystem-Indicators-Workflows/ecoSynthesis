@@ -21,8 +21,8 @@ Imports:
     glue,
     lifecycle,
     rlang (>= 1.1.0),
-    tidyr,
-    withr
+    stringr,
+    tidyr
 Suggests: 
     testthat (>= 3.0.0)
 Config/roxygen2/version: 8.1.0
