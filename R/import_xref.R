@@ -26,8 +26,7 @@ standardise_xref_pairs <- function(
   xref,
   prefix,
   suffix = "p",
-  separator = "_",
-  expert = NULL
+  separator = "_"
 ) {
   target_pat <- glue::glue("^{prefix}(\\d+)$")
   memb_pat <- glue::glue("^{prefix}(\\d+){separator}{suffix}$")
