@@ -4,13 +4,7 @@
 \alias{standardise_xref_pairs}
 \title{Standardise column names for expert cross-reference data in paired-columns format.}
 \usage{
-standardise_xref_pairs(
-  xref,
-  prefix,
-  suffix = "p",
-  separator = "_",
-  expert = NULL
-)
+standardise_xref_pairs(xref, prefix, suffix = "p", separator = "_")
 }
 \arguments{
 \item{xref}{A data frame containing the cross-reference data in paired-columns format.}

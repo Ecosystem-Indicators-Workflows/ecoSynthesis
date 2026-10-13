@@ -5,3 +5,7 @@ export(standardise_xref_pairs)
 import(rlang)
 importFrom(glue,glue)
 importFrom(lifecycle,deprecated)
+importFrom(stringr,
+  str_remove,
+  str_subset
+)
