@@ -1,13 +1,26 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ecoSynthesis
+<!-- README.md is generated from README.qmd. Please edit that file -->
+
+# ecoSynthesis (0.0.0.9000)
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Ecosystem-Indicators-Workflows/ecoSynthesis/graph/badge.svg)](https://app.codecov.io/gh/Ecosystem-Indicators-Workflows/ecoSynthesis)
 <!-- badges: end -->
 
 The goal of ecoSynthesis is to …
+
+*This package is a work in progress and is not yet ready for use. Please
+check back later for updates.*
+
+Please find more information about the Environmental Indicators
+Initiative here;
+<https://ardc.edu.au/project/environmental-indicators-initiative/>, and
+the Ecosystem Indicator Workflows project here;
+<https://ardc.edu.au/project/ecosystem-indicator-workflows/>.
 
 ## Installation
 
@@ -27,24 +40,23 @@ This is a basic example which shows you how to solve a common problem:
 library(ecoSynthesis)
 
 input_table <- data.frame(
-    re1 = c("Semi-deciduous Forest","Deciduous Forest","Wet Montane Forest","Dry Montane Forest"),
-    efg1 = c("T1.1", "T1.2", "T1.1", "T1.2"),
-    memb1 = c(80,80,70,50),
-    efg2 = c("T1.2", "T1.1", "T1.3", "T1.3"),
-    memb2 = c(20,20,30,50)
+  re1 = c(
+    "Semi-deciduous Forest",
+    "Deciduous Forest",
+    "Wet Montane Forest",
+    "Dry Montane Forest"
+  ),
+  efg1 = c("T1.1", "T1.2", "T1.1", "T1.2"),
+  memb1 = c(80, 80, 70, 50),
+  efg2 = c("T1.2", "T1.1", "T1.3", "T1.3"),
+  memb2 = c(20, 20, 30, 50)
 )
 
 membership_table(
-    input_table, 
-    "re1",
-    c("efg1","efg2","efg3"),
-    c("memb1","memb2"),
-    target="T1.3")
-#> # A tibble: 4 × 3
-#>   re1                efg    memb
-#>   <chr>              <chr> <dbl>
-#> 1 Wet Montane Forest T1.1     70
-#> 2 Dry Montane Forest T1.2     50
-#> 3 Wet Montane Forest T1.3     30
-#> 4 Dry Montane Forest T1.3     50
+  input_table,
+  "re1",
+  c("efg1", "efg2", "efg3"),
+  c("memb1", "memb2"),
+  target = "T1.3"
+)
 ```
