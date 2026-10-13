@@ -20,7 +20,7 @@
 #'   TASVEG_mini_expert_paired,
 #'   prefix = "GET",
 #'   suffix = "p",
-#'   separator = "_",
+#'   separator = "_"
 #' )
 standardise_xref_pairs <- function(
   xref,
