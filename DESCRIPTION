@@ -30,3 +30,4 @@ Config/testthat/edition: 3
 Config/usethis/last-upkeep: 2026-10-09
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+LazyData: true
