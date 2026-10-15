@@ -9,13 +9,13 @@ The need to cross-reference different classification systems arises frequently i
 
 Here we try to apply consistent methods and standards for cross-referencing in order to make the relationships between units more explicit and enhance the reproducibility of the process. This will enable efficient update when more information becomes available, and minimise divergent or erroneous interpretations of relationships between classifications. 
 
-The process of cross-reference involves a source classification and 
+The process of cross-referencing involves a source classification and 
 a target classification, where the target classification might have
 a broader scope than the source. Elements in the source classification 
 can be interpreted as directly related to one or more elements in the 
 target classification. This relationship can be quantified as membership
-values, where the source element has memberships between 0 and 100% to each
-element of the target classification. 
+values, where the source element assigns memberships between 0 and 100% to each
+element of the target classification, summing to 100% total. 
 
 Membership estimates from multiple interpreters can be combined to produce more robust cross-referencing relationships. Uncertainty due to disagreements between interpreters can be quantified and documented for maximum transparency.
 
@@ -84,7 +84,7 @@ A membership matrix will have rows for the source classificaton and columns for 
 | Concept A | 100% | 0% |
 | Concept B |  40% | 60% |
 
-The size of the matrix will increase with the number of concepts in each classification (*n* rows for the source and *m* columns for the target).
+The size of the matrix will increase with the number of concepts in each classification ($n$ rows for the source and $m$ columns for the target).
 
 These matrices will expose the information transparently, and can be useful for data entry purposes, but they can become very clunky when the number of concepts is both classifications is large, and are not optimal to store multiple interpretations (see next section).
 
@@ -102,14 +102,14 @@ The size of the table will increase with the number of links between classificat
 
 ### Wide-format table
 
-A membership table can also be represented in wide format if we can assume that  each source concept matches maximum of *q* target concepts:
+A membership table can also be represented in wide format if we can assume that  each source concept matches maximum of $q$ target concepts:
 
  Source Concept | Target Concept 1 | Membership | Target Concept 2 | Membership |
 |---|---|---|---|---|
 | Concept A | Concept Z | 100% |
 | Concept B | Concept W | 60% | Concept Z | 40% |
 
-This table will have $n$ rows for all source concept, but a fixed numner of columns ($1 + (q \times 2)$)
+This table will have $n$ rows for all source concept, but a fixed number of columns ($1 + (q \times 2)$)
 
 ## Multiple interpreters
 
