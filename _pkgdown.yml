@@ -1,4 +1,7 @@
 url: https://ecosystem-indicators-workflows.github.io/ecoSynthesis/
 template:
   bootstrap: 5
-
+  bslib:
+    fg: '#00183a'
+    bg: '#fdfdff'
+    primary: '#c50000'
