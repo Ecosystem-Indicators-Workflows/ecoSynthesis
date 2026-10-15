@@ -7,7 +7,30 @@
 
 <!-- badges: end -->
 
-The goal of ecoSynthesis is to …
+The goal of `ecoSynthesis` is to assist users in the synthesis of
+cross-referencing information between two classification systems.
+
+The process of cross-reference implies a source classification and a
+target classification, where the target classification might have a
+broader scope than the source. Elements in the source classification can
+be interpreted as directly related to one or more elements in the target
+classification. This relationship can be quantified as membership
+values, where the source element has memberships between 0 and 100% to
+each element of the target classification.
+
+<figure>
+<img src="man/figures/diagram-concept-match.png" alt="Diagram" />
+<figcaption aria-hidden="true">Diagram</figcaption>
+</figure>
+
+The membership table (long format) looks like this (assuming all other
+possible pairs have 0% membership).
+
+| Source Classification | Target Classification | Membership |
+|-----------------------|-----------------------|------------|
+| Concept A             | Concept Z             | 100%       |
+| Concept B             | Concept W             | 60%        |
+| Concept B             | Concept Z             | 40%        |
 
 ## Installation
 
@@ -48,3 +71,11 @@ membership_table(
 #> 3 Wet Montane Forest T1.3     30
 #> 4 Dry Montane Forest T1.3     50
 ```
+
+This package in in the very early stages of development.
+
+| Source Classification | Target Classification | Membership |
+|-----------------------|-----------------------|------------|
+| Concept A             | Concept Z             | 100%       |
+| Concept B             | Concept W             | 60%        |
+| Concept B             | Concept Z             | 40%        |
