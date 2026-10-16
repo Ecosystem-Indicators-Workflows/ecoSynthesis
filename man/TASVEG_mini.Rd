@@ -7,10 +7,10 @@
 \format{
 A tibble with 4 columns:
 \describe{
-\item{VEGCODE}{Original vegetation code of the \code{source} unit in the TASVEG 5.0 dataset}
-\item{efg}{Code for the \code{target} Ecosystem Functional Group}
-\item{memb}{Membership value between 0 and 1, indicating the degree of membership of the vegetation unit to the \code{target} EFG}
-\item{expert}{Expert who provided the membership value}
+\item{source}{The source unit being classified. Original vegetation code of the \code{source} unit in the TASVEG 5.0 dataset}
+\item{target}{Code for the target classification. theEcosystem Functional Group from the IUCN GET framework}
+\item{membership}{Membership value between 0 and 1, indicating the degree of membership of the vegetation unit to the \code{target} EFG}
+\item{interpreter}{Character vector of names/identifiers of the interpreterswho provided the membership value}
 }
 }
 \source{
@@ -20,6 +20,6 @@ TBC describe source here #TODO
 TASVEG_mini
 }
 \description{
-A subset of the TASVEG dataset for development and testing
+This is a small subset of the TASVEG 5.0 dataset, used for development and testing purposes (we may choose to use this as an example dataset available for documentation to users).
 }
 \keyword{datasets}
