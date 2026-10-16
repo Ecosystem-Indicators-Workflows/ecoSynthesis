@@ -1,0 +1,28 @@
+
+```{r}
+devtools::document()
+devtools::load_all()
+
+data(TASVEG_mini)
+test_table <- membership_tbl(TASVEG_mini,"VEGCODE","efg","memb","expert")
+class(test_table)
+print(test_table)
+
+xref <- tibble::tibble(
+  source_id = c("A", "A", "B"),
+  target_id = c("EFG1", "EFG2", "EFG3"),
+  membership = c(0.8, 0.2, 1),
+  interpreter = c("Grumpy Wombat","Grumpy Wombat","Grumpy Wombat")
+)
+
+x <- as_membership_tbl(
+  xref,
+  source = "source_id",
+  target = "target_id",
+  membership = "membership",
+  interpreter = "interpreter"
+)
+
+x
+print.membership_tbl(x)
+```
