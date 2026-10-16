@@ -23,14 +23,14 @@
 #'  \item{VEGCODE_D}{Description of the `source` unit}
 #'  \item{Notes}{Notes on the `source` unit}
 #'  \item{workflow}{Workflow information for the `source` unit}
-#'  \item{GET1}{First interpreter assessment of the `source` unit}
-#'  \item{GET1_p}{Membership value for the first interpreter assessment of the `source` unit}
-#'  \item{GET2}{Second interpreter assessment of the `source` unit}
-#'  \item{GET2_p}{Membership value for the second interpreter assessment of the `source` unit}
-#'  \item{GET3}{Third interpreter assessment of the `source` unit}
-#'  \item{GET3_p}{Membership value for the third interpreter assessment of the `source` unit}
-#'  \item{GET4}{Fourth interpreter assessment of the `source` unit}
-#'  \item{GET4_p}{Membership value for the fourth interpreter assessment of the `source` unit}
+#'  \item{GET1}{Interpreter's first target classification of the `source` unit}
+#'  \item{GET1_p}{Membership value for the first interpreter classification of the `source` unit}
+#'  \item{GET2}{Interpreter's second target classification of the `source` unit}
+#'  \item{GET2_p}{Membership value for the second interpreter classification of the `source` unit}
+#'  \item{GET3}{Interpreter's third target classification of the `source` unit}
+#'  \item{GET3_p}{Membership value for the third interpreter classification of the `source` unit}
+#'  \item{GET4}{Interpreter's fourth target classification of the `source` unit}
+#'  \item{GET4_p}{Membership value for the fourth interpreter classification of the `source` unit}
 #' }
 #'
 #' @source TBC describe source here #TODO
