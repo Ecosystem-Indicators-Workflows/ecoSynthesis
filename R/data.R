@@ -14,7 +14,7 @@
 #' @keywords datasets
 "TASVEG_mini"
 
-#' A subset of interpreter cross-reference table in paired-columns format for development and testing
+#' A subset of interpreter cross-reference table in wide format for development and testing
 #'
 #' @format A tibble with 13 columns:
 #' \describe{
@@ -35,4 +35,4 @@
 #'
 #' @source TBC describe source here #TODO
 #' @keywords datasets
-"TASVEG_mini_expert_paired"
+"TASVEG_mini_expert_wide"
