@@ -32,6 +32,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/concepts-xref.html">Key concepts of cross-referencing</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -50,9 +56,39 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of ecoSynthesis is to …</p>
 <p><em>This package is a work in progress and is not yet ready for use. Please check back later for updates.</em></p>
 <p>Please find more information about the Environmental Indicators Initiative here; <a href="https://ardc.edu.au/project/environmental-indicators-initiative/" class="external-link uri">https://ardc.edu.au/project/environmental-indicators-initiative/</a>, and the Ecosystem Indicator Workflows project here; <a href="https://ardc.edu.au/project/ecosystem-indicator-workflows/" class="external-link uri">https://ardc.edu.au/project/ecosystem-indicator-workflows/</a>.</p>
+<hr>
+<p>The goal of <code>ecoSynthesis</code> is to assist users in the synthesis of cross-referencing information between two classification systems. The examples in this package focus on ecosystem classifications, and specifically on cross-referencing from local classifications to a global standard classification, but functions are designed to work with any pair of classification systems.</p>
+<p>The process of cross-reference implies a source classification and a target classification, where the target classification might have a broader scope than the source. Elements in the source classification can be interpreted as directly related to one or more elements in the target classification. This relationship can be quantified as membership values, where the source element has memberships between 0 and 100% to each element of the target classification.</p>
+<div class="float">
+<img src="reference/figures/diagram-concept-match.png" alt="Diagram"><div class="figcaption">Diagram</div>
+</div>
+<p>The membership table (long format) looks like this (assuming all other possible pairs have 0% membership).</p>
+<table class="table">
+<thead><tr>
+<th>Source Classification</th>
+<th>Target Classification</th>
+<th>Membership</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Concept A</td>
+<td>Concept Z</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Concept B</td>
+<td>Concept W</td>
+<td>60%</td>
+</tr>
+<tr>
+<td>Concept B</td>
+<td>Concept Z</td>
+<td>40%</td>
+</tr>
+</tbody>
+</table>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -88,6 +124,11 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"memb1"</span>, <span class="st">"memb2"</span><span class="op">)</span>,</span>
 <span>  target <span class="op">=</span> <span class="st">"T1.3"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>This package implements recommended methods from:</p>
+<blockquote>
+<p>IUCN (2025). Standards, methods and guidelines for cross-referencing ecosystem classifications and maps to the IUCN Global Ecosystem Typology. Version 1.0. Keith, D. A., Dayaram, A., Driver, A., Ferrer-Paris, J. R., Francis, R., Hay, S., Murray, N. J., Nicholson, E., Santos, J., Skowno, A. L. &amp; Tozer, M. G. (Eds.). Gland, Switzerland: IUCN. ISBN: 978-2-8317-2348-8. <a href="DOI:10.2305/CPPC6126" class="uri">DOI:10.2305/CPPC6126</a>.</p>
+</blockquote>
+<p>This package in in the very early stages of development.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
