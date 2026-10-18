@@ -43,8 +43,7 @@ a target classification, where the target classification might have
 a broader scope than the source. Elements in the source classification 
 can be interpreted as directly related to one or more elements in the 
 target classification. This relationship can be quantified as membership
-values, where the source element has memberships between 0 and 100% to each
-element of the target classification. 
+values, where the source element has memberships between 0 and 100% to each element of the target classification. 
 
 ![Diagram](man/figures/diagram-concept-match.png)
 
