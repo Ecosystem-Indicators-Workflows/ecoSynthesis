@@ -1,28 +1,21 @@
+---
+title: "Working with membership tables"
+author: J.R. Ferrer-Paris 
+---
+
+This is an example with our internal dataset, first take a look at the data structure
 
 ```{r}
-devtools::document()
-devtools::load_all()
-
 data(TASVEG_mini)
-test_table <- membership_tbl(TASVEG_mini,"VEGCODE","efg","memb","expert")
-class(test_table)
-print(test_table)
+head(TASVEG_mini)
+```
 
-xref <- tibble::tibble(
-  source_id = c("A", "A", "B"),
-  target_id = c("EFG1", "EFG2", "EFG3"),
-  membership = c(0.8, 0.2, 1),
-  interpreter = c("Grumpy Wombat","Grumpy Wombat","Grumpy Wombat")
-)
+Here we can use the function membership_tbl directly (need to adjust table column names).
 
-x <- as_membership_tbl(
-  xref,
-  source = "source_id",
-  target = "target_id",
-  membership = "membership",
-  interpreter = "interpreter"
-)
+```{r}
+#| eval: false
+TASVEG_tbl <- membership_tbl(TASVEG_mini,"VEGCODE","efg","memb","expert")
+class(TASVEG_tbl)
+print(TASVEG_tbl)
 
-x
-print.membership_tbl(x)
 ```
