@@ -43,6 +43,70 @@ membership_tbl <- function(data,
   )
 }
 
+#' Performs checks on a membership table
+#'
+#' @param x A membership_tbl
+#'
+#' @return List with checks results
+#' @export
+check_membership <- function(x) {
+  stopifnot(inherits(x, "membership_tbl"))
+
+  source_id <- attr(x, "source_id")
+  target_id <- attr(x, "target_id")
+  membership <- attr(x, "membership")
+  interpreter <- attr(x, "interpreter")
+
+  m <- x[[membership]]
+  i <- x[[interpreter]]
+  
+  checks_results <- c(
+    numeric_memb = !is.numeric(m),
+    na_memb = anyNA(m),
+    bounded_memb = any(m < 0 | m > 1))
+
+  errors_list <- c(
+    "Membership column is not numeric.",
+    "Membership column contains missing values.",
+    "Membership values outside bounds [0,1]"
+  )
+  
+  res <- list(
+    valid = !any(checks_results),
+    checks = checks_results,
+    errors = errors_list[checks_results]
+  )
+  class(res) <- c("membership_check","list")
+  res
+}
+
+
+#' Print method for membership_check
+#'
+#' @param x the membership_check
+#' @param ... further arguments passed to or from other methods.
+#' @import cli
+#' @export
+print.membership_check <- function(x, ...) {
+  if (x$checks["numeric_memb"]) {
+    cat(cli::col_red("✗ Membership column is not numeric\n"))
+  } else {
+    cat(cli::col_blue("✓ Membership column is numeric\n"))
+  }
+  if (x$checks["bounded_memb"]) {
+    cat(cli::col_red("✗ Membership values <0 or >1\n"))
+  } else {
+    cat(cli::col_blue("✓ Membership values are within [0,1]\n"))
+  }
+  if (x$valid) {
+    cat("All checks passed, Membership table is valid.")
+  } else {
+    cat("Please fix errors and check data before using other package functions.\n")
+  }
+    #✓ No duplicated relationships ⚠ 12 source concepts have incomplete membership totals ✗ 3 source concepts have totals greater than 1
+}
+
+
 #' Validate a membership table
 #'
 #' @param x A membership_tbl
@@ -52,42 +116,30 @@ membership_tbl <- function(data,
 validate_membership <- function(x) {
 
   stopifnot(inherits(x, "membership_tbl"))
+  res <- check_membership(x)
 
-  source_id <- attr(x, "source_id")
-  target_id <- attr(x, "target_id")
-  membership <- attr(x, "membership")
-
-  m <- x[[membership]]
-
-  if (!is.numeric(m)) {
-    stop("Membership column must be numeric.", call. = FALSE)
+  if (!res$valid) {
+    cat(sprintf("Errors: %s\n", paste(res$errors, collapse="\n")))
+    stop("Please fix errors and check data before using other package functions.\n")
   }
-
-  if (anyNA(m)) {
-    stop("Membership column contains missing values.", call. = FALSE)
-  }
-
-  if (any(m < 0 | m > 1)) {
-    stop(
-      "Membership values must be between 0 and 1.",
-      call. = FALSE
-    )
-  }
-
-  invisible(x)
 }
 
+#' Print method for membership_tbl
+#'
+#' @param x the membership_tbl
+#' @param ... further arguments passed to or from other methods.
+#' @import cli
+#' @import dplyr
 #' @export
 print.membership_tbl <- function(x, ...) {
 
   source_id <- attr(x, "source_id")
   target_id <- attr(x, "target_id")
   membership <- attr(x, "membership")
+  interpreter <- attr(x, "interpreter")
 
-  cat("<membership_tbl>\n")
-  cat(" source_id column: ", source_id, "\n", sep = "")
-  cat(" target_id column: ", target_id, "\n", sep = "")
-  cat(" Membership column: ", membership, "\n\n", sep = "")
+  msg <- "<membership_tbl>\nsource_id column: %s\ntarget_id column: %s\nmembership column: %s\ninterpreter column: %s\n\n"
+  cat(sprintf(msg, cli::col_cyan(source_id), cli::col_magenta(target_id), membership, cli::col_grey(interpreter)))
 
   NextMethod("print", x)
   invisible(x)
