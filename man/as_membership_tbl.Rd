@@ -4,14 +4,14 @@
 \alias{as_membership_tbl}
 \title{Coerce a data frame to membership_tbl}
 \usage{
-as_membership_tbl(x, source, target, membership, interpreter)
+as_membership_tbl(x, source_id, target_id, membership, interpreter)
 }
 \arguments{
 \item{x}{A data frame}
 
-\item{source}{Source concept column}
+\item{source_id}{Source concept column}
 
-\item{target}{Target concept column}
+\item{target_id}{Target concept column}
 
 \item{membership}{Membership column}
 }
@@ -20,4 +20,20 @@ A validated membership_tbl
 }
 \description{
 Coerce a data frame to membership_tbl
+}
+\examples{
+xref <- tibble::tibble(
+  source = c("A", "A", "B"),
+  target = c("EFG1", "EFG2", "EFG3"),
+  membership = c(0.8, 0.2, 1),
+  interpreter = c("Worrisome Wren","Worrisome Wren","Worrisome Wren")
+)
+x <- as_membership_tbl(
+  xref,
+  source_id = "source",
+  target_id = "target",
+  membership = "membership",
+  interpreter = "interpreter"
+)
+x
 }

@@ -6,8 +6,8 @@
 \usage{
 membership_tbl(
   data,
-  source = "source_id",
-  target = "target_id",
+  source_id = "source_id",
+  target_id = "target_id",
   membership = "membership",
   interpreter = "interpreter",
   updated = NULL
@@ -16,15 +16,15 @@ membership_tbl(
 \arguments{
 \item{data}{A data frame}
 
-\item{source}{Column containing source ecosystem concepts}
-
-\item{target}{Column containing target ecosystem concepts}
+\item{source_id}{Column containing source ecosystem concepts}
 
 \item{membership}{Column containing membership values}
 
 \item{interpreter}{Column containing interpreter information}
 
 \item{updated}{Column containing the date of the interpretation}
+
+\item{target}{Column containing target ecosystem concepts}
 }
 \value{
 An object of class 'membership_tbl'

@@ -1,7 +1,7 @@
 #' Create a membership table
 #'
 #' @param data A data frame
-#' @param source Column containing source ecosystem concepts
+#' @param source_id Column containing source ecosystem concepts
 #' @param target Column containing target ecosystem concepts
 #' @param membership Column containing membership values
 #' @param interpreter Column containing interpreter information
@@ -10,15 +10,15 @@
 #' @return An object of class 'membership_tbl'
 #' @export
 membership_tbl <- function(data,
-                           source = "source_id",
-                           target = "target_id",
+                           source_id = "source_id",
+                           target_id = "target_id",
                            membership = "membership",
                            interpreter = "interpreter",
                            updated = NULL) {
 
   stopifnot(is.data.frame(data))
 
-  required <- c(source, target, membership, interpreter)
+  required <- c(source_id, target_id, membership, interpreter)
 
   missing <- setdiff(required, names(data))
 
@@ -34,8 +34,8 @@ membership_tbl <- function(data,
 
   structure(
     data,
-    source = source,
-    target = target,
+    source_id = source_id,
+    target_id = target_id,
     membership = membership,
     interpreter = interpreter,
     updated = updated,
@@ -53,8 +53,8 @@ validate_membership <- function(x) {
 
   stopifnot(inherits(x, "membership_tbl"))
 
-  source <- attr(x, "source")
-  target <- attr(x, "target")
+  source_id <- attr(x, "source_id")
+  target_id <- attr(x, "target_id")
   membership <- attr(x, "membership")
 
   m <- x[[membership]]
@@ -80,13 +80,13 @@ validate_membership <- function(x) {
 #' @export
 print.membership_tbl <- function(x, ...) {
 
-  source <- attr(x, "source")
-  target <- attr(x, "target")
+  source_id <- attr(x, "source_id")
+  target_id <- attr(x, "target_id")
   membership <- attr(x, "membership")
 
   cat("<membership_tbl>\n")
-  cat(" Source column: ", source, "\n", sep = "")
-  cat(" Target column: ", target, "\n", sep = "")
+  cat(" source_id column: ", source_id, "\n", sep = "")
+  cat(" target_id column: ", target_id, "\n", sep = "")
   cat(" Membership column: ", membership, "\n\n", sep = "")
 
   NextMethod("print", x)
@@ -96,22 +96,37 @@ print.membership_tbl <- function(x, ...) {
 #' Coerce a data frame to membership_tbl
 #'
 #' @param x A data frame
-#' @param source Source concept column
-#' @param target Target concept column
+#' @param source_id Source concept column
+#' @param target_id Target concept column
 #' @param membership Membership column
 #'
 #' @return A validated membership_tbl
 #' @export
+#' @examples
+#' xref <- tibble::tibble(
+#'   source = c("A", "A", "B"),
+#'   target = c("EFG1", "EFG2", "EFG3"),
+#'   membership = c(0.8, 0.2, 1),
+#'   interpreter = c("Worrisome Wren","Worrisome Wren","Worrisome Wren")
+#' )
+#' x <- as_membership_tbl(
+#'   xref,
+#'   source_id = "source",
+#'   target_id = "target",
+#'   membership = "membership",
+#'   interpreter = "interpreter"
+#' )
+#' x
 as_membership_tbl <- function(x,
-                              source,
-                              target,
+                              source_id,
+                              target_id,
                               membership,
                               interpreter) {
 
   out <- membership_tbl(
     data = x,
-    source = source,
-    target = target,
+    source_id = source_id,
+    target_id = target_id,
     membership = membership,
     interpreter = interpreter
   )
