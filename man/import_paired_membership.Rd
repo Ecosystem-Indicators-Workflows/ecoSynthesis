@@ -14,8 +14,6 @@ import_paired_membership(data, original_names, target_names, membership_values)
 \item{target_names}{Names or codes of the target ecosystem concepts}
 
 \item{membership_values}{Membership values (between 0 and 1)}
-
-\item{target}{Filter input to focus on specific targets}
 }
 \value{
 A membership table in long format

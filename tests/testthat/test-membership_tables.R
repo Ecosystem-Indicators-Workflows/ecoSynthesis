@@ -1,46 +1,22 @@
 input_table <- data.frame(
     re1 = c("Semi-deciduous Forest","Deciduous Forest","Wet Montane Forest","Dry Montane Forest"),
-    efg1 = c("T1.1", "T1.2", "T1.1", "T1.2"),
-    memb1 = c(80,80,70,50),
-    efg2 = c("T1.2", "T1.1", "T1.3", "T1.3"),
-    memb2 = c(20,20,30,50)
+    efg_1 = c("T1.1", "T1.2", "T1.1", "T1.2"),
+    memb_1 = c(80,80,70,50)/100,
+    efg_2 = c("T1.2", "T1.1", "T1.3", "T1.3"),
+    memb_2 = c(20,20,30,50)/100
 )
-result1 <- membership_table(
+result1 <- import_paired_membership(
     input_table, 
     "re1",
-    c("efg1","efg2","efg3"),
-    c("memb1","memb2"),
-    target="T1.3")
+    c("efg_1","efg_2"),
+    c("memb_1","memb_2"))
 
-result2 <- membership_table(
+result2 <- import_paired_membership(
     input_table, 
     "re1",
     dplyr::starts_with("efg"),
-    dplyr::starts_with("memb"),
-    target="T1.3")
+    dplyr::starts_with("memb"))
 
 test_that("variants of column selection produce same results", {
-  expect_equal(result1, result2)
-})
-
-filtered_table <- dplyr::filter(
-  input_table,
-  efg1 %in% "T1.3" | efg2 %in% "T1.3"
-)
-result1 <- membership_table(
-  input_table,
-  "re1",
-  c("efg1", "efg2"),
-  c("memb1", "memb2"),
-  target = "T1.3"
-)
-result2 <- membership_table(
-  filtered_table,
-  "re1",
-  c("efg1", "efg2"),
-  c("memb1", "memb2")
-)
-
-test_that("filtering by target code works as expected", {
   expect_equal(result1, result2)
 })

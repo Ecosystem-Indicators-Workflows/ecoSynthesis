@@ -204,7 +204,6 @@ as_membership_tbl <- function(
 #' @param original_names Names or codes of the original ecosystem concepts
 #' @param target_names Names or codes of the target ecosystem concepts
 #' @param membership_values Membership values (between 0 and 1)
-#' @param target Filter input to focus on specific targets
 #'
 #' @return A membership table in long format
 #' @import dplyr
