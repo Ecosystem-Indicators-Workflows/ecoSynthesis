@@ -9,13 +9,14 @@
 #'
 #' @return An object of class 'membership_tbl'
 #' @export
-membership_tbl <- function(data,
-                           source_id = "source_id",
-                           target_id = "target_id",
-                           membership = "membership",
-                           interpreter = "interpreter",
-                           updated = NULL) {
-
+membership_tbl <- function(
+  data,
+  source_id = "source_id",
+  target_id = "target_id",
+  membership = "membership",
+  interpreter = "interpreter",
+  updated = NULL
+) {
   stopifnot(is.data.frame(data))
 
   required <- c(source_id, target_id, membership, interpreter)
