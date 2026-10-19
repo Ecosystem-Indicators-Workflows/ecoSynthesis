@@ -2,7 +2,7 @@
 #'
 #' @param data A data frame
 #' @param source_id Column containing source ecosystem concepts
-#' @param target Column containing target ecosystem concepts
+#' @param target_id Column containing target ecosystem concepts
 #' @param membership Column containing membership values
 #' @param interpreter Column containing interpreter information
 #' @param updated Column containing the date of the interpretation
@@ -89,14 +89,14 @@ check_membership <- function(x) {
 #' @export
 print.membership_check <- function(x, ...) {
   if (x$checks["numeric_memb"]) {
-    cat(cli::col_red("✗ Membership column is not numeric\n"))
+    cat(cli::col_red("\u2717 Membership column is not numeric\n"))
   } else {
-    cat(cli::col_blue("✓ Membership column is numeric\n"))
+    cat(cli::col_blue("\u2713 Membership column is numeric\n"))
   }
   if (x$checks["bounded_memb"]) {
-    cat(cli::col_red("✗ Membership values <0 or >1\n"))
+    cat(cli::col_red("\u2717 Membership values <0 or >1\n"))
   } else {
-    cat(cli::col_blue("✓ Membership values are within [0,1]\n"))
+    cat(cli::col_blue("\u2713 Membership values are within [0,1]\n"))
   }
   if (x$valid) {
     cat("All checks passed, Membership table is valid.")
@@ -105,7 +105,6 @@ print.membership_check <- function(x, ...) {
       "Please fix errors and check data before using other package functions.\n"
     )
   }
-  #✓ No duplicated relationships ⚠ 12 source concepts have incomplete membership totals ✗ 3 source concepts have totals greater than 1
 }
 
 
@@ -159,8 +158,10 @@ print.membership_tbl <- function(x, ...) {
 #' @param source_id Source concept column
 #' @param target_id Target concept column
 #' @param membership Membership column
+#' @param interpreter Interpreter column
 #'
 #' @return A validated membership_tbl
+#' @import tibble
 #' @export
 #' @examples
 #' xref <- tibble::tibble(
@@ -207,6 +208,8 @@ as_membership_tbl <- function(
 #' @param target Filter input to focus on specific targets
 #' 
 #' @return A membership table in long format
+#' @import dplyr
+#' @import tidyr
 #' @export
 #' 
 membership_table <- function(xref, original_names, target_names, membership_values, target=NULL) {

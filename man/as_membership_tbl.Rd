@@ -14,6 +14,8 @@ as_membership_tbl(x, source_id, target_id, membership, interpreter)
 \item{target_id}{Target concept column}
 
 \item{membership}{Membership column}
+
+\item{interpreter}{Interpreter column}
 }
 \value{
 A validated membership_tbl
