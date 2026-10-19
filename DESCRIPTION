@@ -1,6 +1,6 @@
 Package: ecoSynthesis
 Title: Synthesis of cross-referencing information between two classification systems
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
            comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395")),
