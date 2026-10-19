@@ -203,14 +203,14 @@ as_membership_tbl <- function(
 #' @param data Input cross-referencing table (paired column format)
 #' @param original_names Names or codes of the original ecosystem concepts
 #' @param target_names Names or codes of the target ecosystem concepts
-#' @param membership_values Membership values (between 0 and 1) 
+#' @param membership_values Membership values (between 0 and 1)
 #' @param target Filter input to focus on specific targets
-#' 
+#'
 #' @return A membership table in long format
 #' @import dplyr
 #' @import tidyr
 #' @export
-#' @examples 
+#' @examples
 #' input_table <- data.frame(
 #'  re1 = c(
 #'    "Semi-deciduous Forest",
@@ -235,20 +235,20 @@ import_paired_membership <- function(
   original_names,
   target_names,
   membership_values
-  ) {    
-    out <- data |>
-        dplyr::select(
-            dplyr::any_of(original_names),
-            dplyr::any_of(target_names),
-            dplyr::any_of(membership_values)
-        ) |> 
+) {
+  out <- data |>
+    dplyr::select(
+      dplyr::any_of(original_names),
+      dplyr::any_of(target_names),
+      dplyr::any_of(membership_values)
+    ) |>
     tidyr::pivot_longer(
       cols = c(target_names, membership_values),
       names_to = c(".value", "pair"),
       names_sep = "_"
     )
-    out
-    cols <- colnames(out)
-    out$interpreter <- "Worrisome Wren"
-    as_membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
+  out
+  cols <- colnames(out)
+  out$interpreter <- "Worrisome Wren"
+  as_membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
 }
