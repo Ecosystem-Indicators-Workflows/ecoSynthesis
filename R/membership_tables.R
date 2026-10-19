@@ -60,24 +60,23 @@ check_membership <- function(x) {
 
   m <- x[[membership]]
   i <- x[[interpreter]]
-  
   checks_results <- c(
     numeric_memb = !is.numeric(m),
     na_memb = anyNA(m),
-    bounded_memb = any(m < 0 | m > 1))
+    bounded_memb = any(m < 0 | m > 1)
+  )
 
   errors_list <- c(
     "Membership column is not numeric.",
     "Membership column contains missing values.",
     "Membership values outside bounds [0,1]"
   )
-  
   res <- list(
     valid = !any(checks_results),
     checks = checks_results,
     errors = errors_list[checks_results]
   )
-  class(res) <- c("membership_check","list")
+  class(res) <- c("membership_check", "list")
   res
 }
 
@@ -102,9 +101,11 @@ print.membership_check <- function(x, ...) {
   if (x$valid) {
     cat("All checks passed, Membership table is valid.")
   } else {
-    cat("Please fix errors and check data before using other package functions.\n")
+    cat(
+      "Please fix errors and check data before using other package functions.\n"
+    )
   }
-    #✓ No duplicated relationships ⚠ 12 source concepts have incomplete membership totals ✗ 3 source concepts have totals greater than 1
+  #✓ No duplicated relationships ⚠ 12 source concepts have incomplete membership totals ✗ 3 source concepts have totals greater than 1
 }
 
 
@@ -115,13 +116,14 @@ print.membership_check <- function(x, ...) {
 #' @return Invisibly returns x
 #' @export
 validate_membership <- function(x) {
-
   stopifnot(inherits(x, "membership_tbl"))
   res <- check_membership(x)
 
   if (!res$valid) {
-    cat(sprintf("Errors: %s\n", paste(res$errors, collapse="\n")))
-    stop("Please fix errors and check data before using other package functions.\n")
+    cat(sprintf("Errors: %s\n", paste(res$errors, collapse = "\n")))
+    stop(
+      "Please fix errors and check data before using other package functions.\n"
+    )
   }
 }
 
@@ -133,14 +135,19 @@ validate_membership <- function(x) {
 #' @import dplyr
 #' @export
 print.membership_tbl <- function(x, ...) {
-
   source_id <- attr(x, "source_id")
   target_id <- attr(x, "target_id")
   membership <- attr(x, "membership")
   interpreter <- attr(x, "interpreter")
 
   msg <- "<membership_tbl>\nsource_id column: %s\ntarget_id column: %s\nmembership column: %s\ninterpreter column: %s\n\n"
-  cat(sprintf(msg, cli::col_cyan(source_id), cli::col_magenta(target_id), membership, cli::col_grey(interpreter)))
+  cat(sprintf(
+    msg,
+    cli::col_cyan(source_id),
+    cli::col_magenta(target_id),
+    membership,
+    cli::col_grey(interpreter)
+  ))
 
   NextMethod("print", x)
   invisible(x)
@@ -170,12 +177,13 @@ print.membership_tbl <- function(x, ...) {
 #'   interpreter = "interpreter"
 #' )
 #' x
-as_membership_tbl <- function(x,
-                              source_id,
-                              target_id,
-                              membership,
-                              interpreter) {
-
+as_membership_tbl <- function(
+  x,
+  source_id,
+  target_id,
+  membership,
+  interpreter
+) {
   out <- membership_tbl(
     data = x,
     source_id = source_id,
@@ -191,7 +199,7 @@ as_membership_tbl <- function(x,
 
 
 #' Reshape membership table from wide to long format
-#' 
+#'
 #' @param xref Input cross-referencing table (wide format)
 #' @param original_names Names or codes of the original ecosystem concepts
 #' @param target_names Names or codes of the target ecosystem concepts
