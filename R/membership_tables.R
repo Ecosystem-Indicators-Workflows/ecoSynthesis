@@ -71,6 +71,7 @@ check_membership <- function(x) {
     "Membership column contains missing values.",
     "Membership values outside bounds [0,1]"
   )
+
   res <- list(
     valid = !any(checks_results),
     checks = checks_results,
