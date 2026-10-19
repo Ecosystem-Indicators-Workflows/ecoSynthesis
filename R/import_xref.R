@@ -17,7 +17,7 @@
 #' @examples
 #' # Example usage of the \code{standardise_xref_pairs} function
 #' standardise_xref_pairs(
-#'   TASVEG_mini_expert_paired,
+#'   TASVEG_mini_expert_wide,
 #'   prefix = "GET",
 #'   suffix = "p",
 #'   separator = "_"
