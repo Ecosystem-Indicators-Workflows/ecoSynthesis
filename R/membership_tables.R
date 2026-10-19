@@ -198,10 +198,9 @@ as_membership_tbl <- function(
   out
 }
 
-
-#' Reshape membership table from wide to long format
+#' Reshape membership table from paired columns to long format
 #'
-#' @param xref Input cross-referencing table (wide format)
+#' @param data Input cross-referencing table (paired column format)
 #' @param original_names Names or codes of the original ecosystem concepts
 #' @param target_names Names or codes of the target ecosystem concepts
 #' @param membership_values Membership values (between 0 and 1) 
@@ -211,22 +210,45 @@ as_membership_tbl <- function(
 #' @import dplyr
 #' @import tidyr
 #' @export
-#' 
-membership_table <- function(xref, original_names, target_names, membership_values, target=NULL) {
-    if (!is.null(target)) {
-       xref <-  dplyr::filter(xref, 
-        dplyr::if_any(dplyr::any_of(target_names), ~ .x %in% target))
-    }
-    
-    xref |>
+#' @examples 
+#' input_table <- data.frame(
+#'  re1 = c(
+#'    "Semi-deciduous Forest",
+#'    "Deciduous Forest",
+#'    "Wet Montane Forest",
+#'    "Dry Montane Forest"
+#'  ),
+#'  efg_1 = c("T1.1", "T1.2", "T1.1", "T1.2"),
+#'  memb_1 = c(0.80, 0.80, 0.70, 0.50),
+#'  efg_2 = c("T1.2", "T1.1", "T1.3", "T1.3"),
+#'  memb_2 = c(0.20, 0.20, 0.30, 0.50)
+#')
+#'
+#'import_paired_membership(
+#'  input_table,
+#'  "re1",
+#'  c("efg_1", "efg_2"),
+#'  c("memb_1", "memb_2")
+#')
+import_paired_membership <- function(
+  data,
+  original_names,
+  target_names,
+  membership_values
+  ) {    
+    out <- data |>
         dplyr::select(
             dplyr::any_of(original_names),
             dplyr::any_of(target_names),
             dplyr::any_of(membership_values)
         ) |> 
     tidyr::pivot_longer(
-        dplyr::any_of(c(target_names,membership_values)),
-        cols_vary = "slowest",
-        names_to = c(".value"),
-        names_pattern = "([[:alpha:]]+)")
+      cols = c(target_names, membership_values),
+      names_to = c(".value", "pair"),
+      names_sep = "_"
+    )
+    out
+    cols <- colnames(out)
+    out$interpreter <- "Worrisome Wren"
+    as_membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
 }
