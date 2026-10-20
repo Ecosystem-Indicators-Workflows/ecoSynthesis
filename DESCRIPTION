@@ -20,9 +20,11 @@ Imports:
     dplyr,
     glue,
     lifecycle,
+    purrr,
     rlang (>= 1.1.0),
     stringr,
-    tidyr
+    tidyr,
+    ggplot2
 Suggests: 
     testthat (>= 3.0.0),
     quarto

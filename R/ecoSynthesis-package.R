@@ -5,6 +5,7 @@
 #' @import rlang
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
+#' @importFrom purrr pluck
 #' @importFrom stringr str_remove
 #' @importFrom stringr str_subset
 ## usethis namespace: end
