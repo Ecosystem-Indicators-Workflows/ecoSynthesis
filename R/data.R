@@ -15,7 +15,7 @@
 
 #' TASVEG cross-reference dataset for development and testing
 #'
-#' This is a test crossreference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids and target ids include some errors (to test checks and validation). 
+#' This is a test crossreference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids and target ids include some errors (to test checks and validation).
 #'
 #' @format A tibble with 4 columns:
 #' \describe{

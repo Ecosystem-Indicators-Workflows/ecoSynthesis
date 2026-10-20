@@ -20,7 +20,7 @@
 library(foreign)
 library(dplyr)
 
-## 1. Obtaining the original data from www.theLIST.tas.gov.au 
+## 1. Obtaining the original data from www.theLIST.tas.gov.au
 
 ## This is the source URL at theLIST repository
 data_url <- 'https://listdata.thelist.tas.gov.au/opendata/data/LIST_TASVEG_50_STATEWIDE.zip'
@@ -32,7 +32,13 @@ temp_zip <- tempfile(fileext = ".zip")
 options(timeout = max(300, getOption("timeout")))
 
 ## Download with wget seems to be more stable
-download.file(data_url, destfile = temp_zip, mode = "wb", method="wget", extra=c("-c"))
+download.file(
+  data_url,
+  destfile = temp_zip,
+  mode = "wb",
+  method = "wget",
+  extra = c("-c")
+)
 
 ## 2. Extract target file from downloaded zip archive
 
@@ -44,24 +50,28 @@ unzip(temp_zip, list = TRUE)
 temp_dir <- tempdir()
 
 ## Unzip the selected file
-unzip(temp_zip, files = "LIST_TASVEG_50_STATEWIDE/TASVEG_5_0.dbf", exdir = temp_dir)
+unzip(
+  temp_zip,
+  files = "LIST_TASVEG_50_STATEWIDE/TASVEG_5_0.dbf",
+  exdir = temp_dir
+)
 
 ## 3. Read dbf file as a data frame
 
 TASVEG_DBF <- read.dbf(
   sprintf(
-    "%s/LIST_TASVEG_50_STATEWIDE/TASVEG_5_0.dbf", 
+    "%s/LIST_TASVEG_50_STATEWIDE/TASVEG_5_0.dbf",
     temp_dir
-    )
   )
+)
 
 ## 4. Data preparation
 
 ## select target columns, arrange, and drop duplicates
-TASVEG_LUT <- 
-  TASVEG_DBF |> 
+TASVEG_LUT <-
+  TASVEG_DBF |>
   select(VEG_GROUP, VEGCODE, VEGCODE_D, VEG_GROUP) |>
-  arrange(VEG_GROUP,VEGCODE) |>
+  arrange(VEG_GROUP, VEGCODE) |>
   unique()
 
 ## 5. Add data to the package
