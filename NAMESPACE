@@ -4,6 +4,20 @@ export(membership_table)
 export(membership_tile_plot)
 export(standardise_xref_pairs)
 import(rlang)
+importFrom(ggplot2,
+  .data,
+  aes,
+  coord_fixed,
+  coord_flip,
+  element_blank,
+  element_line,
+  element_text,
+  geom_label,
+  ggplot,
+  labs,
+  theme,
+  waiver
+)
 importFrom(glue,glue)
 importFrom(lifecycle,deprecated)
 importFrom(purrr,pluck)
