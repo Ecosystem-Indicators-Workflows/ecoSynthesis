@@ -23,7 +23,7 @@ Imports:
     purrr,
     rlang (>= 1.1.0),
     stringr,
-    ggplot2
+    ggplot2,
     tibble,
     tidyr
 Suggests: 
