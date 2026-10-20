@@ -64,7 +64,7 @@ membership_tile_plot <- function(data) {
     ) +
     geom_label(
       #TODO allow user to specify label aesthetics
-      aes(label = round(membership, 2)),
+      aes(label = round(.data$membership, 2)),
       color = "black",
       size = 4,
       fill = "white"
