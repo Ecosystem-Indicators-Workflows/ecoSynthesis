@@ -18,8 +18,8 @@
 #' @examples
 #' #' # Example usage with the TASVEG_mini dataset
 #' data("TASVEG_mini")
-#' TASVEG_mini |> filter(source == "AAP") |> membership_tile_plot()
-#' TASVEG_mini |> filter(source == "OAQ") |> membership_tile_plot()
+#' TASVEG_mini |> dplyr::filter(source == "AAP") |> membership_tile_plot()
+#' TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
 #'
 membership_tile_plot <- function(data) {
   #TODO filter by round once included in example data
