@@ -130,7 +130,7 @@ classifications ($`n \times m`$ rows, but only three columns). If we
 ignore or filter out the zero membership values, then the size can be
 reduced considerably.
 
-### Wide-format table
+### Paired column format
 
 A membership table can also be represented in wide format if we can
 assume that each source concept matches maximum of $`q`$ target

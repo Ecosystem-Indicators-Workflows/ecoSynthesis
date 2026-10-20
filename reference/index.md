@@ -7,8 +7,20 @@
 - [`TASVEG_mini_expert_wide`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini_expert_wide.md)
   : A subset of interpreter cross-reference table in wide format for
   development and testing
-- [`membership_table()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_table.md)
-  : Reshape membership table from wide to long format
+- [`as_membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/as_membership_tbl.md)
+  : Coerce a data frame to membership_tbl
+- [`check_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/check_membership.md)
+  : Performs checks on a membership table
+- [`import_paired_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/import_paired_membership.md)
+  : Reshape membership table from paired columns to long format
+- [`membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.md)
+  : Create a membership table
+- [`print(`*`<membership_check>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_check.md)
+  : Print method for membership_check
+- [`print(`*`<membership_tbl>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_tbl.md)
+  : Print method for membership_tbl
 - [`standardise_xref_pairs()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/standardise_xref_pairs.md)
   : Standardise column names for expert cross-reference data in
   paired-columns format.
+- [`validate_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/validate_membership.md)
+  : Validate a membership table

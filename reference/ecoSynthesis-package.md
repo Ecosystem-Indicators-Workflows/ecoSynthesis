@@ -1,6 +1,12 @@
-# ecoSynthesis: What the Package Does (One Line, Title Case)
+# ecoSynthesis: Synthesis of cross-referencing information between two classification systems
 
-What the package does (one paragraph).
+Complete the synthesis of cross-referencing information between two
+classification systems following clear and reproducible steps.The
+process of cross-reference implies a source classification and a target
+classification, where the target classification might have a broader
+scope than the source. Following the "Standards, methods and guidelines
+for cross-referencing ecosystem classifications and maps to the IUCN
+Global Ecosystem Typology".
 
 ## See also
 
