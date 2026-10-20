@@ -7,8 +7,10 @@
 ^pkgdown$
 ^\.github$
 ^vignettes/articles$
+^vignettes/\.quarto$
 ^[.]?air[.]toml$
 ^\.vscode$
 ^README\.qmd$
 ^codecov\.yml$
 ^data-raw$
+
