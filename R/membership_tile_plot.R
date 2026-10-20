@@ -43,8 +43,13 @@ membership_tile_plot <- function(data) {
       fill = .data$membership,
       fill_alpha = 0.4
     )) +
-    geom_tile(colour = "white", lwd = 1.5, show.legend = T, linetype = 1) +
-    scale_colour_continuous(
+    ggplot2::geom_tile(
+      colour = "white",
+      lwd = 1.5,
+      show.legend = T,
+      linetype = 1
+    ) +
+    ggplot2::scale_colour_continuous(
       name = waiver(),
       guide = "colourbar",
       aesthetics = "fill",
@@ -67,7 +72,7 @@ membership_tile_plot <- function(data) {
     #equal aspect ratio x and y axis
     coord_fixed() +
     #set base size for all font elements
-    theme_grey(base_size = 10) +
+    ggplot2::theme_grey(base_size = 10) +
     #theme options
     theme(
       palette.colour.continuous = "BuPu",
