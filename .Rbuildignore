@@ -12,3 +12,4 @@
 ^README\.qmd$
 ^codecov\.yml$
 ^data-raw$
+^vignettes/\.quarto$

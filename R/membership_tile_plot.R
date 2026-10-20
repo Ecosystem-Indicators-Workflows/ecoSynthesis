@@ -38,9 +38,9 @@ membership_tile_plot <- function(data) {
 
   data |>
     ggplot(aes(
-      y = interpreter,
-      x = target,
-      fill = membership,
+      y = .data$interpreter,
+      x = .data$target,
+      fill = .data$membership,
       fill_alpha = 0.4
     )) +
     geom_tile(colour = "white", lwd = 1.5, show.legend = T, linetype = 1) +
