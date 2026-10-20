@@ -25,8 +25,8 @@ The function is designed to be flexible and can be extended in the future to inc
 \examples{
 #' # Example usage with the TASVEG_mini dataset
 data("TASVEG_mini")
-TASVEG_mini |> filter(source == "AAP") |> membership_tile_plot()
-TASVEG_mini |> filter(source == "OAQ") |> membership_tile_plot()
+TASVEG_mini |> dplyr::filter(source == "AAP") |> membership_tile_plot()
+TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
 
 }
 \author{
