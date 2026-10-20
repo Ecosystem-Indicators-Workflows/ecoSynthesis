@@ -2,6 +2,8 @@
 # TODO we can consider including the full dataset in the package for showing examples of data preparation.
 # See `?TASVEG_mini` for documentation
 
+library(tibble)
+
 tibble::tribble(
   ~source , ~target  , ~membership       , ~interpreter , ~date        ,
   "AAP"   , "TF1.7"  , 1                 , "AK"         , "2026-04-23" ,
