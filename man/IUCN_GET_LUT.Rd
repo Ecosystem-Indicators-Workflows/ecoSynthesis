@@ -5,7 +5,7 @@
 \alias{IUCN_GET_LUT}
 \title{A Look-up Table for the IUCN Global Ecosystem Typology}
 \format{
-A data frame with 7 columns:
+A data frame with 9 columns:
 \describe{
 \item{efg}{Character vector with urls of the permanent ID of the concept in the vocabulary}
 \item{efg_id}{Character vector of short code for the ecosystem functional groups (level 3 in the classification)}
@@ -14,6 +14,8 @@ A data frame with 7 columns:
 \item{biome_name}{Character vector of the name for the functional biomes (level 2 in the classification)}
 \item{realm_id}{Character vector of short code for the realms (level 1 in the classification)}
 \item{realm_name}{Character vector of the name for the realms (level 1 in the classification)}
+\item{version}{Character vector with version name}
+\item{version_date}{Character vector with date version was uploaded or updated}
 }
 }
 \source{
