@@ -108,6 +108,8 @@ This package in in the very early stages of development.
   : Reshape membership table from paired columns to long format
 - [`membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.md)
   : Create a membership table
+- [`membership_tile_plot()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tile_plot.md)
+  : Create a tile plot of membership data
 - [`print(`*`<membership_check>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_check.md)
   : Print method for membership_check
 - [`print(`*`<membership_tbl>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_tbl.md)
