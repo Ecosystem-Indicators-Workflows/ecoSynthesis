@@ -20,7 +20,7 @@
 #' @format A tibble with 4 columns:
 #' \describe{
 #'   \item{VEGCODE}{Original vegetation code of the `source` unit in the TASVEG 5.0 dataset, the source id being classified.}
-#'   \item{efg}{Shortcode for the Ecosystem Functional Group (EFG) from the IUCN Global Ecosystem Typology, the target id.}
+#'   \item{efg}{Shortcode for the Ecosystem Functional Group (EFG) from the IUCN Global Ecosystem Typology, the `target` id.}
 #'   \item{memb}{Membership value between 0 and 1, indicating the degree of membership of the `source` vegetation or map unit to the `target` EFG.}
 #'   \item{interp}{Character vector of codenames for interpreters who provided the membership value. Codenames used instead of the real names or initials.}
 #'   \item{round}{Numeric value for the round of interpretations. Currently only includes round 1.}
