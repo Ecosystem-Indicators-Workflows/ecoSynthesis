@@ -1,6 +1,6 @@
 #' A Look-up Table for the TASVEG 5.0 dataset
 #'
-#' This is a Look-up Table generated from the TASVEG 5.0 dataset containing basic description of vegetation units.  TASVEG is a comprehensive digital map of Tasmania’s vegetation, including sub-Antarctic Macquarie Island. This Look-up Table was extracted from TASVEG 5.0 from www.theLIST.tas.gov.au ©State of Tasmania. It includes 156 map classes including coastal heathlands, eucalypt forest, and other vegetation communities. The current release version for mainland Tasmania is TASVEG 5.0 and was published in November 2025. The current release version for Macquarie Island is TASVEG 3.0 Macquarie Island and was published in November 2013. The original data is supplied under Creative Commons Attribution 3.0 Australia (CC BY 3.0 AU) Licence.
+#' This is a Look-up Table generated from the TASVEG 5.0 dataset containing basic description of vegetation units.  TASVEG is a comprehensive digital map of Tasmania’s vegetation, including sub-Antarctic Macquarie Island. This Look-up Table was extracted from TASVEG 5.0 from <www.theLIST.tas.gov.au> ©State of Tasmania. It includes 156 map classes including coastal heathlands, eucalypt forest, and other vegetation communities. The current release version for mainland Tasmania is TASVEG 5.0 and was published in November 2025. The current release version for Macquarie Island is TASVEG 3.0 Macquarie Island and was published in November 2013. The original data is supplied under Creative Commons Attribution 3.0 Australia (CC BY 3.0 AU) Licence.
 #'
 #' @format A data frame with 3 columns:
 #' \describe{
@@ -9,20 +9,20 @@
 #'   \item{VEGCODE_D}{Character vector of one-line descriptions for each unit}
 #' }
 #'
-#' @source Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
+#' @source Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025 <www.theLIST.tas.gov.au>. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
 #' @keywords datasets
 "TASVEG_LUT"
 
 #' TASVEG cross-reference dataset for development and testing
 #'
-#' This is a test crossreference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids and target ids include some errors (to test checks and validation).
+#' This is a test cross-reference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids (`VEGCODE`) and target ids (`efg`) include some errors (to test checks and validation).
 #'
 #' @format A tibble with 4 columns:
 #' \describe{
 #'   \item{VEGCODE}{Original vegetation code of the `source` unit in the TASVEG 5.0 dataset, the source id being classified.}
-#'   \item{efg}{Shortcode for the Ecosystem Functional Group (EFG) from the IUCN Global Ecosystem Typology, the target id.}
+#'   \item{efg}{Shortcode for the Ecosystem Functional Group (EFG) from the IUCN Global Ecosystem Typology, the `target` id.}
 #'   \item{memb}{Membership value between 0 and 1, indicating the degree of membership of the `source` vegetation or map unit to the `target` EFG.}
-#'   \item{interp}{Character vector of codenames for interpreters who provided the membership value. Codenames used instead of the real names or initials.}
+#'   \item{interp}{Character vector of codenames for interpreters who provided the membership value. Anonymous codenames used instead of real names or initials.}
 #'   \item{round}{Numeric value for the round of interpretations. Currently only includes round 1.}
 #' }
 #'

@@ -20,6 +20,12 @@
 library(foreign)
 library(dplyr)
 
+# This script requires 'wget' to be installed for downloading files.
+# Please install 'wget' using your package manager:
+# For macOS users: brew install wget
+# For Ubuntu users: sudo apt-get install wget
+# For Windows users: Please refer to the wget documentation for installation instructions at:
+# https://eternallybored.org/misc/wget/
 ## 1. Obtaining the original data from www.theLIST.tas.gov.au
 
 ## This is the source URL at theLIST repository
@@ -72,7 +78,8 @@ TASVEG_LUT <-
   TASVEG_DBF |>
   select(VEG_GROUP, VEGCODE, VEGCODE_D, VEG_GROUP) |>
   arrange(VEG_GROUP, VEGCODE) |>
-  unique()
+  unique() |>
+  as_tibble()
 
 ## 5. Add data to the package
 
