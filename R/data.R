@@ -11,6 +11,7 @@
 #'
 #' @source Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025 <www.theLIST.tas.gov.au>. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
 #' @keywords datasets
+#' @family data
 "TASVEG_LUT"
 
 #' TASVEG cross-reference dataset for development and testing
@@ -28,11 +29,15 @@
 #'
 #' @source Mark Tozer (pers. comm.)
 #' @keywords datasets
+#' @family data
 "TASVEG_xref"
 
 #' A subset of the TASVEG dataset for development and testing
 #'
 #' This is a small subset of the TASVEG 5.0 dataset, used for development and testing purposes (we may choose to use this as an example dataset available for documentation to users).
+#'
+#' @details
+#' `r lifecycle::badge('deprecated')`  `TASVEG_mini` is deprecated and will be removed in a future release. Please use [TASVEG_xref] instead.
 #'
 #' @format A tibble with 4 columns:
 #' \describe{
@@ -44,6 +49,7 @@
 #'
 #' @source TBC describe source here #TODO
 #' @keywords datasets
+#' @family data
 "TASVEG_mini"
 
 #' A subset of interpreter cross-reference table in wide format for development and testing
@@ -67,4 +73,5 @@
 #'
 #' @source TBC describe source here #TODO
 #' @keywords datasets
+#' @family data
 "TASVEG_mini_expert_wide"

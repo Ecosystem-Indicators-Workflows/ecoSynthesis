@@ -31,4 +31,11 @@ TASVEG_mini_expert_wide
 \description{
 A subset of interpreter cross-reference table in wide format for development and testing
 }
+\seealso{
+Other data:
+\code{\link{TASVEG_LUT}},
+\code{\link{TASVEG_mini}},
+\code{\link{TASVEG_xref}}
+}
+\concept{data}
 \keyword{datasets}

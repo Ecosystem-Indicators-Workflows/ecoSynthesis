@@ -22,4 +22,14 @@ TASVEG_mini
 \description{
 This is a small subset of the TASVEG 5.0 dataset, used for development and testing purposes (we may choose to use this as an example dataset available for documentation to users).
 }
+\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}  \code{TASVEG_mini} is deprecated and will be removed in a future release. Please use \link{TASVEG_xref} instead.
+}
+\seealso{
+Other data:
+\code{\link{TASVEG_LUT}},
+\code{\link{TASVEG_mini_expert_wide}},
+\code{\link{TASVEG_xref}}
+}
+\concept{data}
 \keyword{datasets}
