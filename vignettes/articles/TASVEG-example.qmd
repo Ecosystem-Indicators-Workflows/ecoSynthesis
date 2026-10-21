@@ -1,0 +1,91 @@
+---
+title: "Crossreferencing Tasmanian vegetation communities"
+author: JR Ferrer-Paris
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+This article describe steps for crossreferencing using a real example from the state of Tasmania, Australia. Example data is provided as part of the package {ecoSynthesis}.
+
+```{r}
+#| label: setup
+library(ecoSynthesis)
+library(dplyr)
+```
+
+
+## Source and target classifications
+
+We will use the Tasmanian vegetation communities described in the TASVEG 5.0 dataset. A look-up table for this dataset is available in the `TASVEG_LUT` data:
+
+```{r}
+#| label: load source classification
+TASVEG_LUT
+```
+
+The target classification is the IUCN Global Ecosystem Typology. A look-up table for this dataset is available in the `IUCN_GET_LUT` data:
+
+```{r}
+#| label: load target classification
+#| eval: false
+IUCN_GET_LUT
+```
+
+## Interpretation of classifications
+
+In 2026 a group of four interpreters looked at full descriptions of the vegetation community units in the TASVEG 5.0 dataset and assigned them to ecosystem functional groups from the IUCN GET. A table containing source and target ids, membership values, and interpreter information (anonymised using codenames). This represents a first round of interpretation. The table is available in the `TASVEG_xref` data:
+
+```{r}
+#| label: load membership table
+TASVEG_xref
+```
+
+### Our first membership table
+
+If we want to use this data in our package we need to transform this table into a `membership_tbl` object. We explicitly declare which columns will be used as source and target ids, and which ones contain membership values and interpreter info.
+
+```{r}
+#| label: load membership table
+TASVEG_memb <- membership_tbl(
+  TASVEG_xref,
+  source_id = "VEGCODE",
+  target_id = "efg",
+  membership = "memb",
+  interpreter = "interp"
+)
+```
+
+### Cleaning and preparing the data
+
+This dataset has some errors that need to be curated:
+
+- NA values in membership column
+- some source units are invalid (valid id, but unit not aligned with ecosystem concept)
+- some target ids are invalid (label does not exists in IUCN GET, likely typos)
+
+First, let's see if the `check_membership` function can detect these issues:
+
+:::{.callout-warning}
+## Bug alert!
+This check is not working, there is one NA value and check is failing.
+:::
+
+```{r}
+#| label: check membership table
+#| eval: false
+check_membership(TASVEG_memb)
+```
+
+:::{.callout-caution}
+## Placeholder
+The following code block will be replaced with a function later.
+:::
+
+```{r}
+#| label: check source info
+#| eval: false
+s <- attr(TASVEG_memb,"source_id")
+TASVEG_memb[[s]] %in% TASVEG_LUT$VEGCODE
+```
