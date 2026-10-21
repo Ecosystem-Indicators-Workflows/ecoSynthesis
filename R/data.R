@@ -9,7 +9,7 @@
 #'   \item{VEGCODE_D}{Character vector of one-line descriptions for each unit}
 #' }
 #'
-#' @source Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
+#' @source Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025 <www.theLIST.tas.gov.au>. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
 #' @keywords datasets
 "TASVEG_LUT"
 
