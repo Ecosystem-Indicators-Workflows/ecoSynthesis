@@ -4,7 +4,13 @@
 \alias{import_paired_membership}
 \title{Reshape membership table from paired columns to long format}
 \usage{
-import_paired_membership(data, original_names, target_names, membership_values)
+import_paired_membership(
+  data,
+  original_names,
+  target_names,
+  membership_values,
+  interpreter = NULL
+)
 }
 \arguments{
 \item{data}{Input cross-referencing table (paired column format)}

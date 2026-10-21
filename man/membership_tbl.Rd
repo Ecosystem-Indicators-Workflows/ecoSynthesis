@@ -10,7 +10,7 @@ membership_tbl(
   target_id = "target_id",
   membership = "membership",
   interpreter = "interpreter",
-  updated = NULL
+  round = NULL
 )
 }
 \arguments{

@@ -15,7 +15,7 @@ membership_tbl <- function(
   target_id = "target_id",
   membership = "membership",
   interpreter = "interpreter",
-  updated = NULL
+  round = NULL
 ) {
   stopifnot(is.data.frame(data))
 
@@ -39,7 +39,7 @@ membership_tbl <- function(
     target_id = target_id,
     membership = membership,
     interpreter = interpreter,
-    updated = updated,
+    round = round,
     class = c("membership_tbl", class(data))
   )
 }
@@ -63,7 +63,7 @@ check_membership <- function(x) {
   checks_results <- c(
     numeric_memb = !is.numeric(m),
     na_memb = anyNA(m),
-    bounded_memb = any(m < 0 | m > 1)
+    bounded_memb = any(m[!is.na(m)] < 0 | m[!is.na(m)] > 1)
   )
 
   errors_list <- c(
@@ -93,6 +93,11 @@ print.membership_check <- function(x, ...) {
     cat(cli::col_red("\u2717 Membership column is not numeric\n"))
   } else {
     cat(cli::col_blue("\u2713 Membership column is numeric\n"))
+  }
+  if (x$checks["na_memb"]) {
+    cat(cli::col_red("\u2717 Membership values contains NA values\n"))
+  } else {
+    cat(cli::col_blue("\u2713 All records have a membership value\n"))
   }
   if (x$checks["bounded_memb"]) {
     cat(cli::col_red("\u2717 Membership values <0 or >1\n"))
@@ -184,14 +189,16 @@ as_membership_tbl <- function(
   source_id,
   target_id,
   membership,
-  interpreter
+  interpreter,
+  round = NULL
 ) {
   out <- membership_tbl(
     data = x,
     source_id = source_id,
     target_id = target_id,
     membership = membership,
-    interpreter = interpreter
+    interpreter = interpreter,
+    round = round
   )
 
   validate_membership(out)
@@ -234,7 +241,8 @@ import_paired_membership <- function(
   data,
   original_names,
   target_names,
-  membership_values
+  membership_values,
+  interpreter = NULL
 ) {
   out <- data |>
     dplyr::select(
@@ -249,6 +257,9 @@ import_paired_membership <- function(
     )
   out
   cols <- colnames(out)
-  out$interpreter <- "Worrisome Wren"
+  if (is.null(interpreter)) {
+    interpreter <- "Worrisome Wren"
+  }
+  out$interpreter <- interpreter
   as_membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
 }
