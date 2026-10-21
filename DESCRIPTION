@@ -1,13 +1,13 @@
 Package: ecoSynthesis
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Synthesis of cross-referencing information between two classification systems
+Version: 0.0.0.9001
 Authors@R: c(
     person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
            comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395")),
     person("Elliot", "Gould", , "elliot.gould@unsw.edu.au", role = "aut",
            comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-6585-538X"))
   )
-Description: What the package does (one paragraph).
+Description: Complete the synthesis of cross-referencing information between two classification systems following clear and reproducible steps. The process of cross-referencing implies a source classification and a target classification, where the target classification might have a broader scope than the source. Following the "Standards, methods and guidelines for cross-referencing ecosystem classifications and maps to the IUCN Global Ecosystem Typology". 
 License: GPL (>= 3)
 URL: https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis,
     https://ecosystem-indicators-workflows.github.io/ecoSynthesis/
@@ -20,8 +20,11 @@ Imports:
     dplyr,
     glue,
     lifecycle,
+    purrr,
     rlang (>= 1.1.0),
     stringr,
+    ggplot2,
+    tibble,
     tidyr
 Suggests: 
     testthat (>= 3.0.0),
@@ -33,3 +36,4 @@ Config/usethis/last-upkeep: 2026-10-09
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LazyData: true
+VignetteBuilder: quarto
