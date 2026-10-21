@@ -78,7 +78,8 @@ TASVEG_LUT <-
   TASVEG_DBF |>
   select(VEG_GROUP, VEGCODE, VEGCODE_D, VEG_GROUP) |>
   arrange(VEG_GROUP, VEGCODE) |>
-  unique()
+  unique() |>
+  as_tibble()
 
 ## 5. Add data to the package
 
