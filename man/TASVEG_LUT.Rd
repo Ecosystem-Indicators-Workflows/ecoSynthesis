@@ -13,12 +13,12 @@ A data frame with 3 columns:
 }
 }
 \source{
-Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
+Department of Natural Resources and Environment Tasmania. TASVEG 5.0, Released November 2025 <www.theLIST.tas.gov.au>. Tasmanian Vegetation Monitoring and Mapping Program, Environment Business Unit.​
 }
 \usage{
 TASVEG_LUT
 }
 \description{
-This is a Look-up Table generated from the TASVEG 5.0 dataset containing basic description of vegetation units.  TASVEG is a comprehensive digital map of Tasmania’s vegetation, including sub-Antarctic Macquarie Island. This Look-up Table was extracted from TASVEG 5.0 from www.theLIST.tas.gov.au ©State of Tasmania. It includes 156 map classes including coastal heathlands, eucalypt forest, and other vegetation communities. The current release version for mainland Tasmania is TASVEG 5.0 and was published in November 2025. The current release version for Macquarie Island is TASVEG 3.0 Macquarie Island and was published in November 2013. The original data is supplied under Creative Commons Attribution 3.0 Australia (CC BY 3.0 AU) Licence.
+This is a Look-up Table generated from the TASVEG 5.0 dataset containing basic description of vegetation units.  TASVEG is a comprehensive digital map of Tasmania’s vegetation, including sub-Antarctic Macquarie Island. This Look-up Table was extracted from TASVEG 5.0 from <www.theLIST.tas.gov.au> ©State of Tasmania. It includes 156 map classes including coastal heathlands, eucalypt forest, and other vegetation communities. The current release version for mainland Tasmania is TASVEG 5.0 and was published in November 2025. The current release version for Macquarie Island is TASVEG 3.0 Macquarie Island and was published in November 2013. The original data is supplied under Creative Commons Attribution 3.0 Australia (CC BY 3.0 AU) Licence.
 }
 \keyword{datasets}

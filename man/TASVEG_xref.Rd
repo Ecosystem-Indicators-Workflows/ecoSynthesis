@@ -8,9 +8,9 @@
 A tibble with 4 columns:
 \describe{
 \item{VEGCODE}{Original vegetation code of the \code{source} unit in the TASVEG 5.0 dataset, the source id being classified.}
-\item{efg}{Shortcode for the Ecosystem Functional Group (EFG) from the IUCN Global Ecosystem Typology, the target id.}
+\item{efg}{Shortcode for the Ecosystem Functional Group (EFG) from the IUCN Global Ecosystem Typology, the \code{target} id.}
 \item{memb}{Membership value between 0 and 1, indicating the degree of membership of the \code{source} vegetation or map unit to the \code{target} EFG.}
-\item{interp}{Character vector of codenames for interpreters who provided the membership value. Codenames used instead of the real names or initials.}
+\item{interp}{Character vector of codenames for interpreters who provided the membership value. Anonymous codenames used instead of real names or initials.}
 \item{round}{Numeric value for the round of interpretations. Currently only includes round 1.}
 }
 }
@@ -21,6 +21,6 @@ Mark Tozer (pers. comm.)
 TASVEG_xref
 }
 \description{
-This is a test crossreference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids and target ids include some errors (to test checks and validation).
+This is a test cross-reference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids (\code{VEGCODE}) and target ids (\code{efg}) include some errors (to test checks and validation).
 }
 \keyword{datasets}
