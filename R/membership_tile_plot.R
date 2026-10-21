@@ -91,7 +91,7 @@ membership_tile_plot <- function(data) {
       #set y axis text colour and adjust vertical justification
       axis.text.y = element_text(vjust = 0.2, colour = textcol),
       #change axis ticks thickness
-      axis.ticks = element_line(size = 0.4),
+      axis.ticks = element_line(linewidth = 0.4),
       #change title font, size, colour and justification
       plot.title = element_text(
         colour = textcol,
