@@ -20,6 +20,8 @@ import_paired_membership(
 \item{target_names}{Names or codes of the target ecosystem concepts}
 
 \item{membership_values}{Membership values (between 0 and 1)}
+
+\item{interpreter}{Name of the interpreter}
 }
 \value{
 A membership table in long format

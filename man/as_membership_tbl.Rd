@@ -23,6 +23,8 @@ as_membership_tbl(
 \item{membership}{Membership column}
 
 \item{interpreter}{Interpreter column}
+
+\item{round}{Round column}
 }
 \value{
 A validated membership_tbl

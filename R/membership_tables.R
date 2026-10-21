@@ -5,7 +5,7 @@
 #' @param target_id Column containing target ecosystem concepts
 #' @param membership Column containing membership values
 #' @param interpreter Column containing interpreter information
-#' @param updated Column containing the date of the interpretation
+#' @param round Column containing the date of the interpretation
 #'
 #' @return An object of class 'membership_tbl'
 #' @export
@@ -165,6 +165,7 @@ print.membership_tbl <- function(x, ...) {
 #' @param target_id Target concept column
 #' @param membership Membership column
 #' @param interpreter Interpreter column
+#' @param round Round column
 #'
 #' @return A validated membership_tbl
 #' @import tibble
@@ -212,6 +213,7 @@ as_membership_tbl <- function(
 #' @param original_names Names or codes of the original ecosystem concepts
 #' @param target_names Names or codes of the target ecosystem concepts
 #' @param membership_values Membership values (between 0 and 1)
+#' @param interpreter Name of the interpreter
 #'
 #' @return A membership table in long format
 #' @import dplyr

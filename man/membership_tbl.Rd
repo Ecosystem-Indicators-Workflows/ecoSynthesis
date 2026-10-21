@@ -24,7 +24,7 @@ membership_tbl(
 
 \item{interpreter}{Column containing interpreter information}
 
-\item{updated}{Column containing the date of the interpretation}
+\item{round}{Column containing the date of the interpretation}
 }
 \value{
 An object of class 'membership_tbl'
