@@ -73,3 +73,10 @@ A tibble with 13 columns:
 ## Source
 
 TBC describe source here \#TODO
+
+## See also
+
+Other data:
+[`TASVEG_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_LUT.md),
+[`TASVEG_mini`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini.md),
+[`TASVEG_xref`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_xref.md)

@@ -2,11 +2,15 @@
 
 ## All functions
 
+- [`TASVEG_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_LUT.md)
+  : A Look-up Table for the TASVEG 5.0 dataset
 - [`TASVEG_mini`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini.md)
   : A subset of the TASVEG dataset for development and testing
 - [`TASVEG_mini_expert_wide`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini_expert_wide.md)
   : A subset of interpreter cross-reference table in wide format for
   development and testing
+- [`TASVEG_xref`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_xref.md)
+  : TASVEG cross-reference dataset for development and testing
 - [`as_membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/as_membership_tbl.md)
   : Coerce a data frame to membership_tbl
 - [`check_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/check_membership.md)

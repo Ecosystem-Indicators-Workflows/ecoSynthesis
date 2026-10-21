@@ -37,3 +37,17 @@ A tibble with 4 columns:
 ## Source
 
 TBC describe source here \#TODO
+
+## Details
+
+**\[deprecated\]** `TASVEG_mini` is deprecated and will be removed in a
+future release. Please use
+[TASVEG_xref](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_xref.md)
+instead.
+
+## See also
+
+Other data:
+[`TASVEG_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_LUT.md),
+[`TASVEG_mini_expert_wide`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini_expert_wide.md),
+[`TASVEG_xref`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_xref.md)
