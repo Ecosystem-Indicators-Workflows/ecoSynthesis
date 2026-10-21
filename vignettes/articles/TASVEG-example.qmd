@@ -84,10 +84,70 @@ The following code block will be replaced with a function later.
 :::
 
 ```{r}
-#| label: check source info
+#| label: check source and target info
 #| eval: true
 sid <- attr(TASVEG_memb,"source_id")
 table(TASVEG_memb[[sid]] %in% TASVEG_LUT$VEGCODE)
 tid <- attr(TASVEG_memb,"target_id")
 table(TASVEG_memb[[tid]] %in% IUCN_GET_LUT$efg_id)
+```
+
+### Summarising the data
+
+
+:::{.callout-caution}
+## Placeholder
+The following code block will be replaced with a function later.
+:::
+
+```{r}
+#| label: summary by interpreter
+#| eval: true
+interp <- rlang::sym(attr(TASVEG_memb,"interpreter"))
+sid <- rlang::sym(attr(TASVEG_memb,"source_id"))
+tid <- rlang::sym(attr(TASVEG_memb,"target_id"))
+memb <- rlang::sym(attr(TASVEG_memb,"membership"))
+TASVEG_memb |> 
+  group_by(interpreter = !!interp) |>
+  summarise(
+    n_sources = n_distinct(!!sid), 
+    n_targets = n_distinct(!!tid), 
+    merbership_sum = sum(!!memb)
+    )
+
+```
+
+## Visualisations
+
+### Tile plot
+
+We want to visualise the different assignments from all interpreters for one single source unit. 
+
+We will use a tile plot, and select the following unit:
+
+```{r}
+#| label: show HSW unit
+ filter(TASVEG_LUT, VEGCODE == "HSW")
+```
+
+:::{.callout-caution}
+## Work in progress
+This will require modifications to existing functions.
+:::
+
+
+```{r}
+#| label: tile plot
+#| eval: false
+
+TASVEG_memb |>
+  filter(VEGCODE == "HSW") |>
+  membership_tile_plot()
+
+#Alternatively, code the filter in the function:
+membership_tile_plot(TASVEG_memb, select_source="HSW")
+# would internally use:
+# sid <- attr(TASVEG_memb,"source_id")
+# data <- filter(TASVEG_memb, sid == select_source)
+
 ```

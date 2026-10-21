@@ -5,7 +5,7 @@
 ## The Global Ecosystem Typology vocabulary is a beta release of the classification structure underpinning the IUCN Global Ecosystem Typology (GET), the first internationally agreed framework for describing and mapping the world's ecosystems. It has been published in Research Vocabularies Australia (RVA) as part of the Ecosystem Indicator Workflows project, giving Australian and international researchers a citable, machine-readable version of the typology's hierarchy for use in data description, discovery and interoperability.
 
 ## https://w3id.org/iucn-get/IUCNEcosystemTypology
-## Data is available from Research Vocabularies Australia, 
+## Data is available from Research Vocabularies Australia,
 ## SPARQL endpoint: https://demo.vocabs.ardc.edu.au/repository/api/sparql/ands-nc_iucn-get-example_2026-04-01-v3
 
 ## Summary of steps from data source to prepared data:
@@ -36,13 +36,13 @@ SELECT ?scheme ?title WHERE {
           skos:prefLabel ?title .
 }
 "
-rdf_query(IUCNGET,query)
+rdf_query(IUCNGET, query)
 
 ## If title is "IUCN Global Ecosystem Typology" we have the right vocabulary
 
 ## 2. Query rdf to extract information of interest
 
-query = "
+query <- "
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX iucn: <https://w3id.org/iucn-get/ontology#>
 
@@ -70,13 +70,13 @@ WHERE {
 }
 "
 
-IUCNGET_profile <- rdf_query(IUCNGET,query)
+IUCNGET_profile <- rdf_query(IUCNGET, query)
 
 ## 3. Data preparation
 
-IUCN_GET_LUT <- IUCNGET_profile |> 
-  mutate(version="RVA demo v3", version_date="2026-04-01") |>
-  arrange(efg_id) 
+IUCN_GET_LUT <- IUCNGET_profile |>
+  mutate(version = "RVA demo v3", version_date = "2026-04-01") |>
+  arrange(efg_id)
 
 ## 4. Add data to the package repository
 
