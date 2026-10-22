@@ -33,6 +33,30 @@ The target classification is the IUCN Global Ecosystem Typology. A look-up table
 IUCN_GET_LUT
 ```
 
+### Assessing alignment
+
+One of the first steps of the cross-referencing process is to assess the alignment between classifications. Units are eligible for cross-referencing if they represent similar concepts. 
+
+The TASVEG 5.0 is a map of vegetation communities. Most units represent a single vegetation community. These vegetation communities do align with the ecosystem concept used in the IUCN GET. 
+
+However, some TASVEG units are described based on mappeable units that do not align with the ecosystem concept. This units might represent mosaics of multiple communities, or represent unvegetated ecological features. 
+
+For example, these units grouped as "Other natural environments" in TASVEG are probably not eligible for cross-referencing and should be excluded:
+
+```{r}
+#| label: select not eligible units
+TASVEG_LUT |>
+  filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
+```
+
+Here, we create a subset of the eligible units:
+
+```{r}
+#| label: select eligible units
+TASVEG_LUT_SS <- TASVEG_LUT |>
+  filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
+```
+
 ## Interpretation of classifications
 
 In 2026 a group of four interpreters looked at full descriptions of the vegetation community units in the TASVEG 5.0 dataset and assigned them to ecosystem functional groups from the IUCN GET. A table containing source and target ids, membership values, and interpreter information (anonymised using codenames). This represents a first round of interpretation. The table is available in the `TASVEG_xref` data:
@@ -82,7 +106,7 @@ The following code block will be replaced with a function later.
 #| label: check source and target info
 #| eval: true
 sid <- attr(TASVEG_memb, "source_id")
-table(TASVEG_memb[[sid]] %in% TASVEG_LUT$VEGCODE)
+table(TASVEG_memb[[sid]] %in% TASVEG_LUT_SS$VEGCODE)
 tid <- attr(TASVEG_memb, "target_id")
 table(TASVEG_memb[[tid]] %in% IUCN_GET_LUT$efg_id)
 ```
