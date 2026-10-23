@@ -10,3 +10,4 @@ docs
 /.quarto/
 **/*.quarto_ipynb
 **/.quarto/
+_reprex
