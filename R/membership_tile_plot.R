@@ -17,7 +17,7 @@
 #' @author Elliot Gould
 #' @family visualisation
 #' @examples
-#' # Example usage with the TASVEG_xref dataset
+#' # Example usage with the [TASVEG_xref] dataset
 #' data("TASVEG_xref")
 #'
 #' # Create a tile plot for a specific source
