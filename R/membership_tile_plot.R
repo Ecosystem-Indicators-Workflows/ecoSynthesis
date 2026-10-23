@@ -45,7 +45,13 @@ membership_tile_plot <- function(data, round = NULL) {
   if (!is.null(round)) {
     # Check that the specified round is within the range of available rounds in the data
     checkmate::assert(
-      checkmate::checkSubset(round, lower = 1, upper = max(unique(data$round)))
+      checkmate::checkNumber(
+        round,
+        na.ok = FALSE,
+        lower = 1,
+        upper = max(unique(data$round)),
+        null.ok = FALSE
+      )
     )
     # Filter by round if specified
     data <- data |> dplyr::filter(round == round)
