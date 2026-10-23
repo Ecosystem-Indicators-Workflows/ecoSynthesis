@@ -22,6 +22,11 @@
 #' TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
 #'
 membership_tile_plot <- function(data) {
+  # Checks
+  checkmate::assert(
+    checkmate::checkClass(data, "membership_tbl")
+  )
+
   #TODO filter by round once included in example data
   #TODO ensure interoperable with membership classes
 
