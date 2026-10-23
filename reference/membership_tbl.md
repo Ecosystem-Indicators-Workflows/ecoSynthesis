@@ -11,7 +11,7 @@ membership_tbl(
   target_id = "target_id",
   membership = "membership",
   interpreter = "interpreter",
-  updated = NULL
+  round = NULL
 )
 ```
 
@@ -37,7 +37,7 @@ membership_tbl(
 
   Column containing interpreter information
 
-- updated:
+- round:
 
   Column containing the date of the interpretation
 

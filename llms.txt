@@ -95,6 +95,8 @@ This package in in the very early stages of development.
 
 ## All functions
 
+- [`IUCN_GET_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/IUCN_GET_LUT.md)
+  : A Look-up Table for the IUCN Global Ecosystem Typology
 - [`TASVEG_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_LUT.md)
   : A Look-up Table for the TASVEG 5.0 dataset
 - [`TASVEG_mini`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini.md)
@@ -126,9 +128,19 @@ This package in in the very early stages of development.
 
 # Articles
 
-### All vignettes
+### General concepts
 
 - [Key concepts of
   cross-referencing](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/articles/concepts-xref.md):
+
+### Examples
+
+- [Crossreferencing Tasmanian vegetation
+  communities](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/articles/TASVEG-example.md):
+
+### Learn more
+
+Vignettes about general topics
+
 - [Working with membership
   tables](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/articles/membership-tbl-example.md):

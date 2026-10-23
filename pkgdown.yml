@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   articles/concepts-xref: concepts-xref.html
   articles/membership-tbl-example: membership-tbl-example.html
-last_built: 2026-10-21T05:44Z
+  articles/TASVEG-example: TASVEG-example.html
+last_built: 2026-10-23T05:55Z
 urls:
   reference: https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference
   article: https://ecosystem-indicators-workflows.github.io/ecoSynthesis/articles

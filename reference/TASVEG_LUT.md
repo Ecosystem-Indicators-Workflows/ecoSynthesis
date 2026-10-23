@@ -44,6 +44,7 @@ Monitoring and Mapping Program, Environment Business Unit.​
 ## See also
 
 Other data:
+[`IUCN_GET_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/IUCN_GET_LUT.md),
 [`TASVEG_mini`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini.md),
 [`TASVEG_mini_expert_wide`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini_expert_wide.md),
 [`TASVEG_xref`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_xref.md)

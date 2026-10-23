@@ -5,7 +5,14 @@ Coerce a data frame to membership_tbl
 ## Usage
 
 ``` r
-as_membership_tbl(x, source_id, target_id, membership, interpreter)
+as_membership_tbl(
+  x,
+  source_id,
+  target_id,
+  membership,
+  interpreter,
+  round = NULL
+)
 ```
 
 ## Arguments
@@ -29,6 +36,10 @@ as_membership_tbl(x, source_id, target_id, membership, interpreter)
 - interpreter:
 
   Interpreter column
+
+- round:
+
+  Round column
 
 ## Value
 

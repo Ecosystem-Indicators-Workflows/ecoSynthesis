@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`IUCN_GET_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/IUCN_GET_LUT.md)
+  : A Look-up Table for the IUCN Global Ecosystem Typology
 - [`TASVEG_LUT`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_LUT.md)
   : A Look-up Table for the TASVEG 5.0 dataset
 - [`TASVEG_mini`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini.md)

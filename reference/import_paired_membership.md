@@ -5,7 +5,13 @@ Reshape membership table from paired columns to long format
 ## Usage
 
 ``` r
-import_paired_membership(data, original_names, target_names, membership_values)
+import_paired_membership(
+  data,
+  original_names,
+  target_names,
+  membership_values,
+  interpreter = NULL
+)
 ```
 
 ## Arguments
@@ -25,6 +31,10 @@ import_paired_membership(data, original_names, target_names, membership_values)
 - membership_values:
 
   Membership values (between 0 and 1)
+
+- interpreter:
+
+  Name of the interpreter
 
 ## Value
 
