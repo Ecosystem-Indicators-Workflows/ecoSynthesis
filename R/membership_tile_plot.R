@@ -38,14 +38,21 @@ membership_tile_plot <- function(data) {
   #TODO allow user to specify title
   #TODO allow user to specify subtitle
 
+  ## Extract col names from attributes for use in plot aesthetics
+  interp <- attr(TASVEG_memb, "interpreter")
+  sid <- attr(TASVEG_memb, "source_id")
+  tid <- attr(TASVEG_memb, "target_id")
+  memb <- attr(TASVEG_memb, "membership")
+
+  ## Set text color for plot elements and extract source label for subtitle
   textcol <- "grey40"
-  label_source <- data |> pluck("source", unique)
+  label_source <- data |> pluck(!!!sid, unique)
 
   data |>
     ggplot(aes(
-      y = .data$interpreter,
-      x = .data$target,
-      fill = .data$membership,
+      y = .data[[interp]],
+      x = .data[[tid]],
+      fill = .data[[memb]],
       fill_alpha = 0.4
     )) +
     ggplot2::geom_tile(
@@ -69,7 +76,7 @@ membership_tile_plot <- function(data) {
     ) +
     geom_label(
       #TODO allow user to specify label aesthetics
-      aes(label = round(.data$membership, 2)),
+      aes(label = round(.data[[memb]], 2)),
       color = "black",
       size = 4,
       fill = "white"
