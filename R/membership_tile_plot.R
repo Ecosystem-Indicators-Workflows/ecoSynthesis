@@ -38,7 +38,6 @@ membership_tile_plot <- function(data) {
   )
 
   #TODO filter by round once included in example data after #49 merged in
-  #TODO ensure interoperable with membership classes
 
   #TODO allow user to specify theme options
   #TODO allow user to specify text color
@@ -49,10 +48,10 @@ membership_tile_plot <- function(data) {
   #TODO allow user to specify subtitle
 
   ## Extract col names from attributes for use in plot aesthetics
-  interp <- attr(TASVEG_memb, "interpreter")
-  sid <- attr(TASVEG_memb, "source_id")
-  tid <- attr(TASVEG_memb, "target_id")
-  memb <- attr(TASVEG_memb, "membership")
+  interp <- attr(data, "interpreter")
+  sid <- attr(data, "source_id")
+  tid <- attr(data, "target_id")
+  memb <- attr(data, "membership")
 
   ## Set text color for plot elements and extract source label for subtitle
   textcol <- "grey40"
