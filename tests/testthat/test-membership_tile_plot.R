@@ -20,6 +20,32 @@ test_that("membership_tile_plot returns error for non-membership_tbl input", {
   )
 })
 
+test_that("membership_tile_plot evaluates round argument correctly", {
+  # Expect no error when calling membership_tile_plot with a valid round argument
+  expect_no_error(
+    membership_tile_plot(test_membership_tbl, round = 1)
+  )
+  expect_no_error(
+    membership_tile_plot(test_membership_tbl, round = NULL)
+  )
+})
+
+test_that("membership_tile_plot returns error for invalid round argument", {
+  # Expect an error when calling membership_tile_plot with an invalid round argument
+  expect_error(
+    membership_tile_plot(test_membership_tbl, round = "invalid_round"),
+    "Assertion on 'round' failed"
+  )
+  expect_error(
+    membership_tile_plot(test_membership_tbl, round = 2),
+    "Assertion on 'round' failed"
+  )
+  expect_error(
+    membership_tile_plot(test_membership_tbl, round = NA),
+    "Assertion on 'round' failed"
+  )
+})
+
 ## ----- membership_tile_plot - results -----
 
 test_that("membership_tile_plot returns a ggplot object", {
