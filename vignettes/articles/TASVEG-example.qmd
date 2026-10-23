@@ -145,7 +145,8 @@ We will use a tile plot, and select the following unit:
 
 ```{r}
 #| label: show HSW unit
-filter(TASVEG_LUT, VEGCODE == "HSW")
+TASVEG_LUT |>
+  filter(VEGCODE == "HSW")
 ```
 
 :::{.callout-caution}
