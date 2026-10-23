@@ -58,7 +58,7 @@ membership_tile_plot <- function(data) {
     ggplot2::geom_tile(
       colour = "white",
       lwd = 1.5,
-      show.legend = T,
+      show.legend = TRUE,
       linetype = 1
     ) +
     ggplot2::scale_colour_continuous(
@@ -69,8 +69,8 @@ membership_tile_plot <- function(data) {
     ) +
     #remove axis labels, add title
     labs(
-      x = "target",
-      y = "interpreter",
+      x = "Target",
+      y = "Interpreter",
       title = "Round 1 Cross-Referencing", #TODO allow user to specify title
       subtitle = glue::glue("Source: {label_source}") #TODO allow user to specify subtitle
     ) +
