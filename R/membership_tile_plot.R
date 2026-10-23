@@ -16,10 +16,19 @@
 #' @author Elliot Gould
 #' @family visualisation
 #' @examples
-#' #' # Example usage with the TASVEG_mini dataset
-#' data("TASVEG_mini")
-#' TASVEG_mini |> dplyr::filter(source == "AAP") |> membership_tile_plot()
-#' TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
+#' # Example usage with the TASVEG_xref dataset
+#' data("TASVEG_xref")
+#'
+#' # Create a tile plot for a specific source
+#' TASVEG_xref |>
+#' membership_tbl(
+#'   source_id = "VEGCODE",
+#'   target_id = "efg",
+#'   membership = "memb",
+#'   interpreter = "interp"
+#' ) |>
+#' dplyr::filter(VEGCODE == "HSW") |>
+#'   membership_tile_plot()
 #'
 membership_tile_plot <- function(data) {
   # Checks
