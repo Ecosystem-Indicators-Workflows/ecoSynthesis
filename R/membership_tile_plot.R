@@ -27,7 +27,7 @@ membership_tile_plot <- function(data) {
     checkmate::checkClass(data, "membership_tbl")
   )
 
-  #TODO filter by round once included in example data
+  #TODO filter by round once included in example data after #49 merged in
   #TODO ensure interoperable with membership classes
 
   #TODO allow user to specify theme options
