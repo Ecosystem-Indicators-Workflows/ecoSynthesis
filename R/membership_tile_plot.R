@@ -1,6 +1,7 @@
 #' Create a tile plot of membership data
 #'
 #' @param data A data frame of class `membership_tbl` containing membership data for a single `source` and a single round of elicitation.
+#' @param round The round of elicitation to plot. If NULL, all rounds are plotted.
 #'
 #' @returns A ggplot object representing the tile plot of membership data.
 #'
@@ -31,21 +32,24 @@
 #' dplyr::filter(VEGCODE == "HSW") |>
 #'   membership_tile_plot()
 #'
-membership_tile_plot <- function(data) {
+membership_tile_plot <- function(data, round = NULL) {
   # Checks
   checkmate::assert(
     checkmate::checkClass(data, "membership_tbl")
   )
 
-  #TODO filter by round once included in example data after #49 merged in
+  checkmate::assert(
+    checkmate::checkNumber(round, null.ok = TRUE)
+  )
 
-  #TODO allow user to specify theme options
-  #TODO allow user to specify text color
-  #TODO allow user to specify label aesthetics
-  #TODO allow user to specify geom_tile options
-  #TODO allow user to specify axis labels
-  #TODO allow user to specify title
-  #TODO allow user to specify subtitle
+  if (!is.null(round)) {
+    # Check that the specified round is within the range of available rounds in the data
+    checkmate::assert(
+      checkmate::checkSubset(round, lower = 1, upper = max(unique(data$round)))
+    )
+    # Filter by round if specified
+    data <- data |> dplyr::filter(round == round)
+  }
 
   ## Extract col names from attributes for use in plot aesthetics
   interp <- attr(data, "interpreter")
@@ -57,6 +61,7 @@ membership_tile_plot <- function(data) {
   textcol <- "grey40"
   label_source <- data |> pluck(!!!sid, unique)
 
+  ## Plotting
   data |>
     ggplot(aes(
       y = .data[[interp]],
@@ -127,4 +132,12 @@ membership_tile_plot <- function(data) {
       #remove plot border
       panel.border = element_blank()
     )
+
+  #TODO allow user to specify theme options
+  #TODO allow user to specify text color
+  #TODO allow user to specify label aesthetics
+  #TODO allow user to specify geom_tile options
+  #TODO allow user to specify axis labels
+  #TODO allow user to specify title
+  #TODO allow user to specify subtitle
 }
