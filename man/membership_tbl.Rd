@@ -10,7 +10,7 @@ membership_tbl(
   target_id = "target_id",
   membership = "membership",
   interpreter = "interpreter",
-  updated = NULL
+  round = NULL
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ membership_tbl(
 
 \item{interpreter}{Column containing interpreter information}
 
-\item{updated}{Column containing the date of the interpretation}
+\item{round}{Column containing the date of the interpretation}
 }
 \value{
 An object of class 'membership_tbl'

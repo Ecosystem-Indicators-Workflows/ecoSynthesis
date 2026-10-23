@@ -14,3 +14,6 @@
 ^codecov\.yml$
 ^data-raw$
 ^vignettes/\.quarto$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$
+^_reprex$

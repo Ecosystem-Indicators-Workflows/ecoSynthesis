@@ -23,6 +23,7 @@ This is a Look-up Table generated from the TASVEG 5.0 dataset containing basic d
 }
 \seealso{
 Other data:
+\code{\link{IUCN_GET_LUT}},
 \code{\link{TASVEG_mini}},
 \code{\link{TASVEG_mini_expert_wide}},
 \code{\link{TASVEG_xref}}

@@ -26,6 +26,7 @@ library(dplyr)
 # For Ubuntu users: sudo apt-get install wget
 # For Windows users: Please refer to the wget documentation for installation instructions at:
 # https://eternallybored.org/misc/wget/
+
 ## 1. Obtaining the original data from www.theLIST.tas.gov.au
 
 ## This is the source URL at theLIST repository

@@ -2,6 +2,15 @@ url: https://ecosystem-indicators-workflows.github.io/ecoSynthesis/
 template:
   bootstrap: 5
   bslib:
-    fg: '#00183a'
-    bg: '#fdfdff'
-    primary: '#c50000'
+    fg: '#853E90'
+    bg: '#FFFFFF'
+    primary: '#D55B41'
+articles:
+- title: General concepts
+  contents: articles/concepts-xref
+- title: Examples
+  contents: articles/TASVEG-example
+- title: Learn more
+  desc: Vignettes about general topics
+  contents:
+  - articles/membership-tbl-example

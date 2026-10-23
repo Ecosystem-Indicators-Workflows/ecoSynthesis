@@ -33,6 +33,7 @@ A subset of interpreter cross-reference table in wide format for development and
 }
 \seealso{
 Other data:
+\code{\link{IUCN_GET_LUT}},
 \code{\link{TASVEG_LUT}},
 \code{\link{TASVEG_mini}},
 \code{\link{TASVEG_xref}}

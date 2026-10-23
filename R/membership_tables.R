@@ -5,7 +5,7 @@
 #' @param target_id Column containing target ecosystem concepts
 #' @param membership Column containing membership values
 #' @param interpreter Column containing interpreter information
-#' @param updated Column containing the date of the interpretation
+#' @param round Column containing the date of the interpretation
 #'
 #' @return An object of class 'membership_tbl'
 #' @export
@@ -15,7 +15,7 @@ membership_tbl <- function(
   target_id = "target_id",
   membership = "membership",
   interpreter = "interpreter",
-  updated = NULL
+  round = NULL
 ) {
   stopifnot(is.data.frame(data))
 
@@ -39,7 +39,7 @@ membership_tbl <- function(
     target_id = target_id,
     membership = membership,
     interpreter = interpreter,
-    updated = updated,
+    round = round,
     class = c("membership_tbl", class(data))
   )
 }
@@ -63,7 +63,7 @@ check_membership <- function(x) {
   checks_results <- c(
     numeric_memb = !is.numeric(m),
     na_memb = anyNA(m),
-    bounded_memb = any(m < 0 | m > 1)
+    bounded_memb = any(m[!is.na(m)] < 0 | m[!is.na(m)] > 1)
   )
 
   errors_list <- c(
@@ -93,6 +93,11 @@ print.membership_check <- function(x, ...) {
     cat(cli::col_red("\u2717 Membership column is not numeric\n"))
   } else {
     cat(cli::col_blue("\u2713 Membership column is numeric\n"))
+  }
+  if (x$checks["na_memb"]) {
+    cat(cli::col_red("\u2717 Membership values contains NA values\n"))
+  } else {
+    cat(cli::col_blue("\u2713 All records have a membership value\n"))
   }
   if (x$checks["bounded_memb"]) {
     cat(cli::col_red("\u2717 Membership values <0 or >1\n"))
@@ -160,6 +165,7 @@ print.membership_tbl <- function(x, ...) {
 #' @param target_id Target concept column
 #' @param membership Membership column
 #' @param interpreter Interpreter column
+#' @param round Round column
 #'
 #' @return A validated membership_tbl
 #' @import tibble
@@ -184,14 +190,16 @@ as_membership_tbl <- function(
   source_id,
   target_id,
   membership,
-  interpreter
+  interpreter,
+  round = NULL
 ) {
   out <- membership_tbl(
     data = x,
     source_id = source_id,
     target_id = target_id,
     membership = membership,
-    interpreter = interpreter
+    interpreter = interpreter,
+    round = round
   )
 
   validate_membership(out)
@@ -205,6 +213,7 @@ as_membership_tbl <- function(
 #' @param original_names Names or codes of the original ecosystem concepts
 #' @param target_names Names or codes of the target ecosystem concepts
 #' @param membership_values Membership values (between 0 and 1)
+#' @param interpreter Name of the interpreter
 #'
 #' @return A membership table in long format
 #' @import dplyr
@@ -234,7 +243,8 @@ import_paired_membership <- function(
   data,
   original_names,
   target_names,
-  membership_values
+  membership_values,
+  interpreter = NULL
 ) {
   out <- data |>
     dplyr::select(
@@ -249,6 +259,9 @@ import_paired_membership <- function(
     )
   out
   cols <- colnames(out)
-  out$interpreter <- "Worrisome Wren"
+  if (is.null(interpreter)) {
+    interpreter <- "Worrisome Wren"
+  }
+  out$interpreter <- interpreter
   as_membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
 }

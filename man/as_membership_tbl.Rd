@@ -4,7 +4,14 @@
 \alias{as_membership_tbl}
 \title{Coerce a data frame to membership_tbl}
 \usage{
-as_membership_tbl(x, source_id, target_id, membership, interpreter)
+as_membership_tbl(
+  x,
+  source_id,
+  target_id,
+  membership,
+  interpreter,
+  round = NULL
+)
 }
 \arguments{
 \item{x}{A data frame}
@@ -16,6 +23,8 @@ as_membership_tbl(x, source_id, target_id, membership, interpreter)
 \item{membership}{Membership column}
 
 \item{interpreter}{Interpreter column}
+
+\item{round}{Round column}
 }
 \value{
 A validated membership_tbl

@@ -25,6 +25,7 @@ This is a test cross-reference of the TASVEG 5.0 classification to the IUCN Glob
 }
 \seealso{
 Other data:
+\code{\link{IUCN_GET_LUT}},
 \code{\link{TASVEG_LUT}},
 \code{\link{TASVEG_mini}},
 \code{\link{TASVEG_mini_expert_wide}}
