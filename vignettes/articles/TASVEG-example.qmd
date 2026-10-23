@@ -7,7 +7,7 @@ knitr:
     comment: '#>'
 ---
 
-This article describe steps for crossreferencing using a real example from the state of Tasmania, Australia. Example data is provided as part of the package `ecoSynthesis`.
+This article describes steps for cross-referencing using a real example from the state of Tasmania, Australia. Example data is provided as part of the package `ecoSynthesis`.
 
 ```{r}
 #| label: setup
@@ -39,7 +39,7 @@ One of the first steps of the cross-referencing process is to assess the alignme
 
 The TASVEG 5.0 is a map of vegetation communities. Most units represent a single vegetation community. These vegetation communities do align with the ecosystem concept used in the IUCN GET. 
 
-However, some TASVEG units are described based on mappeable units that do not align with the ecosystem concept. This units might represent mosaics of multiple communities, or represent unvegetated ecological features. 
+However, some TASVEG units are described based on mappable units that do not align with the ecosystem concept. This units might represent mosaics of multiple communities, or represent un-vegetated ecological features. 
 
 For example, these units grouped as "Other natural environments" in TASVEG are probably not eligible for cross-referencing and should be excluded:
 
@@ -59,7 +59,7 @@ TASVEG_LUT_SS <- TASVEG_LUT |>
 
 ## Interpretation of classifications
 
-In 2026 a group of four interpreters looked at full descriptions of the vegetation community units in the TASVEG 5.0 dataset and assigned them to ecosystem functional groups from the IUCN GET. A table containing source and target ids, membership values, and interpreter information (anonymised using codenames). This represents a first round of interpretation. The table is available in the `TASVEG_xref` data:
+In 2026 a group of four interpreters looked at full descriptions of the vegetation community units in the TASVEG 5.0 dataset and assigned them to ecosystem functional groups from the IUCN GET. This data is contained in a table containing source and target ids, membership values, and interpreter information (anonymised using codenames). This represents a first round of interpretation. The table is available in the `TASVEG_xref` data:
 
 ```{r}
 #| label: load membership data
@@ -83,13 +83,14 @@ TASVEG_memb
 ```
 
 ### Cleaning and preparing the data
-This dataset has some errors that need to be curated:
 
-- NA values in membership column
+This dataset has some errors that need to be corrected:
+
+- `NA` values in membership column
 - some source units are invalid (valid id, but unit not aligned with ecosystem concept)
-- some target ids are invalid (label does not exists in IUCN GET, likely typos)
+- some `target_id`s are invalid (label does not exists in IUCN GET, likely typos)
 
-The `check_membership` function can detect the problem with NA values:
+The `check_membership` function can detect the problem with `NA` values:
 
 ```{r}
 #| label: check membership table
