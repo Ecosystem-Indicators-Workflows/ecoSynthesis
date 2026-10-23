@@ -4,10 +4,12 @@
 \alias{membership_tile_plot}
 \title{Create a tile plot of membership data}
 \usage{
-membership_tile_plot(data)
+membership_tile_plot(data, round = NULL)
 }
 \arguments{
-\item{data}{A data frame containing membership data in long format, with columns for interpreter, target, and membership values.}
+\item{data}{A data frame of class \code{membership_tbl} containing membership data for a single \code{source} and a single round of elicitation.}
+
+\item{round}{The round of elicitation to plot. If NULL, all rounds are plotted.}
 }
 \value{
 A ggplot object representing the tile plot of membership data.
@@ -16,6 +18,9 @@ A ggplot object representing the tile plot of membership data.
 Create a tile plot of membership data
 }
 \details{
+The data frame should include columns for interpreters, targets, and membership values.
+The function generates a tile plot where each tile represents the membership value for a specific interpreter-target pair. The tiles are colored according to the membership value, with a color gradient indicating the strength of membership. The plot also includes labels on each tile showing the rounded membership value.
+
 Returns a tile plot of membership functions among interpreters for a single \code{source} for a single round of elicitation. The plot uses a color gradient to represent membership values, with tiles colored according to the membership value for each interpreter-target pair. The plot includes labels for each tile showing the rounded membership value.
 \subsection{Future Enhancements}{
 
@@ -23,10 +28,19 @@ The function is designed to be flexible and can be extended in the future to inc
 }
 }
 \examples{
-#' # Example usage with the TASVEG_mini dataset
-data("TASVEG_mini")
-TASVEG_mini |> dplyr::filter(source == "AAP") |> membership_tile_plot()
-TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
+# Example usage with the [TASVEG_xref] dataset
+data("TASVEG_xref")
+
+# Create a tile plot for a specific source
+TASVEG_xref |>
+membership_tbl(
+  source_id = "VEGCODE",
+  target_id = "efg",
+  membership = "memb",
+  interpreter = "interp"
+) |>
+dplyr::filter(VEGCODE == "HSW") |>
+  membership_tile_plot()
 
 }
 \author{
