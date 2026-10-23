@@ -14,6 +14,10 @@ import(dplyr)
 import(rlang)
 import(tibble)
 import(tidyr)
+importFrom(checkmate,
+  assert,
+  checkClass
+)
 importFrom(ggplot2,
   .data,
   aes,
@@ -31,5 +35,7 @@ importFrom(ggplot2,
 importFrom(glue,glue)
 importFrom(lifecycle,deprecated)
 importFrom(purrr,pluck)
-importFrom(stringr,str_remove)
-importFrom(stringr,str_subset)
+importFrom(stringr,
+  str_remove,
+  str_subset
+)

@@ -25,7 +25,8 @@ Imports:
     stringr,
     ggplot2,
     tibble,
-    tidyr
+    tidyr,
+    checkmate
 Suggests: 
     testthat (>= 3.0.0),
     quarto
