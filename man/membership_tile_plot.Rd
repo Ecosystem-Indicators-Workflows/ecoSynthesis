@@ -4,10 +4,12 @@
 \alias{membership_tile_plot}
 \title{Create a tile plot of membership data}
 \usage{
-membership_tile_plot(data)
+membership_tile_plot(data, round = NULL)
 }
 \arguments{
 \item{data}{A data frame of class \code{membership_tbl} containing membership data for a single \code{source} and a single round of elicitation.}
+
+\item{round}{The round of elicitation to plot. If NULL, all rounds are plotted.}
 }
 \value{
 A ggplot object representing the tile plot of membership data.
