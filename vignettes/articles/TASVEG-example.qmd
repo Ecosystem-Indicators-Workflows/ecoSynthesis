@@ -157,7 +157,7 @@ This will require modifications to existing functions.
 ```{r}
 #| label: tile plot
 #| eval: false
-
+#TODO switch to eval: true after fixing #50
 TASVEG_memb |>
   filter(VEGCODE == "HSW") |>
   membership_tile_plot()
