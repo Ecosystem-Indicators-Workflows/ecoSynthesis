@@ -26,7 +26,7 @@ This is a small subset of the TASVEG 5.0 dataset, used for development and testi
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}  \code{TASVEG_mini} is deprecated and will be removed in a future release. Please use \link{TASVEG_xref} instead.
 }
 \seealso{
-Other data:
+Other data: 
 \code{\link{IUCN_GET_LUT}},
 \code{\link{TASVEG_LUT}},
 \code{\link{TASVEG_mini_expert_wide}},

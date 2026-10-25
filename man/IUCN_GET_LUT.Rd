@@ -25,10 +25,10 @@ Keith, D. A., J. R. Ferrer-Paris et al. (2022) A function-based typology for Ear
 IUCN_GET_LUT
 }
 \description{
-The IUCN Global Ecosystem Typology (GET) is the first internationally agreed framework for describing and mapping the world's ecosystems. This is a Look-up Table generated from the Global Ecosystem Typology vocabulary at https://w3id.org/iucn-get/IUCNEcosystemTypology.
+The IUCN Global Ecosystem Typology (GET) is the first internationally agreed framework for describing and mapping the world's ecosystems. This is a Look-up Table generated from the Global Ecosystem Typology vocabulary at \url{https://w3id.org/iucn-get/IUCNEcosystemTypology}.
 }
 \seealso{
-Other data:
+Other data: 
 \code{\link{TASVEG_LUT}},
 \code{\link{TASVEG_mini}},
 \code{\link{TASVEG_mini_expert_wide}},
