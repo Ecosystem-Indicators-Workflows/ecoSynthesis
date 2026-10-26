@@ -132,7 +132,7 @@ TASVEG_memb |>
   summarise(
     n_sources = n_distinct(!!sid),
     n_targets = n_distinct(!!tid),
-    merbership_sum = sum(!!memb)
+    merbership_sum = sum(!!memb, na.rm = TRUE)
   )
 ```
 
