@@ -65,7 +65,11 @@ membership_target_heatmap <- function(data) {
         face = "bold"
       ),
       axis.text = ggplot2::element_text(colour = textcol),
-      plot.title = ggplot2::element_text(colour = textcol, size = 14, face = "bold"),
+      plot.title = ggplot2::element_text(
+        colour = textcol,
+        size = 14,
+        face = "bold"
+      ),
       #remove plot background and grid
       plot.background = ggplot2::element_blank(),
       panel.grid = ggplot2::element_blank(),
