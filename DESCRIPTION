@@ -5,7 +5,9 @@ Authors@R: c(
     person("José R.", "Ferrer-Paris", , "jr.ferrer.paris@gmail.com", role = c("cre", "aut"),
            comment = c("Documentation, contributions to classes and methods", ORCID = "0000-0002-9554-3395")),
     person("Elliot", "Gould", , "elliot.gould@unsw.edu.au", role = "aut",
-           comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-6585-538X"))
+           comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-6585-538X")),
+    person("Abhimanyu Raj", "Singh", , "abhimanyu.singh@unsw.edu.au", role = "aut",
+           comment = c("Code development, documentation and maintenance", ORCID = "0000-0002-2279-7060"))
   )
 Description: Complete the synthesis of cross-referencing information between two classification systems following clear and reproducible steps. The process of cross-referencing implies a source classification and a target classification, where the target classification might have a broader scope than the source. Following the "Standards, methods and guidelines for cross-referencing ecosystem classifications and maps to the IUCN Global Ecosystem Typology". 
 License: GPL (>= 3)
