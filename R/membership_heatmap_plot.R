@@ -53,7 +53,7 @@ membership_target_heatmap <- function(data) {
     ggplot2::labs(
       x = "interpreter",
       y = "target",
-      title = "Round 1 Target Use",
+      title = "Round X Target Use",
       subtitle = "Number of source units assigned to each target"
     ) +
     ggplot2::theme_grey(base_size = 10) +
