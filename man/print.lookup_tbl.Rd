@@ -14,3 +14,6 @@
 \description{
 Print method for lookup_tbl
 }
+\author{
+JR Ferrer-Paris
+}

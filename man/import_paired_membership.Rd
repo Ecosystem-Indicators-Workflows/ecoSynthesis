@@ -50,3 +50,6 @@ import_paired_membership(
  c("memb_1", "memb_2")
 )
 }
+\author{
+JR Ferrer-Paris
+}

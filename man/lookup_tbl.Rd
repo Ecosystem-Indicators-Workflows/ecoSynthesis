@@ -29,3 +29,6 @@ not_eligible <- c("OAQ", "ORO", "OSM")
 TASVEG_LUT$eligible <- !TASVEG_LUT$VEGCODE \%in\% not_eligible
 lookup_tbl(TASVEG_LUT, "VEGCODE", "VEGCODE_D", "eligible")
 }
+\author{
+JR Ferrer-Paris
+}

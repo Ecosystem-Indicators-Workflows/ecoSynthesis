@@ -7,6 +7,7 @@
 #'
 #' @return An object of class 'lookup_tbl'
 #' @export
+#' @author JR Ferrer-Paris
 #' @examples
 #' # All units are eligible per default:
 #' lookup_tbl(IUCN_GET_LUT, id = "efg_id", name = "efg_name")
@@ -56,6 +57,7 @@ lookup_tbl <- function(
 #' @import cli
 #' @import dplyr
 #' @export
+#' @author JR Ferrer-Paris
 print.lookup_tbl <- function(x, ...) {
   id <- attr(x, "id")
   name <- attr(x, "name")

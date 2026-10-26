@@ -14,3 +14,6 @@
 \description{
 Print method for membership_check
 }
+\author{
+JR Ferrer-Paris
+}

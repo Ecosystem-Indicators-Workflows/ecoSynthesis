@@ -14,3 +14,6 @@
 \description{
 Print method for membership_tbl
 }
+\author{
+JR Ferrer-Paris
+}
