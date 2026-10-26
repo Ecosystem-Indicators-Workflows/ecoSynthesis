@@ -51,8 +51,8 @@ membership_target_heatmap <- function(data) {
     ggplot2::geom_text(ggplot2::aes(label = .data$n_sources), size = 3) +
     ggplot2::scale_fill_gradient(low = "#E8F4F2", high = "#0F6B66") +
     ggplot2::labs(
-      x = "interpreter",
-      y = "target",
+      x = "Interpreter",
+      y = "Target",
       title = "Round X Target Use",
       subtitle = "Number of source units assigned to each target"
     ) +
