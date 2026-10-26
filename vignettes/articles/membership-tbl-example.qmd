@@ -1,21 +1,34 @@
 ---
 title: "Working with membership tables"
-author: J.R. Ferrer-Paris 
+author: J.R. Ferrer-Paris
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+    eval: true
 ---
 
 This is an example with our internal dataset, first take a look at the data structure
 
 ```{r}
+#| label: load data
 library(ecoSynthesis)
-data("TASVEG_mini", package = "ecoSynthesis")
-head(TASVEG_mini)
+data("TASVEG_xref")
+head(TASVEG_xref)
 ```
 
-Here we can use the function membership_tbl directly (need to adjust table column names).
+Here we can use the function `membership_tbl` directly.
 
 ```{r}
-#| eval: false
-TASVEG_tbl <- membership_tbl(TASVEG_mini, "VEGCODE", "efg", "memb", "expert")
+#| label: create membership table
+#| error: true
+TASVEG_tbl <- TASVEG_xref |>
+  membership_tbl(
+    source_id = "VEGCODE",
+    target_id = "efg",
+    membership = "memb",
+    interpreter = "interp"
+  )
 class(TASVEG_tbl)
 print(TASVEG_tbl)
 check_membership(TASVEG_tbl)
