@@ -22,7 +22,9 @@ Useful links:
 
 Authors:
 \itemize{
+  \item José R. Ferrer-Paris \email{jr.ferrer.paris@gmail.com} (\href{https://orcid.org/0000-0002-9554-3395}{ORCID}) (Documentation, contributions to classes and methods)
   \item Elliot Gould \email{elliot.gould@unsw.edu.au} (\href{https://orcid.org/0000-0002-6585-538X}{ORCID}) (Code development, documentation and maintenance)
+  \item Abhimanyu Raj Singh \email{abhimanyu.singh@unsw.edu.au} (\href{https://orcid.org/0000-0002-2279-7060}{ORCID}) (Code development, documentation and maintenance)
 }
 
 }

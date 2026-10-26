@@ -28,7 +28,7 @@ data("TASVEG_xref")
 TASVEG_memb <- membership_tbl(
   TASVEG_xref,
   source_id = "VEGCODE",
-  target_id = "efg",plot
+  target_id = "efg",
   membership = "memb",
   interpreter = "interp"
 )
@@ -36,8 +36,8 @@ membership_target_heatmap(TASVEG_memb)
 
 }
 \seealso{
-Other visualisation: 
-\code{\link{membership_tile_plot}()}
+Other visualisation:
+\code{\link[=membership_tile_plot]{membership_tile_plot()}}
 }
 \author{
 Abhimanyu Raj Singh

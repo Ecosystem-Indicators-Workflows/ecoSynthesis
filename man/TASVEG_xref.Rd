@@ -24,7 +24,7 @@ TASVEG_xref
 This is a test cross-reference of the TASVEG 5.0 classification to the IUCN Global Ecosystem Typology, used for development and testing purposes. This table holds membership values assigned by four interpreters (anonymised using codenames) in a first round of interpretation. Column names have not been standardised, source ids (\code{VEGCODE}) and target ids (\code{efg}) include some errors (to test checks and validation).
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{IUCN_GET_LUT}},
 \code{\link{TASVEG_LUT}},
 \code{\link{TASVEG_mini}},

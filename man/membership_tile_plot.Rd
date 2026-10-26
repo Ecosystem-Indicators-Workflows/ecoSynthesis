@@ -30,8 +30,8 @@ TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
 
 }
 \seealso{
-Other visualisation: 
-\code{\link{membership_target_heatmap}()}
+Other visualisation:
+\code{\link[=membership_target_heatmap]{membership_target_heatmap()}}
 }
 \author{
 Elliot Gould
