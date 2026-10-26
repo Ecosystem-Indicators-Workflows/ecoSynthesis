@@ -2,7 +2,7 @@
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
-# ecoSynthesis (0.0.0.9000)
+# ecoSynthesis (0.0.0.9002)
 
 <!-- badges: start -->
 
