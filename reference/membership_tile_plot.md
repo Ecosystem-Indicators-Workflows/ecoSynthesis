@@ -36,6 +36,11 @@ labels, title, and subtitle to tailor the plot to their specific needs.
 These enhancements will allow for greater control over the visual
 presentation of the membership data.
 
+## See also
+
+Other visualisation:
+[`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md)
+
 ## Author
 
 Elliot Gould

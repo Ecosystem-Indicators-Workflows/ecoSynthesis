@@ -19,6 +19,8 @@
   : Performs checks on a membership table
 - [`import_paired_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/import_paired_membership.md)
   : Reshape membership table from paired columns to long format
+- [`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md)
+  : Create a heatmap of target use by interpreter
 - [`membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.md)
   : Create a membership table
 - [`membership_tile_plot()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tile_plot.md)

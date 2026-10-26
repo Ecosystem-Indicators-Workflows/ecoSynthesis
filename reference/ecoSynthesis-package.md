@@ -34,3 +34,7 @@ Authors:
 - Elliot Gould <elliot.gould@unsw.edu.au>
   ([ORCID](https://orcid.org/0000-0002-6585-538X)) (Code development,
   documentation and maintenance)
+
+- Abhimanyu Raj Singh <abhimanyu.singh@unsw.edu.au>
+  ([ORCID](https://orcid.org/0000-0002-2279-7060)) (Code development,
+  documentation and maintenance)

@@ -3,7 +3,7 @@
 The IUCN Global Ecosystem Typology (GET) is the first internationally
 agreed framework for describing and mapping the world's ecosystems. This
 is a Look-up Table generated from the Global Ecosystem Typology
-vocabulary at https://w3id.org/iucn-get/IUCNEcosystemTypology.
+vocabulary at <https://w3id.org/iucn-get/IUCNEcosystemTypology>.
 
 ## Usage
 
