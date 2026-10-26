@@ -5,6 +5,7 @@ knitr:
   opts_chunk:
     collapse: true
     comment: '#>'
+    eval: true
 ---
 
 This article describes steps for cross-referencing using a real example from the state of Tasmania, Australia. Example data is provided as part of the package `ecoSynthesis`.
@@ -29,7 +30,6 @@ The target classification is the IUCN Global Ecosystem Typology. A look-up table
 
 ```{r}
 #| label: load target classification
-#| eval: true
 IUCN_GET_LUT
 ```
 
@@ -46,7 +46,7 @@ For example, these units grouped as "Other natural environments" in TASVEG are p
 ```{r}
 #| label: select not eligible units
 TASVEG_LUT |>
-  filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
+  dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
 ```
 
 Here, we create a subset of the eligible units:
@@ -54,7 +54,7 @@ Here, we create a subset of the eligible units:
 ```{r}
 #| label: select eligible units
 TASVEG_LUT_SS <- TASVEG_LUT |>
-  filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
+  dplyr::filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
 ```
 
 ## Interpretation of classifications
@@ -94,7 +94,6 @@ The `check_membership` function can detect the problem with `NA` values:
 
 ```{r}
 #| label: check membership table
-#| eval: true
 check_membership(TASVEG_memb)
 ```
 
@@ -105,7 +104,6 @@ The following code block will be replaced with a function later.
 
 ```{r}
 #| label: check source and target info
-#| eval: true
 sid <- attr(TASVEG_memb, "source_id")
 table(TASVEG_memb[[sid]] %in% TASVEG_LUT_SS$VEGCODE)
 tid <- attr(TASVEG_memb, "target_id")
@@ -122,7 +120,6 @@ The following code block will be replaced with a function later.
 
 ```{r}
 #| label: summary by interpreter
-#| eval: true
 interp <- rlang::sym(attr(TASVEG_memb, "interpreter"))
 sid <- rlang::sym(attr(TASVEG_memb, "source_id"))
 tid <- rlang::sym(attr(TASVEG_memb, "target_id"))
@@ -147,7 +144,7 @@ We will use a tile plot, and select the following unit:
 ```{r}
 #| label: show HSW unit
 TASVEG_LUT |>
-  filter(VEGCODE == "HSW")
+  dplyr::filter(VEGCODE == "HSW")
 ```
 
 :::{.callout-caution}
@@ -160,7 +157,7 @@ This will require modifications to existing functions.
 #| label: tile plot
 #| error: true
 TASVEG_memb |>
-  filter(VEGCODE == "HSW") |>
+  dplyr::filter(VEGCODE == "HSW") |>
   membership_tile_plot()
 
 #Alternatively, code the filter in the function:
