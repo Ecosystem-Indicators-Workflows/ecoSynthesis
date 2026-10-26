@@ -66,28 +66,60 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis" class="external-link">ecoSynthesis</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"TASVEG_mini"</span>, package <span class="op">=</span> <span class="st">"ecoSynthesis"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">TASVEG_mini</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-  source target membership interpreter date
-  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;date&gt;
-1 AAP    TF1.7        1    AK          2026-04-23
-2 AAP    TF1.7        1    AL          2026-04-23
-3 AAP    TF1.7        1    JB          2026-04-23
-4 AAP    TF1.7        0.7  MGT         2026-04-23
-5 AAP    TF1.6        0.3  MGT         2026-04-23
-6 AWU    MFT1.3       0.25 AK          2026-04-23</code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"TASVEG_xref"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">TASVEG_xref</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 5</span></span>
+<span><span class="co">#&gt;   VEGCODE efg    memb interp                round</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;                 &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 AAP     TF1.7   1   Frightened Flamingo       1</span></span>
+<span><span class="co">#&gt; 2 AAP     TF1.7   1   Worrysome Wren            1</span></span>
+<span><span class="co">#&gt; 3 AAP     TF1.7   1   Pointless Panda           1</span></span>
+<span><span class="co">#&gt; 4 AAP     TF1.7   0.7 Tantalising Tarantula     1</span></span>
+<span><span class="co">#&gt; 5 AAP     TF1.6   0.3 Tantalising Tarantula     1</span></span>
+<span><span class="co">#&gt; 6 AHF     F2.2    0.4 Frightened Flamingo       1</span></span></code></pre></div>
 </div>
-</div>
-<p>Here we can use the function membership_tbl directly (need to adjust table column names).</p>
+<p>Here we can use the function <code>membership_tbl</code> directly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">TASVEG_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/membership_tbl.html">membership_tbl</a></span><span class="op">(</span><span class="va">TASVEG_mini</span>, <span class="st">"VEGCODE"</span>, <span class="st">"efg"</span>, <span class="st">"memb"</span>, <span class="st">"expert"</span><span class="op">)</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">TASVEG_tbl</span> <span class="op">&lt;-</span> <span class="va">TASVEG_xref</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/membership_tbl.html">membership_tbl</a></span><span class="op">(</span></span>
+<span>    source_id <span class="op">=</span> <span class="st">"VEGCODE"</span>,</span>
+<span>    target_id <span class="op">=</span> <span class="st">"efg"</span>,</span>
+<span>    membership <span class="op">=</span> <span class="st">"memb"</span>,</span>
+<span>    interpreter <span class="op">=</span> <span class="st">"interp"</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">TASVEG_tbl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "membership_tbl" "tbl_df"         "tbl"            "data.frame"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">TASVEG_tbl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;membership_tbl&gt;</span></span>
+<span><span class="co">#&gt; source_id column: VEGCODE</span></span>
+<span><span class="co">#&gt; target_id column: efg</span></span>
+<span><span class="co">#&gt; membership column: memb</span></span>
+<span><span class="co">#&gt; interpreter column: interp</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 965 × 5</span></span>
+<span><span class="co">#&gt;    VEGCODE efg    memb interp                round</span></span>
+<span><span class="co">#&gt;  * &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;                 &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 AAP     TF1.7 1     Frightened Flamingo       1</span></span>
+<span><span class="co">#&gt;  2 AAP     TF1.7 1     Worrysome Wren            1</span></span>
+<span><span class="co">#&gt;  3 AAP     TF1.7 1     Pointless Panda           1</span></span>
+<span><span class="co">#&gt;  4 AAP     TF1.7 0.7   Tantalising Tarantula     1</span></span>
+<span><span class="co">#&gt;  5 AAP     TF1.6 0.3   Tantalising Tarantula     1</span></span>
+<span><span class="co">#&gt;  6 AHF     F2.2  0.4   Frightened Flamingo       1</span></span>
+<span><span class="co">#&gt;  7 AHF     F2.3  0.4   Frightened Flamingo       1</span></span>
+<span><span class="co">#&gt;  8 AHF     TF1.3 0.2   Frightened Flamingo       1</span></span>
+<span><span class="co">#&gt;  9 AHF     F2.2  0.333 Worrysome Wren            1</span></span>
+<span><span class="co">#&gt; 10 AHF     F2.3  0.4   Worrysome Wren            1</span></span>
+<span><span class="co">#&gt; # ℹ 955 more rows</span></span>
 <span><span class="fu"><a href="../reference/check_membership.html">check_membership</a></span><span class="op">(</span><span class="va">TASVEG_tbl</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/validate_membership.html">validate_membership</a></span><span class="op">(</span><span class="va">TASVEG_tbl</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; ✓ Membership column is numeric</span></span>
+<span><span class="co">#&gt; ✗ Membership values contains NA values</span></span>
+<span><span class="co">#&gt; ✓ Membership values are within [0,1]</span></span>
+<span><span class="co">#&gt; Please fix errors and check data before using other package functions.</span></span>
+<span><span class="fu"><a href="../reference/validate_membership.html">validate_membership</a></span><span class="op">(</span><span class="va">TASVEG_tbl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Errors: Membership column contains missing values.</span></span>
+<span><span class="co">#&gt; Error in `validate_membership()`:</span></span>
+<span><span class="co">#&gt; ! Please fix errors and check data before using other package functions.</span></span></code></pre></div>
 </div>
 
 

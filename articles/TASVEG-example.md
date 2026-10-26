@@ -87,7 +87,7 @@ excluded:
 ``` r
 
 TASVEG_LUT |>
-  filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
+  dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
 #> # A tibble: 3 × 3
 #>   VEG_GROUP                  VEGCODE VEGCODE_D             
 #>   <fct>                      <fct>   <fct>                 
@@ -101,7 +101,7 @@ Here, we create a subset of the eligible units:
 ``` r
 
 TASVEG_LUT_SS <- TASVEG_LUT |>
-  filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
+  dplyr::filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
 ```
 
 ## Interpretation of classifications
@@ -228,13 +228,13 @@ TASVEG_memb |>
   summarise(
     n_sources = n_distinct(!!sid),
     n_targets = n_distinct(!!tid),
-    merbership_sum = sum(!!memb)
+    merbership_sum = sum(!!memb, na.rm = TRUE)
   )
 #> # A tibble: 4 × 4
 #>   interpreter           n_sources n_targets merbership_sum
 #>   <chr>                     <int>     <int>          <dbl>
 #> 1 Frightened Flamingo         156        34           156 
-#> 2 Pointless Panda             156        35            NA 
+#> 2 Pointless Panda             156        35           156.
 #> 3 Tantalising Tarantula       156        28           156.
 #> 4 Worrysome Wren              156        34           156.
 ```
@@ -251,7 +251,7 @@ We will use a tile plot, and select the following unit:
 ``` r
 
 TASVEG_LUT |>
-  filter(VEGCODE == "HSW")
+  dplyr::filter(VEGCODE == "HSW")
 #> # A tibble: 1 × 3
 #>   VEG_GROUP                    VEGCODE VEGCODE_D                              
 #>   <fct>                        <fct>   <fct>                                  
@@ -264,13 +264,20 @@ TASVEG_LUT |>
 
 ``` r
 
-#TODO switch to eval: true after fixing #50
 TASVEG_memb |>
-  filter(VEGCODE == "HSW") |>
+  dplyr::filter(VEGCODE == "HSW") |>
   membership_tile_plot()
+```
+
+![](TASVEG-example_files/figure-html/tile%20plot-1.png)
+
+``` r
+
 
 #Alternatively, code the filter in the function:
 membership_tile_plot(TASVEG_memb, select_source = "HSW")
+#> Error in `membership_tile_plot()`:
+#> ! unused argument (select_source = "HSW")
 # would internally use:
 # sid <- attr(TASVEG_memb,"source_id")
 # data <- filter(TASVEG_memb, sid == select_source)
