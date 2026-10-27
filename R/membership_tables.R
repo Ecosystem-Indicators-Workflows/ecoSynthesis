@@ -143,57 +143,68 @@ check_membership <- function(x, source = NULL, target = NULL) {
 #' @author JR Ferrer-Paris
 print.membership_check <- function(x, ...) {
   if (x$checks["numeric_memb"]) {
-    cat(cli::col_red("\u2717 Membership column is not numeric\n"))
-  } else {
-    cat(cli::col_blue("\u2713 Membership column is numeric\n"))
-  }
-  if (x$checks["na_memb"]) {
-    cat(cli::col_red("\u2717 Membership values contains NA values\n"))
-  } else {
-    cat(cli::col_blue("\u2713 All records have a membership value\n"))
-  }
-  if (x$checks["bounded_memb"]) {
-    cat(cli::col_red("\u2717 Membership values <0 or >1\n"))
-  } else {
-    cat(cli::col_blue("\u2713 Membership values are within [0,1]\n"))
-  }
-  if (x$checks["source_missing"]) {
-    cat(cli::col_red(
-      "\u2717 No lookup table for source classification provided\n"
+    cli::cli_alert_danger(cli::col_red(
+      "Membership column is not numeric"
     ))
   } else {
-    cat(cli::col_blue(
-      "\u2713 Lookup table for source classification provided\n"
+    cli::cli_alert_success(cli::col_blue("Membership column is numeric"))
+  }
+  if (x$checks["na_memb"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "Membership values contains NA values"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue("All records have a membership value"))
+  }
+  if (x$checks["bounded_memb"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "Membership values <0 or >1"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue("Membership values are within [0,1]"))
+  }
+  if (x$checks["source_missing"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "No lookup table for source classification provided"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue(
+      "Lookup table for source classification provided"
     ))
   }
   if (x$checks["source_eligibility"]) {
-    cat(cli::col_red("\u2717 Problems with eligibility of source ids\n"))
-  } else {
-    cat(cli::col_blue("\u2713 All source ids are eligible\n"))
-  }
-  if (x$checks["target_missing"]) {
-    cat(cli::col_red(
-      "\u2717 No lookup table for target classification provided\n"
+    cli::cli_alert_danger(cli::col_red(
+      "Problems with eligibility of source ids"
     ))
   } else {
-    cat(cli::col_blue(
-      "\u2713 Lookup table for target classification provided\n"
+    cli::cli_alert_success(cli::col_blue("All source ids are eligible"))
+  }
+  if (x$checks["target_missing"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "No lookup table for target classification provided"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue(
+      "Lookup table for target classification provided"
     ))
   }
   if (x$checks["target_valid"]) {
-    cat(cli::col_red("\u2717 Problems with validity of target ids\n"))
+    cli::cli_alert_danger(cli::col_red(
+      "Problems with validity of target ids"
+    ))
   } else {
-    cat(cli::col_blue("\u2713 All target ids are valid\n"))
+    cli::cli_alert_success(cli::col_blue("All target ids are valid"))
   }
   if (x$valid) {
-    cat("All checks passed, Membership table is valid.")
+    cli::cli_alert_success(cli::col_green(
+      "All checks passed, Membership table is valid."
+    ))
   } else {
-    cat(
-      "Please fix errors and check data before using other package functions.\n"
-    )
+    cli::cli_alert_info(cli::col_yellow(
+      "Please fix errors and check data before using other package functions."
+    ))
   }
 }
-
 
 #' Validate a membership table
 #'
