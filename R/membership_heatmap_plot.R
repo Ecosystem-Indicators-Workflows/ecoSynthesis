@@ -59,10 +59,17 @@ membership_target_heatmap <- function(data) {
     ggplot2::theme_grey(base_size = 10) +
     ggplot2::theme(
       legend.title = ggplot2::element_blank(),
-      legend.text = ggplot2::element_text(colour = textcol, size = 7, face = "bold"),
-      axis.text = ggplot2::element_text(colour = textcol),
-      plot.title = ggplot2::element_text(colour = textcol, size = 14, face = "bold"),
-      #remove plot background and grid
+      legend.text = ggplot2::element_text(
+        colour = textcol,
+        size = 7,
+        face = "bold"
+      ),
+            axis.text = ggplot2::element_text(colour = textcol),
+            plot.title = ggplot2::element_text(
+             colour = textcol,
+             size = 14,
+             face = "bold"
+             ),      
       plot.background = ggplot2::element_blank(),
       panel.grid = ggplot2::element_blank(),
       panel.background = ggplot2::element_blank()
