@@ -323,7 +323,7 @@ import_paired_membership <- function(
       dplyr::any_of(membership_values)
     ) |>
     tidyr::pivot_longer(
-      cols = c(target_names, membership_values),
+      cols = dplyr::all_of(c(target_names, membership_values)),
       names_to = c(".value", "pair"),
       names_sep = "_"
     )
