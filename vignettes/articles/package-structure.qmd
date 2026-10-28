@@ -1,0 +1,76 @@
+---
+title: "Package structure"
+author: 
+  - J.R. Ferrer-Paris, Abhimanyu Raj Singh and Elliot Gould
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+Here we want to summarise discussions about the structure of the package, design decisions around functions, and their relationship with the cross-referencing process.
+
+## User journey
+
+- Data preparation
+- Validation
+- Exploration
+- Within round: Agreement and disagreement
+- Between rounds
+- Synthesis and outputs
+
+## Functions, classes and methods  
+
+### Core functions
+
+### Data preparation
+
+### Validation pipeline
+
+```{dot}
+//| label: fig-validation
+//| fig-cap: "Validation pipeline: functions, classes, methods and their relationship during a cycle of validation."
+digraph membership {
+
+// classes
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2];
+MT[label=<{Class <i>membership_tbl</i>|(not documented)}>]
+MC[label=<{Class <i>membership_check</i>|(not documented)}>]
+LUT[label=<{Class <i>lookup_tbl</i>|(not documented)}>]
+
+// methods
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2];
+LUTP[label=<print(<i>lookup_tbl</i>)>]
+MTP[label=<print(<i>membership_tbl</i>)>] 
+MCP[label=<print(<i>membership_check</i>)>] 
+// 
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2];
+ASMT[label=<{<i>as_membership_tbl()</i>|Coerce a data frame<BR/>to membership_tbl}>];
+CHECKMT[label=<{<i>check_membership()</i>|Performs checks on a<BR/>membership table}>];
+LUTF[label=<{<i>lookup_tbl()</i>|Create a lookup table<BR/>for a classification}>];
+MTF[label=<{<i>membership_tbl()</i>|Create a membership table}>];
+VMT[label=<{<i>validate_membership()</i>|Validate a membership table}>];
+
+subgraph cluster_prep {
+    label="Data validation pipeline"; 
+    MT -> CHECKMT [label=input];
+    LUTF -> LUT [label=creates];
+    LUT -> CHECKMT [label=<input<BR/>(optional)>];
+    CHECKMT -> MC -> VMT;
+    LUT -> LUTP [label=<has method>]
+    MC -> MCP [label=<has method>]
+    VMT -> ASMT;
+    ASMT -> MTF;
+    subgraph cluster_main {
+        label="Core functions" style=dashed;
+        MT -> MTP [label=<has method>];
+        MTF -> MT [label=creates];
+    }
+}
+}
+```
+
+
+
+### Visualisation
+

@@ -1,6 +1,6 @@
 ---
 title: "Crossreferencing Tasmanian vegetation communities"
-author: JR Ferrer-Paris
+author: J.R. Ferrer-Paris
 knitr:
   opts_chunk:
     collapse: true
@@ -47,7 +47,7 @@ For example, these units grouped as "Other natural environments" in TASVEG are p
 ```{r}
 #| label: select not eligible units
 TASVEG_LUT |>
-  dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
+    dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
 ```
 
 Here, we create a lookup table with explicit eligible units:
@@ -55,8 +55,8 @@ Here, we create a lookup table with explicit eligible units:
 ```{r}
 #| label: select eligible units
 TASVEG_LUT_SS <- TASVEG_LUT |>
-  dplyr::mutate(elig = !VEGCODE %in% c("OAQ", "ORO", "OSM")) |>
-  lookup_tbl(id = "VEGCODE", name = "VEGCODE_D", eligible = "elig")
+    dplyr::mutate(elig = !VEGCODE %in% c("OAQ", "ORO", "OSM")) |>
+    lookup_tbl(id = "VEGCODE", name = "VEGCODE_D", eligible = "elig")
 ```
 
 ## Interpretation of classifications
@@ -75,11 +75,11 @@ If we want to use this data in our package we need to transform this table into 
 ```{r}
 #| label: create membership table
 TASVEG_memb <- membership_tbl(
-  TASVEG_xref,
-  source_id = "VEGCODE",
-  target_id = "efg",
-  membership = "memb",
-  interpreter = "interp"
+    TASVEG_xref,
+    source_id = "VEGCODE",
+    target_id = "efg",
+    membership = "memb",
+    interpreter = "interp"
 )
 TASVEG_memb
 ```
@@ -127,12 +127,12 @@ sid <- rlang::sym(attr(TASVEG_memb, "source_id"))
 tid <- rlang::sym(attr(TASVEG_memb, "target_id"))
 memb <- rlang::sym(attr(TASVEG_memb, "membership"))
 TASVEG_memb |>
-  group_by(interpreter = !!interp) |>
-  summarise(
-    n_sources = n_distinct(!!sid),
-    n_targets = n_distinct(!!tid),
-    merbership_sum = sum(!!memb, na.rm = TRUE)
-  )
+    group_by(interpreter = !!interp) |>
+    summarise(
+        n_sources = n_distinct(!!sid),
+        n_targets = n_distinct(!!tid),
+        merbership_sum = sum(!!memb, na.rm = TRUE)
+    )
 ```
 
 ## Visualisations
@@ -146,7 +146,7 @@ We will use a tile plot, and select the following unit:
 ```{r}
 #| label: show HSW unit
 TASVEG_LUT |>
-  dplyr::filter(VEGCODE == "HSW")
+    dplyr::filter(VEGCODE == "HSW")
 ```
 
 :::{.callout-caution}
@@ -159,10 +159,10 @@ This will require modifications to existing functions.
 #| label: tile plot
 #| error: true
 TASVEG_memb |>
-  dplyr::filter(VEGCODE == "HSW") |>
-  membership_tile_plot()
+    dplyr::filter(VEGCODE == "HSW") |>
+    membership_tile_plot()
 
-#Alternatively, code the filter in the function:
+# Alternatively, code the filter in the function:
 membership_tile_plot(TASVEG_memb, select_source = "HSW")
 # would internally use:
 # sid <- attr(TASVEG_memb,"source_id")
