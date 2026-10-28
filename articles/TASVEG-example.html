@@ -78,13 +78,18 @@
 </div>
 <section class="level2"><h2 id="source-and-target-classifications">Source and target classifications<a class="anchor" aria-label="anchor" href="#source-and-target-classifications"></a>
 </h2>
-<p>We will use the Tasmanian vegetation communities described in the TASVEG 5.0 dataset. A look-up table for this dataset is available in the <code>TASVEG_LUT</code> data:</p>
+<p>The target classification is the IUCN Global Ecosystem Typology. We create a lookup table for this dataset using the <code>IUCN_GET_LUT</code> data and the <code>lookup_tbl</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">IUCN_GET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lookup_tbl.html">lookup_tbl</a></span><span class="op">(</span><span class="va">IUCN_GET_LUT</span>, id <span class="op">=</span> <span class="st">"efg_id"</span>, name <span class="op">=</span> <span class="st">"efg_name"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>We will use the Tasmanian vegetation communities described in the TASVEG 5.0 dataset. A look-up table for this dataset is available in the <code>TASVEG_LUT</code> data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">TASVEG_LUT</span></span>
 <span><span class="co">#&gt; # A tibble: 156 × 3</span></span>
 <span><span class="co">#&gt;    VEG_GROUP                        VEGCODE VEGCODE_D                           </span></span>
-<span><span class="co">#&gt;    &lt;fct&gt;                            &lt;fct&gt;   &lt;fct&gt;                               </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;                               </span></span>
 <span><span class="co">#&gt;  1 Dry eucalypt forest and woodland DAC     (DAC) Eucalyptus amygdalina coastal…</span></span>
 <span><span class="co">#&gt;  2 Dry eucalypt forest and woodland DAD     (DAD) Eucalyptus amygdalina forest …</span></span>
 <span><span class="co">#&gt;  3 Dry eucalypt forest and woodland DAM     (DAM) Eucalyptus amygdalina forest …</span></span>
@@ -97,48 +102,29 @@
 <span><span class="co">#&gt; 10 Dry eucalypt forest and woodland DDP     (DDP) Eucalyptus dalrympleana - Euc…</span></span>
 <span><span class="co">#&gt; # ℹ 146 more rows</span></span></code></pre></div>
 </div>
-<p>The target classification is the IUCN Global Ecosystem Typology. A look-up table for this dataset is available in the <code>IUCN_GET_LUT</code> data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">IUCN_GET_LUT</span></span>
-<span><span class="co">#&gt; # A tibble: 110 × 9</span></span>
-<span><span class="co">#&gt;    efg           efg_id efg_name biome_id biome_name realm_id realm_name version</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 https://w3id… F1.1   Permane… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  2 https://w3id… F1.2   Permane… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  3 https://w3id… F1.3   Freeze-… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  4 https://w3id… F1.4   Seasona… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  5 https://w3id… F1.5   Seasona… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  6 https://w3id… F1.6   Episodi… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  7 https://w3id… F1.7   Large l… F1       Rivers an… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  8 https://w3id… F2.1   Large p… F2       Lakes bio… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt;  9 https://w3id… F2.10  Subglac… F2       Lakes bio… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt; 10 https://w3id… F2.2   Small p… F2       Lakes bio… F        Freshwater RVA de…</span></span>
-<span><span class="co">#&gt; # ℹ 100 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: version_date &lt;chr&gt;</span></span></code></pre></div>
-</div>
 <section class="level3"><h3 id="assessing-alignment">Assessing alignment<a class="anchor" aria-label="anchor" href="#assessing-alignment"></a>
 </h3>
 <p>One of the first steps of the cross-referencing process is to assess the alignment between classifications. Units are eligible for cross-referencing if they represent similar concepts.</p>
 <p>The TASVEG 5.0 is a map of vegetation communities. Most units represent a single vegetation community. These vegetation communities do align with the ecosystem concept used in the IUCN GET.</p>
 <p>However, some TASVEG units are described based on mappable units that do not align with the ecosystem concept. This units might represent mosaics of multiple communities, or represent un-vegetated ecological features.</p>
-<p>For example, these units grouped as “Other natural environments” in TASVEG are probably not eligible for cross-referencing and should be excluded:</p>
+<p>For example, these units grouped as “Other natural environments” in TASVEG are probably not eligible for cross-referencing.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">TASVEG_LUT</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">VEGCODE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OAQ"</span>, <span class="st">"ORO"</span>, <span class="st">"OSM"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 3</span></span>
 <span><span class="co">#&gt;   VEG_GROUP                  VEGCODE VEGCODE_D             </span></span>
-<span><span class="co">#&gt;   &lt;fct&gt;                      &lt;fct&gt;   &lt;fct&gt;                 </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                      &lt;chr&gt;   &lt;chr&gt;                 </span></span>
 <span><span class="co">#&gt; 1 Other natural environments OAQ     (OAQ) Water, sea      </span></span>
 <span><span class="co">#&gt; 2 Other natural environments ORO     (ORO) Lichen lithosere</span></span>
 <span><span class="co">#&gt; 3 Other natural environments OSM     (OSM) Sand, mud</span></span></code></pre></div>
 </div>
-<p>Here, we create a subset of the eligible units:</p>
+<p>Here, we create a lookup table with explicit eligible units:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">TASVEG_LUT_SS</span> <span class="op">&lt;-</span> <span class="va">TASVEG_LUT</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">VEGCODE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OAQ"</span>, <span class="st">"ORO"</span>, <span class="st">"OSM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>elig <span class="op">=</span> <span class="op">!</span><span class="va">VEGCODE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OAQ"</span>, <span class="st">"ORO"</span>, <span class="st">"OSM"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/lookup_tbl.html">lookup_tbl</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"VEGCODE"</span>, name <span class="op">=</span> <span class="st">"VEGCODE_D"</span>, eligible <span class="op">=</span> <span class="st">"elig"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h2 id="interpretation-of-classifications">Interpretation of classifications<a class="anchor" aria-label="anchor" href="#interpretation-of-classifications"></a>
 </h2>
@@ -207,11 +193,15 @@
 <p>The <code>check_membership</code> function can detect the problem with <code>NA</code> values:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/check_membership.html">check_membership</a></span><span class="op">(</span><span class="va">TASVEG_memb</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ✓ Membership column is numeric</span></span>
-<span><span class="co">#&gt; ✗ Membership values contains NA values</span></span>
-<span><span class="co">#&gt; ✓ Membership values are within [0,1]</span></span>
-<span><span class="co">#&gt; Please fix errors and check data before using other package functions.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/check_membership.html">check_membership</a></span><span class="op">(</span><span class="va">TASVEG_memb</span>, source <span class="op">=</span> <span class="va">TASVEG_LUT_SS</span>, target <span class="op">=</span> <span class="va">IUCN_GET</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Membership column is numeric</span></span>
+<span><span class="co">#&gt; ✖ Membership values contains NA values</span></span>
+<span><span class="co">#&gt; ✔ Membership values are within [0,1]</span></span>
+<span><span class="co">#&gt; ✔ Lookup table for source classification provided</span></span>
+<span><span class="co">#&gt; ✖ Problems with eligibility of source ids</span></span>
+<span><span class="co">#&gt; ✔ Lookup table for target classification provided</span></span>
+<span><span class="co">#&gt; ✖ Problems with validity of target ids</span></span>
+<span><span class="co">#&gt; ℹ Please fix errors and check data before using other package functions.</span></span></code></pre></div>
 </div>
 <div>
 <blockquote>
@@ -224,8 +214,8 @@
 <code class="sourceCode R"><span><span class="va">sid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">TASVEG_memb</span>, <span class="st">"source_id"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">TASVEG_memb</span><span class="op">[[</span><span class="va">sid</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">TASVEG_LUT_SS</span><span class="op">$</span><span class="va">VEGCODE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; FALSE  TRUE </span></span>
-<span><span class="co">#&gt;    43   922</span></span>
+<span><span class="co">#&gt; TRUE </span></span>
+<span><span class="co">#&gt;  965</span></span>
 <span><span class="va">tid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">TASVEG_memb</span>, <span class="st">"target_id"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">TASVEG_memb</span><span class="op">[[</span><span class="va">tid</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">IUCN_GET_LUT</span><span class="op">$</span><span class="va">efg_id</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -273,7 +263,7 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">VEGCODE</span> <span class="op">==</span> <span class="st">"HSW"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   VEG_GROUP                    VEGCODE VEGCODE_D                              </span></span>
-<span><span class="co">#&gt;   &lt;fct&gt;                        &lt;fct&gt;   &lt;fct&gt;                                  </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                        &lt;chr&gt;   &lt;chr&gt;                                  </span></span>
 <span><span class="co">#&gt; 1 Highland treeless vegetation HSW     (HSW) Western alpine sedgeland/herbland</span></span></code></pre></div>
 </div>
 <div>

@@ -20,6 +20,15 @@ library(dplyr)
 
 ## Source and target classifications
 
+The target classification is the IUCN Global Ecosystem Typology. We
+create a lookup table for this dataset using the `IUCN_GET_LUT` data and
+the `lookup_tbl` function:
+
+``` r
+
+IUCN_GET <- lookup_tbl(IUCN_GET_LUT, id = "efg_id", name = "efg_name")
+```
+
 We will use the Tasmanian vegetation communities described in the TASVEG
 5.0 dataset. A look-up table for this dataset is available in the
 `TASVEG_LUT` data:
@@ -29,7 +38,7 @@ We will use the Tasmanian vegetation communities described in the TASVEG
 TASVEG_LUT
 #> # A tibble: 156 × 3
 #>    VEG_GROUP                        VEGCODE VEGCODE_D                           
-#>    <fct>                            <fct>   <fct>                               
+#>    <chr>                            <chr>   <chr>                               
 #>  1 Dry eucalypt forest and woodland DAC     (DAC) Eucalyptus amygdalina coastal…
 #>  2 Dry eucalypt forest and woodland DAD     (DAD) Eucalyptus amygdalina forest …
 #>  3 Dry eucalypt forest and woodland DAM     (DAM) Eucalyptus amygdalina forest …
@@ -41,29 +50,6 @@ TASVEG_LUT
 #>  9 Dry eucalypt forest and woodland DDE     (DDE) Eucalyptus tasmaniensis dry f…
 #> 10 Dry eucalypt forest and woodland DDP     (DDP) Eucalyptus dalrympleana - Euc…
 #> # ℹ 146 more rows
-```
-
-The target classification is the IUCN Global Ecosystem Typology. A
-look-up table for this dataset is available in the `IUCN_GET_LUT` data:
-
-``` r
-
-IUCN_GET_LUT
-#> # A tibble: 110 × 9
-#>    efg           efg_id efg_name biome_id biome_name realm_id realm_name version
-#>    <chr>         <chr>  <chr>    <chr>    <chr>      <chr>    <chr>      <chr>  
-#>  1 https://w3id… F1.1   Permane… F1       Rivers an… F        Freshwater RVA de…
-#>  2 https://w3id… F1.2   Permane… F1       Rivers an… F        Freshwater RVA de…
-#>  3 https://w3id… F1.3   Freeze-… F1       Rivers an… F        Freshwater RVA de…
-#>  4 https://w3id… F1.4   Seasona… F1       Rivers an… F        Freshwater RVA de…
-#>  5 https://w3id… F1.5   Seasona… F1       Rivers an… F        Freshwater RVA de…
-#>  6 https://w3id… F1.6   Episodi… F1       Rivers an… F        Freshwater RVA de…
-#>  7 https://w3id… F1.7   Large l… F1       Rivers an… F        Freshwater RVA de…
-#>  8 https://w3id… F2.1   Large p… F2       Lakes bio… F        Freshwater RVA de…
-#>  9 https://w3id… F2.10  Subglac… F2       Lakes bio… F        Freshwater RVA de…
-#> 10 https://w3id… F2.2   Small p… F2       Lakes bio… F        Freshwater RVA de…
-#> # ℹ 100 more rows
-#> # ℹ 1 more variable: version_date <chr>
 ```
 
 ### Assessing alignment
@@ -81,8 +67,7 @@ not align with the ecosystem concept. This units might represent mosaics
 of multiple communities, or represent un-vegetated ecological features.
 
 For example, these units grouped as “Other natural environments” in
-TASVEG are probably not eligible for cross-referencing and should be
-excluded:
+TASVEG are probably not eligible for cross-referencing.
 
 ``` r
 
@@ -90,18 +75,19 @@ TASVEG_LUT |>
   dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
 #> # A tibble: 3 × 3
 #>   VEG_GROUP                  VEGCODE VEGCODE_D             
-#>   <fct>                      <fct>   <fct>                 
+#>   <chr>                      <chr>   <chr>                 
 #> 1 Other natural environments OAQ     (OAQ) Water, sea      
 #> 2 Other natural environments ORO     (ORO) Lichen lithosere
 #> 3 Other natural environments OSM     (OSM) Sand, mud
 ```
 
-Here, we create a subset of the eligible units:
+Here, we create a lookup table with explicit eligible units:
 
 ``` r
 
 TASVEG_LUT_SS <- TASVEG_LUT |>
-  dplyr::filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
+  dplyr::mutate(elig = !VEGCODE %in% c("OAQ", "ORO", "OSM")) |>
+  lookup_tbl(id = "VEGCODE", name = "VEGCODE_D", eligible = "elig")
 ```
 
 ## Interpretation of classifications
@@ -186,11 +172,15 @@ The `check_membership` function can detect the problem with `NA` values:
 
 ``` r
 
-check_membership(TASVEG_memb)
-#> ✓ Membership column is numeric
-#> ✗ Membership values contains NA values
-#> ✓ Membership values are within [0,1]
-#> Please fix errors and check data before using other package functions.
+check_membership(TASVEG_memb, source = TASVEG_LUT_SS, target = IUCN_GET)
+#> ✔ Membership column is numeric
+#> ✖ Membership values contains NA values
+#> ✔ Membership values are within [0,1]
+#> ✔ Lookup table for source classification provided
+#> ✖ Problems with eligibility of source ids
+#> ✔ Lookup table for target classification provided
+#> ✖ Problems with validity of target ids
+#> ℹ Please fix errors and check data before using other package functions.
 ```
 
 > **Placeholder**
@@ -202,8 +192,8 @@ check_membership(TASVEG_memb)
 sid <- attr(TASVEG_memb, "source_id")
 table(TASVEG_memb[[sid]] %in% TASVEG_LUT_SS$VEGCODE)
 #> 
-#> FALSE  TRUE 
-#>    43   922
+#> TRUE 
+#>  965
 tid <- attr(TASVEG_memb, "target_id")
 table(TASVEG_memb[[tid]] %in% IUCN_GET_LUT$efg_id)
 #> 
@@ -254,7 +244,7 @@ TASVEG_LUT |>
   dplyr::filter(VEGCODE == "HSW")
 #> # A tibble: 1 × 3
 #>   VEG_GROUP                    VEGCODE VEGCODE_D                              
-#>   <fct>                        <fct>   <fct>                                  
+#>   <chr>                        <chr>   <chr>                                  
 #> 1 Highland treeless vegetation HSW     (HSW) Western alpine sedgeland/herbland
 ```
 

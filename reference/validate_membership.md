@@ -17,3 +17,7 @@ validate_membership(x)
 ## Value
 
 Invisibly returns x
+
+## Author
+
+JR Ferrer-Paris

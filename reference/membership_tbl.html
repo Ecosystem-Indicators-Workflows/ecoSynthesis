@@ -81,7 +81,41 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class 'membership_tbl'</p>
     </div>
+    <div class="section level2">
+    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
+    <p>JR Ferrer-Paris</p>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xref</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"EFG1"</span>, <span class="st">"EFG2"</span>, <span class="st">"EFG3"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  membership <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  interpreter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Worrisome Wren"</span>,<span class="st">"Worrisome Wren"</span>,<span class="st">"Worrisome Wren"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">membership_tbl</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">xref</span>,</span></span>
+<span class="r-in"><span>  source_id <span class="op">=</span> <span class="st">"source"</span>,</span></span>
+<span class="r-in"><span>  target_id <span class="op">=</span> <span class="st">"target"</span>,</span></span>
+<span class="r-in"><span>  membership <span class="op">=</span> <span class="st">"membership"</span>,</span></span>
+<span class="r-in"><span>  interpreter <span class="op">=</span> <span class="st">"interpreter"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;membership_tbl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source_id column: <span style="color: #00BBBB;">source</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_id column: <span style="color: #BB00BB;">target</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> membership column: membership</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> interpreter column: <span style="color: #555555;">interpreter</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   source target membership interpreter   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> A      EFG1          0.8 Worrisome Wren</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> A      EFG2          0.2 Worrisome Wren</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> B      EFG3          1   Worrisome Wren</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

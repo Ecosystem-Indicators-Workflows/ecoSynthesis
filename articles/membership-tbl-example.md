@@ -54,12 +54,18 @@ print(TASVEG_tbl)
 #> 10 AHF     F2.3  0.4   Worrysome Wren            1
 #> # ℹ 955 more rows
 check_membership(TASVEG_tbl)
-#> ✓ Membership column is numeric
-#> ✗ Membership values contains NA values
-#> ✓ Membership values are within [0,1]
-#> Please fix errors and check data before using other package functions.
+#> ✔ Membership column is numeric
+#> ✖ Membership values contains NA values
+#> ✔ Membership values are within [0,1]
+#> ✖ No lookup table for source classification provided
+#> ✔ All source ids are eligible
+#> ✖ No lookup table for target classification provided
+#> ✔ All target ids are valid
+#> ℹ Please fix errors and check data before using other package functions.
 validate_membership(TASVEG_tbl)
 #> Errors: Membership column contains missing values.
+#> No lookup table for source classification provided
+#> No lookup table for target classification provided
 #> Error in `validate_membership()`:
 #> ! Please fix errors and check data before using other package functions.
 ```

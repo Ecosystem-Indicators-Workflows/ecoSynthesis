@@ -40,6 +40,10 @@ import_paired_membership(
 
 A membership table in long format
 
+## Author
+
+JR Ferrer-Paris
+
 ## Examples
 
 ``` r
