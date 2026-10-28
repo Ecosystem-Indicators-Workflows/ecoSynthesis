@@ -2,7 +2,7 @@
 
 S3method(print,lookup_tbl)
 S3method(print,membership_check)
-S3method(print,membership_tbl)
+export("%nin%")
 export(as_membership_tbl)
 export(check_membership)
 export(import_paired_membership)
@@ -13,8 +13,6 @@ export(membership_tile_plot)
 export(standardise_xref_pairs)
 export(validate_membership)
 import(rlang)
-import(tibble)
-import(tidyr)
 importFrom(checkmate,
   assert,
   assert_data_frame,

@@ -13,7 +13,7 @@
 #' lookup_tbl(IUCN_GET_LUT, id = "efg_id", name = "efg_name")
 #' # If some units are not eligible, this can be defined as:
 #' not_eligible <- c("OAQ", "ORO", "OSM")
-#' TASVEG_LUT$eligible <- !TASVEG_LUT$VEGCODE %in% not_eligible
+#' TASVEG_LUT$eligible <- TASVEG_LUT$VEGCODE %nin% not_eligible
 #' lookup_tbl(TASVEG_LUT, "VEGCODE", "VEGCODE_D", "eligible")
 lookup_tbl <- function(
   data,
@@ -34,7 +34,8 @@ lookup_tbl <- function(
     stop(
       "Missing required columns: ",
       paste(missing, collapse = ", "),
-      call. = FALSE
+    cli::cli_abort(
+      "Missing required columns: {.field {missing}}"
     )
   }
   if (is.null(eligible)) {
@@ -57,8 +58,6 @@ lookup_tbl <- function(
 #'
 #' @param x the lookup_tbl
 #' @param ... further arguments passed to or from other methods.
-#' @import cli
-#' @import dplyr
 #' @export
 #' @author JR Ferrer-Paris
 print.lookup_tbl <- function(x, ...) {
@@ -73,7 +72,25 @@ print.lookup_tbl <- function(x, ...) {
     cli::col_magenta(name),
     sum(x[[eligible]]),
     nrow(x)
-  ))
+  cli_div(
+    theme = list(
+      span.var_cyan = list(color = "cyan"),
+      "span.var_cyan" = list(before = "`"),
+      "span.var_cyan" = list(after = "`"),
+      span.var_magenta = list(color = "magenta"),
+      "span.var_magenta" = list(before = "`"),
+      "span.var_magenta" = list(after = "`")
+    ),
+    class = "lookup_tbl"
+  )
+
+  cli::cli_rule("{.cls lookup_tbl}")
+  cli::cli_alert_info("id column: {.var_cyan {id}}")
+  cli::cli_alert_info("name column: {.var_magenta {name}}")
+  cli::cli_alert_info(
+    "eligible units: {.val {sum(x[[eligible]])}} of {.val {nrow(x)}}"
+  )
+cli_end()
 
   NextMethod("print", x)
   invisible(x)

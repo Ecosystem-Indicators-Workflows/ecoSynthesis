@@ -67,7 +67,6 @@ membership_tbl <- function(
 #' @param target Lookup table for the target classification
 #'
 #' @return List with checks results
-#' @import dplyr
 #' @export
 #' @author JR Ferrer-Paris
 check_membership <- function(x, source = NULL, target = NULL) {
@@ -138,7 +137,6 @@ check_membership <- function(x, source = NULL, target = NULL) {
 #'
 #' @param x the membership_check
 #' @param ... further arguments passed to or from other methods.
-#' @import cli
 #' @export
 #' @author JR Ferrer-Paris
 print.membership_check <- function(x, ...) {
@@ -230,7 +228,6 @@ validate_membership <- function(x) {
 #' @param x the membership_tbl
 #' @param ... further arguments passed to or from other methods.
 #' @import cli
-#' @import dplyr
 #' @export
 #' @author JR Ferrer-Paris
 print.membership_tbl <- function(x, ...) {
@@ -262,7 +259,6 @@ print.membership_tbl <- function(x, ...) {
 #' @param round Round column
 #'
 #' @return A validated membership_tbl
-#' @import tibble
 #' @export
 #' @author JR Ferrer-Paris
 as_membership_tbl <- function(
@@ -296,8 +292,6 @@ as_membership_tbl <- function(
 #' @param interpreter Name of the interpreter
 #'
 #' @return A membership table in long format
-#' @import dplyr
-#' @import tidyr
 #' @export
 #' @author JR Ferrer-Paris
 #' @examples
