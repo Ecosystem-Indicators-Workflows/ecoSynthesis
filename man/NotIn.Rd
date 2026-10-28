@@ -4,7 +4,7 @@
 \alias{\%nin\%}
 \title{Negative Value Matching}
 \source{
-Function retrieved 2026-10-27 from \url{https://stackoverflow.com/a/38352065}. Posted by catastrophic-failure, modified by community. See post 'Timeline' for change history. License - CC BY-SA 4.0. Function documentation written by Elliot Gould.
+Function retrieved 2026-10-27 from \url{https://stackoverflow.com/a/38352065}. Posted by catastrophic-failure, modified by community, see also r-help post \url{https://stat.ethz.ch/pipermail/r-help/2011-May/277498.html}. See post 'Timeline' for change history. License - CC BY-SA 4.0. Function documentation written by Elliot Gould and JR Ferrer-Paris.
 }
 \usage{
 lhs \%nin\% rhs
@@ -18,7 +18,7 @@ lhs \%nin\% rhs
 A logical vector indicating which value of \code{lhs} are \emph{not} matched in \code{rhs}
 }
 \description{
-See \code{base::\code{\%in\%}} for details. \verb{\%nin\%} is a binary operator,
+See \code{base::\%in\%} for details. \verb{\%nin\%} is a binary operator,
 returning a logical vector indicating if there is a negative match or not.
 }
 \examples{
@@ -26,7 +26,7 @@ returning a logical vector indicating if there is a negative match or not.
 TASVEG_LUT$eligible <- TASVEG_LUT$VEGCODE \%nin\% c("OAQ", "ORO", "OSM")
 }
 \author{
-\href{https://stackoverflow.com/users/2874779/catastrophic-failure}{catastrophic-failure}, Elliot Gould.
+\href{https://stackoverflow.com/users/2874779/catastrophic-failure}{catastrophic-failure}, Elliot Gould and JR Ferrer-Paris.
 }
 \concept{Utility functions}
 \keyword{internal}
