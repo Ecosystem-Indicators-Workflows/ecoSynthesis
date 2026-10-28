@@ -69,7 +69,8 @@ TASVEG_DBF <- read.dbf(
   sprintf(
     "%s/LIST_TASVEG_50_STATEWIDE/TASVEG_5_0.dbf",
     temp_dir
-  )
+  ),
+  as.is = TRUE
 )
 
 ## 4. Data preparation

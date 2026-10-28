@@ -19,6 +19,13 @@ library(dplyr)
 
 ## Source and target classifications
 
+The target classification is the IUCN Global Ecosystem Typology. We create a lookup table for this dataset using the `IUCN_GET_LUT` data and the `lookup_tbl` function:
+
+```{r}
+#| label: load target classification
+IUCN_GET <- lookup_tbl(IUCN_GET_LUT, id = "efg_id", name = "efg_name")
+```
+
 We will use the Tasmanian vegetation communities described in the TASVEG 5.0 dataset. A look-up table for this dataset is available in the `TASVEG_LUT` data:
 
 ```{r}
@@ -26,12 +33,6 @@ We will use the Tasmanian vegetation communities described in the TASVEG 5.0 dat
 TASVEG_LUT
 ```
 
-The target classification is the IUCN Global Ecosystem Typology. A look-up table for this dataset is available in the `IUCN_GET_LUT` data:
-
-```{r}
-#| label: load target classification
-IUCN_GET_LUT
-```
 
 ### Assessing alignment
 
@@ -41,7 +42,7 @@ The TASVEG 5.0 is a map of vegetation communities. Most units represent a single
 
 However, some TASVEG units are described based on mappable units that do not align with the ecosystem concept. This units might represent mosaics of multiple communities, or represent un-vegetated ecological features. 
 
-For example, these units grouped as "Other natural environments" in TASVEG are probably not eligible for cross-referencing and should be excluded:
+For example, these units grouped as "Other natural environments" in TASVEG are probably not eligible for cross-referencing. 
 
 ```{r}
 #| label: select not eligible units
@@ -49,12 +50,13 @@ TASVEG_LUT |>
   dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
 ```
 
-Here, we create a subset of the eligible units:
+Here, we create a lookup table with explicit eligible units:
 
 ```{r}
 #| label: select eligible units
 TASVEG_LUT_SS <- TASVEG_LUT |>
-  dplyr::filter(!VEGCODE %in% c("OAQ", "ORO", "OSM"))
+  dplyr::mutate(elig = !VEGCODE %in% c("OAQ", "ORO", "OSM")) |>
+  lookup_tbl(id = "VEGCODE", name = "VEGCODE_D", eligible = "elig")
 ```
 
 ## Interpretation of classifications
@@ -94,7 +96,7 @@ The `check_membership` function can detect the problem with `NA` values:
 
 ```{r}
 #| label: check membership table
-check_membership(TASVEG_memb)
+check_membership(TASVEG_memb, source = TASVEG_LUT_SS, target = IUCN_GET)
 ```
 
 :::{.callout-caution}
