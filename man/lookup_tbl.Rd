@@ -26,7 +26,7 @@ Create a lookup table for a classification
 lookup_tbl(IUCN_GET_LUT, id = "efg_id", name = "efg_name")
 # If some units are not eligible, this can be defined as:
 not_eligible <- c("OAQ", "ORO", "OSM")
-TASVEG_LUT$eligible <- !TASVEG_LUT$VEGCODE \%in\% not_eligible
+TASVEG_LUT$eligible <- TASVEG_LUT$VEGCODE \%nin\% not_eligible
 lookup_tbl(TASVEG_LUT, "VEGCODE", "VEGCODE_D", "eligible")
 }
 \author{

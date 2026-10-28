@@ -18,7 +18,7 @@ lhs \%nin\% rhs
 A logical vector indicating which value of \code{lhs} are \emph{not} matched in \code{rhs}
 }
 \description{
-See \code{base::\href{`\%in\%`}{}} for details. \verb{\%nin\%} is a binary operator,
+See \code{base::\code{\%in\%}} for details. \verb{\%nin\%} is a binary operator,
 returning a logical vector indicating if there is a negative match or not.
 }
 \examples{

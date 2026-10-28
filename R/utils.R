@@ -1,6 +1,6 @@
 #' Negative Value Matching
 #'
-#' See \code{base::[](`%in%`)} for details. `%nin%` is a binary operator,
+#' See \code{base::`%in%`} for details. `%nin%` is a binary operator,
 #' returning a logical vector indicating if there is a negative match or not.
 #'
 #' @name %nin%

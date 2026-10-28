@@ -24,7 +24,7 @@ lookup_tbl <- function(
   checkmate::assert_data_frame(data, .var.name = "data")
   checkmate::assert_string(id, .var.name = "id")
   checkmate::assert_string(name, .var.name = "name")
-  checkmate::assert_logical(eligible, null.ok = TRUE, .var.name = "eligible")
+  checkmate::assert_string(eligible, null.ok = TRUE, .var.name = "eligible")
 
   required <- c(id, name)
 
@@ -34,13 +34,18 @@ lookup_tbl <- function(
     stop(
       "Missing required columns: ",
       paste(missing, collapse = ", "),
-    cli::cli_abort(
-      "Missing required columns: {.field {missing}}"
+      cli::cli_abort(
+        "Missing required columns: {.field {missing}}"
+      )
     )
   }
   if (is.null(eligible)) {
     eligible <- "eligible"
     data[eligible] <- TRUE
+  } else {
+    checkmate::assert_logical(
+      data[[eligible]]
+    )
   }
 
   data <- tibble::as_tibble(data)
@@ -65,13 +70,6 @@ print.lookup_tbl <- function(x, ...) {
   name <- attr(x, "name")
   eligible <- attr(x, "eligible")
 
-  msg <- "<lookup_tbl>\nid column: %s\nname column: %s\neligible units: %s of %s\n\n"
-  cat(sprintf(
-    msg,
-    cli::col_cyan(id),
-    cli::col_magenta(name),
-    sum(x[[eligible]]),
-    nrow(x)
   cli_div(
     theme = list(
       span.var_cyan = list(color = "cyan"),
@@ -90,7 +88,7 @@ print.lookup_tbl <- function(x, ...) {
   cli::cli_alert_info(
     "eligible units: {.val {sum(x[[eligible]])}} of {.val {nrow(x)}}"
   )
-cli_end()
+  cli_end()
 
   NextMethod("print", x)
   invisible(x)

@@ -8,6 +8,6 @@ test_that("lookup_tbl returns error if data is not a data frame", {
   # Expect an error when calling lookup_tbl with list input
   expect_error(
     lookup_tbl(test_input_data),
-    "is not TRUE"
+    "Assertion on 'data' failed"
   )
 })
