@@ -21,7 +21,10 @@ lookup_tbl <- function(
   name = "name",
   eligible = NULL
 ) {
-  stopifnot(is.data.frame(data))
+  checkmate::assert_data_frame(data, .var.name = "data")
+  checkmate::assert_string(id, .var.name = "id")
+  checkmate::assert_string(name, .var.name = "name")
+  checkmate::assert_logical(eligible, null.ok = TRUE, .var.name = "eligible")
 
   required <- c(id, name)
 
