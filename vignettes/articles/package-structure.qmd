@@ -15,15 +15,118 @@ Here we want to summarise discussions about the structure of the package, design
 - Data preparation
 - Validation
 - Exploration
-- Within round: Agreement and disagreement
-- Between rounds
+- Expert elicitation
+  - Within round: Agreement and disagreement
+  - Between rounds
 - Synthesis and outputs
 
 ## Functions, classes and methods  
 
+This package includes functions, classes and methods. Some functionality has been **proposed** and tested outside the package development process. Some of these proposal are integrated in *development branches* before they are implemented in the *main branch*.
+
+We use a consistent key to refer to these in all figures.
+
+```{dot}
+//| label: fig-legend
+//| fig-cap: "Visual key to functions, classes and methods in different stages of development."
+digraph membership {
+
+// classes
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2];
+CL[label=<{This is <i>my class</i>|with a description}>]
+
+// methods
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2];
+MT[label=<MethodFor(<i>my class</i>)>]
+
+// functions
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2];
+FN[label=<{<i>function_name()</i>|with description}>];
+
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2 style=dashed];
+CLWIP[label=<{This is <i>my class</i>|with a description}>]
+
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2 style=dashed];
+MTWIP[label=<MethodFor(<i>my class</i>)>]
+
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2 style=dashed];
+FNWIP[label=<{<i>function_name()</i>|with description}>];
+
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2 style=dotted];
+CLPROP[label=<{This is <i>my class</i>|with a description}>]
+
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2 style=dotted];
+MTPROP[label=<MethodFor(<i>my class</i>)>]
+
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2 style=dotted];
+FNPROP[label=<{<i>function_name()</i>|with description}>];
+
+subgraph cluster_inPkg {
+  label = "Main branch"
+  FN -> CL -> MT [style=invis]
+}
+subgraph cluster_WIP {
+  label = "Development branches"
+  FNWIP -> CLWIP -> MTWIP [style=invis]
+}
+subgraph cluster_Prop {
+  label = "Proposed"
+  FNPROP -> CLPROP -> MTPROP [style=invis]
+}
+CL -> CLWIP -> CLPROP [style=invis]
+FN -> FNWIP -> FNPROP[style=invis]
+MT -> MTWIP -> MTPROP [style=invis]
+}
+```
+
 ### Core functions
 
+Two core functions create the main classes used in the package. All other functions will work with these two main classes. 
+
+:::{.callout-warning}
+
+Documentation of the classes is missing!
+
+:::
+
+```{dot}
+//| label: fig-core
+//| fig-cap: "Core functions, classes, methods and their relationships."
+digraph membership {
+
+// classes
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2];
+MT[label=<{Class <i>membership_tbl</i>|(not documented)}>]
+LUT[label=<{Class <i>lookup_tbl</i>|(not documented)}>]
+
+// methods
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2];
+LUTP[label=<print(<i>lookup_tbl</i>)>]
+MTP[label=<print(<i>membership_tbl</i>)>] 
+// 
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2];
+LUTF[label=<{<i>lookup_tbl()</i>|Create a lookup table<BR/>for a classification}>];
+MTF[label=<{<i>membership_tbl()</i>|Create a membership table}>];
+
+subgraph cluster_prep {
+        label="Core functions" style=dashed;
+        MT -> MTP [label=<has method>];
+        MTF -> MT [label=creates];
+        LUTF -> LUT [label=creates];
+        LUT -> LUTP [label=<has method>]
+    }
+}
+```
+
 ### Data preparation
+
+
+:::{.callout-important}
+
+TO DO: Similar to validation, but replace check with *membership_clean()*. Include *read_membership*.
+
+:::
+
 
 ### Validation pipeline
 
@@ -40,8 +143,6 @@ LUT[label=<{Class <i>lookup_tbl</i>|(not documented)}>]
 
 // methods
 node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2];
-LUTP[label=<print(<i>lookup_tbl</i>)>]
-MTP[label=<print(<i>membership_tbl</i>)>] 
 MCP[label=<print(<i>membership_check</i>)>] 
 // 
 node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2];
@@ -54,17 +155,17 @@ VMT[label=<{<i>validate_membership()</i>|Validate a membership table}>];
 subgraph cluster_prep {
     label="Data validation pipeline"; 
     MT -> CHECKMT [label=input];
-    LUTF -> LUT [label=creates];
+    
     LUT -> CHECKMT [label=<input<BR/>(optional)>];
     CHECKMT -> MC -> VMT;
-    LUT -> LUTP [label=<has method>]
+    
     MC -> MCP [label=<has method>]
     VMT -> ASMT;
     ASMT -> MTF;
     subgraph cluster_main {
         label="Core functions" style=dashed;
-        MT -> MTP [label=<has method>];
         MTF -> MT [label=creates];
+        LUTF -> LUT [label=creates];
     }
 }
 }
@@ -74,3 +175,9 @@ subgraph cluster_prep {
 
 ### Visualisation
 
+
+:::{.callout-important}
+
+Plot classes, this should be structured around the stages of exploration within round and between interpreters?
+
+:::
