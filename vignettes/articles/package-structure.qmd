@@ -160,21 +160,56 @@ subgraph cluster_prep {
 
 We propose a couple of simple functions to facilitate the most common data import nad data cleaning steps. 
 
-However, in many cases data preparation will require wrangling with data formats (e.g. combining or joining data, filtering, modifying records). This can be done effectively inside R (for example with packages from the tidyverse collection), or outside R with the tools of preference.
-
-
 :::{.callout-important}
+## TO DO
 
-TO DO: Similar to validation, but replace check with *membership_clean()* (proposed). Include *read_membership* (proposed).
+Two proposed functions *membership_clean()* and *read_membership()*. 
 
 :::
 
+```{dot}
+//| label: fig-preparation
+//| fig-cap: "Data preparation: functions, classes, methods and their relationship during a cycle of data preparation."
+digraph membership {
+
+// classes
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2];
+MT[label=<{Class <i>membership_tbl</i>|(not documented)}>]
+LUT[label=<{Class <i>lookup_tbl</i>|(not documented)}>]
+
+// methods
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2];
+// 
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2];
+LUTF[label=<{<i>lookup_tbl()</i>|Create a lookup table<BR/>for a classification}>];
+MTF[label=<{<i>membership_tbl()</i>|Create a membership table}>];
+
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2 style=dotted];
+CLEANMT[label=<{<i>clean_membership()</i>|Flag and remove errors from <BR/>membership table}>];
+READMT[label=<{<i>read_membership()</i>|Read files or data frames<BR/>and coerce to<BR/>membership table}>];
+
+subgraph cluster_prep {
+    label="Data preparation cycle";
+    READMT -> MTF;
+    MT -> CLEANMT  [label=input];
+    CLEANMT ->MT
+    LUT -> CLEANMT [label=<input<BR/>(optional)>];
+    subgraph cluster_main {
+        direction=LR
+        label="Core functions" style=dashed;
+        MTF -> MT [label=creates];
+        LUTF -> LUT [label=creates];
+    }
+}
+}
+```
+
+However, in many cases data preparation will require wrangling with data formats (e.g. combining or joining data, filtering, modifying records). This can be done effectively inside R (for example with packages from the `tidyverse` collection), or outside R with other tools of preference.
 
 ### Validation pipeline
 
 Data validation allows the user to check if the data is valid for further processing. The validation functions are intended to catch common problems and pitfalls that could invalidate the final results. Validation should be completed before moving to data exploration and analysis.  
 
-Positive results of validation means that the process can move to the step of data exploration, negative results indicate that further steps of data preparation are required.
 
 ```{dot}
 //| label: fig-validation
@@ -217,15 +252,20 @@ subgraph cluster_prep {
 }
 ```
 
+Positive results of validation means that the process can move to the step of data exploration, negative results indicate that further steps of data preparation are required.
 
 
 ### Exploration
 
 Data exploration includes calculating basic statistics to understand the shape of the data, for example the nr. of interpreters and rounds, or the distribution of membership values.
 
+
 :::{.callout-important}
+## TO DO
 
 Plot classes, summaries and other tools for exploration.
+
+Add figure with existing and proposed functions
 
 :::
 
@@ -245,9 +285,45 @@ With multiple interpreters it is possible to analyse agreement and disagreement 
 
 #### Within rounds
 
+
+:::{.callout-important}
+## TO DO
+
+Discuss functions and their relationship
+
+:::
+
 #### Between rounds
+
+
+:::{.callout-important}
+## TO DO
+
+Discuss functions and their relationship
+
+:::
 
 ### Synthesis
 
+
+:::{.callout-important}
+## TO DO
+
+Discuss functions and their relationship
+
+:::
+
 ### Outputs
 
+
+:::{.callout-important}
+## TO DO
+
+Discuss functions and their relationship
+
+:::
+
+For some outputs the main functions will be related to external packages:
+
+- Writing synthesis membership table to a file (CSV or EXCEL format)
+- Outputs to GIS data: vectors or raster attribute tables.
