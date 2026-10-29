@@ -30,18 +30,17 @@
 membership_matrix <- function(data) {
   #TODO filter by round once included in membership_tbl
   checkmate::assert_class(data, "membership_tbl")
+  checkmate::assert_numeric(data[[attributes(data)$membership]], .var.name = attributes(data)$membership)
+  checkmate::assert_character(data[[attributes(data)$source_id]], .var.name = attributes(data)$source_id)
+  checkmate::assert_character(data[[attributes(data)$target_id]], .var.name = attributes(data)$target_id)
+  checkmate::assert_character(data[[attributes(data)$interpreter]], .var.name = attributes(data)$interpreter)
   long <- data |>
-    tibble::as_tibble() |>
     dplyr::select(
       source = attr(data, "source_id"),
       target = attr(data, "target_id"),
       membership = attr(data, "membership"),
       interpreter = attr(data, "interpreter")
-    ) |>
-    dplyr::mutate(dplyr::across(
-      c("source", "target", "interpreter"),
-      as.character
-    ))
+    )
 
   n_missing <- sum(is.na(long$membership))
   if (n_missing > 0) {
