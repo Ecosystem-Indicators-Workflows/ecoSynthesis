@@ -12,22 +12,20 @@ Here we want to summarise discussions about the structure of the package, design
 
 ## User journey
 
-- Data preparation
-- Validation
-- Exploration
-- Expert elicitation
-  - Within round: Agreement and disagreement
-  - Between rounds
-- Synthesis and outputs
+For the package desing we distinguish two main stages of the cross-referencing process. The first is dedicated to data preparation, validation and exploration. The second is dedicated to analysis and synthesis. See @fig-userjourney for an overview.
 
 ```{mermaid}
+%%| label: fig-userjourney
+%%| fig-cap: "Steps of the user journey. Solid green symbols can be completed with the package functions, classes and methods. Dashed symbols require a mix of package functions, other packages, and external tools."
 flowchart TB
-    PREP["Data Preparation:\nimporting, joining, filtering, modifying datasets "]:::Data
-    VALID{"Data\nValidation"}:::InPkg
-    EXP[Exploration:\n Interpreters, rounds, membership values]:::InPkg
-    NINT{"Nr of interpreters\n and rounds"}:::Data
-    ELI[Expert elicitation\nWithin rounds\nagreemnet\nBetween rounds\nEntropy\nFiltering]:::InPkg
-    FILTER["Between rounds\nEntropy metrics\nFiltering"]:::InPkg
+    PREP["Data Preparation:<br/>importing, joining, filtering, modifying datasets "]:::Mixed
+    VALID{"Data<br/>Validation"}:::InPkg
+    EXP[Exploration:<br/> Interpreters, rounds, membership values]:::InPkg
+    NINT{"Nr of interpreters<br/> and rounds"}:::InPkg
+    ELI1[Within rounds<br/>agreemnet]:::InPkg
+    ELI2[Between rounds<br/>entropy metrics]:::InPkg
+    
+    FILTER["Between rounds<br/>entropy metrics"]:::InPkg
     SYNT[Synthesis]:::InPkg
     OUTP[Outputs]:::Mixed
 
@@ -35,30 +33,36 @@ flowchart TB
         direction LR
         PREP --> VALID
         VALID -->|no| PREP
-        VALID -->|yes| EXP -->|improvements needed| PREP
+        VALID -->|yes| EXP -.->|review data if necessary| PREP
     end
-    FIRST --> SECOND
-    subgraph SECOND["Aggregation"]
+    FIRST:::Steps --> SECOND:::Steps
+    subgraph SECOND["Analysis"]
         direction LR
-        NINT -->|"1 interp and round"| THIRD;
-        NINT -->|"1 interp and >1 round"| FILTER --> THIRD ;
-        NINT -->|>1 interp| ELI --> THIRD;
-        subgraph THIRD["Synthesis"]
-            direction TB
-            SYNT --> OUTP;
-        end
+        NINT -->|"1 interpreter and round"| THIRD;
+        NINT -->|"1 interp and >1 round"| FILTER -->|Filtering| THIRD ;
+        NINT -->|"multiple interpreters"| FOURTH:::Mixed -->|Filtering| THIRD:::Steps;
     end
-
+    subgraph THIRD["Synthesis"]
+        direction TB
+        SYNT --> OUTP;
+    end
+    subgraph FOURTH["Expert elicitation"]
+        direction TB
+        ELI1 --> ELI2
+    end
     classDef Data fill:#f8f9fa,stroke:#1A1A1A,color:#1A1A1A,stroke-width:2px
     classDef InPkg fill:#dfd,stroke:#040,color:#040,stroke-width:2px
     classDef Mixed fill:#fff,stroke:#853E90,color:#853E90,stroke-width:2px,stroke-dasharray:5 5
+    classDef Steps fill:#fff,stroke:#853E90,color:#853E90,stroke-width:1px
 ```
+
+The ecoSynthesis package aims to facilitate the tasks related to these stages of the cross-referencing process. While some task could be completed with the functions, classes and methods defined in this package, there are some task that will require interaction with additional R packages, other tools, and the real world. 
 
 ## Functions, classes and methods  
 
-This package includes functions, classes and methods. Some functionality has been **proposed** and tested outside the package development process. Some of these proposal are integrated in *development branches* before they are implemented in the *main branch*.
+This package includes functions, classes and methods. Some functionality has been **proposed** and tested outside the package development process. Some of these proposal are integrated in **development branches** before they are implemented in the **main branch**.
 
-We use a consistent key to refer to these in all figures.
+We use a consistent key to refer to these in all figures [@fig-legend].
 
 ```{dot}
 //| label: fig-legend
@@ -115,11 +119,11 @@ MT -> MTWIP -> MTPROP [style=invis]
 
 ### Core functions
 
-Two core functions create the main classes used in the package. All other functions will work with these two main classes. 
+Two core functions ([`lookup_tbl()`](../reference/lookup_tbl.html) and [`membership_tbl()`](../reference/membership_tbl.html)) create the main classes used in the package. All other functions will work with these two main classes. 
 
 :::{.callout-warning}
 
-Documentation of the classes is missing!
+Documentation of the classes is missing in the R files!
 
 :::
 
@@ -154,15 +158,23 @@ subgraph cluster_prep {
 
 ### Data preparation
 
+We propose a couple of simple functions to facilitate the most common data import nad data cleaning steps. 
+
+However, in many cases data preparation will require wrangling with data formats (e.g. combining or joining data, filtering, modifying records). This can be done effectively inside R (for example with packages from the tidyverse collection), or outside R with the tools of preference.
+
 
 :::{.callout-important}
 
-TO DO: Similar to validation, but replace check with *membership_clean()*. Include *read_membership*.
+TO DO: Similar to validation, but replace check with *membership_clean()* (proposed). Include *read_membership* (proposed).
 
 :::
 
 
 ### Validation pipeline
+
+Data validation allows the user to check if the data is valid for further processing. The validation functions are intended to catch common problems and pitfalls that could invalidate the final results. Validation should be completed before moving to data exploration and analysis.  
+
+Positive results of validation means that the process can move to the step of data exploration, negative results indicate that further steps of data preparation are required.
 
 ```{dot}
 //| label: fig-validation
@@ -207,11 +219,35 @@ subgraph cluster_prep {
 
 
 
-### Visualisation
+### Exploration
 
+Data exploration includes calculating basic statistics to understand the shape of the data, for example the nr. of interpreters and rounds, or the distribution of membership values.
 
 :::{.callout-important}
 
-Plot classes, this should be structured around the stages of exploration within round and between interpreters?
+Plot classes, summaries and other tools for exploration.
 
 :::
+
+Data exploration could lead to identifying gaps or other shortfalls in the data. In such cases, an additional step of data preparation (and validation) might be useful before proceeding with next steps. 
+
+Data exploration will provide the basic data to inform decisions about the analysis and synthesis steps.
+
+### Analysis
+
+Analysis steps will depend on the number of interpreters and rounds. 
+
+With one interpreter and one round, proceed directly to synthesis and outputs.
+
+With one interpreter and multiple rounds, it is possible to analyse how uncertainty (measured as entropy) changes between rounds.
+
+With multiple interpreters it is possible to analyse agreement and disagreement between experts in a single round, and analyse changes in uncertainty and disagreement between rounds. We refer to this process in general as *expert elicitation*, although the specific methods used for the consultation of interpreters can be different in different contexts. 
+
+#### Within rounds
+
+#### Between rounds
+
+### Synthesis
+
+### Outputs
+
