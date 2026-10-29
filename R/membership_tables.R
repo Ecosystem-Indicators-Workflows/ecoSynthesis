@@ -9,6 +9,22 @@
 #'
 #' @return An object of class 'membership_tbl'
 #' @export
+#' @author JR Ferrer-Paris
+#' @examples
+#' xref <- tibble::tibble(
+#'   source = c("A", "A", "B"),
+#'   target = c("EFG1", "EFG2", "EFG3"),
+#'   membership = c(0.8, 0.2, 1),
+#'   interpreter = c("Worrisome Wren","Worrisome Wren","Worrisome Wren")
+#' )
+#' x <- membership_tbl(
+#'   xref,
+#'   source_id = "source",
+#'   target_id = "target",
+#'   membership = "membership",
+#'   interpreter = "interpreter"
+#' )
+#' x
 membership_tbl <- function(
   data,
   source_id = "source_id",
@@ -47,29 +63,64 @@ membership_tbl <- function(
 #' Performs checks on a membership table
 #'
 #' @param x A membership_tbl
+#' @param source Lookup table for the source classification
+#' @param target Lookup table for the target classification
 #'
 #' @return List with checks results
 #' @export
-check_membership <- function(x) {
+#' @author JR Ferrer-Paris
+check_membership <- function(x, source = NULL, target = NULL) {
   stopifnot(inherits(x, "membership_tbl"))
 
-  source_id <- attr(x, "source_id")
-  target_id <- attr(x, "target_id")
   membership <- attr(x, "membership")
-  interpreter <- attr(x, "interpreter")
 
   m <- x[[membership]]
-  i <- x[[interpreter]]
+  eligibility <- is.null(source)
+  if (!is.null(source)) {
+    stopifnot(inherits(source, "lookup_tbl"))
+    source_id <- attr(x, "source_id")
+    sid <- x[[source_id]]
+    vid <- rlang::sym(attr(source, "id"))
+    elig <- rlang::sym(attr(source, "eligible"))
+    eid <- dplyr::filter(source, !!elig) |> dplyr::pull(!!vid)
+    eligibility <- all(sid %in% eid)
+  }
+  validity <- is.null(target)
+  if (!is.null(target)) {
+    stopifnot(inherits(target, "lookup_tbl"))
+    target_id <- attr(x, "target_id")
+    tid <- x[[target_id]]
+    vid <- attr(target, "id")
+    elig <- attr(target, "eligible")
+    eid <- target[[vid]][target[[elig]]]
+    validity <- all(tid %in% eid)
+  }
   checks_results <- c(
     numeric_memb = !is.numeric(m),
     na_memb = anyNA(m),
-    bounded_memb = any(m[!is.na(m)] < 0 | m[!is.na(m)] > 1)
+    bounded_memb = any(m[!is.na(m)] < 0 | m[!is.na(m)] > 1),
+    source_missing = is.null(source),
+    source_eligibility = !eligibility,
+    target_missing = is.null(target),
+    target_valid = !validity
   )
 
   errors_list <- c(
     "Membership column is not numeric.",
     "Membership column contains missing values.",
-    "Membership values outside bounds [0,1]"
+    "Membership values outside bounds [0,1]",
+    "No lookup table for source classification provided",
+    dplyr::if_else(
+      is.null(source),
+      "Source ids have not been checked",
+      "Some source ids are not eligible"
+    ),
+    "No lookup table for target classification provided",
+    dplyr::if_else(
+      is.null(target),
+      "Target ids have not been checked",
+      "Some target ids are not valid"
+    )
   )
 
   res <- list(
@@ -86,33 +137,72 @@ check_membership <- function(x) {
 #'
 #' @param x the membership_check
 #' @param ... further arguments passed to or from other methods.
-#' @import cli
 #' @export
+#' @author JR Ferrer-Paris
 print.membership_check <- function(x, ...) {
   if (x$checks["numeric_memb"]) {
-    cat(cli::col_red("\u2717 Membership column is not numeric\n"))
+    cli::cli_alert_danger(cli::col_red(
+      "Membership column is not numeric"
+    ))
   } else {
-    cat(cli::col_blue("\u2713 Membership column is numeric\n"))
+    cli::cli_alert_success(cli::col_blue("Membership column is numeric"))
   }
   if (x$checks["na_memb"]) {
-    cat(cli::col_red("\u2717 Membership values contains NA values\n"))
+    cli::cli_alert_danger(cli::col_red(
+      "Membership values contains NA values"
+    ))
   } else {
-    cat(cli::col_blue("\u2713 All records have a membership value\n"))
+    cli::cli_alert_success(cli::col_blue("All records have a membership value"))
   }
   if (x$checks["bounded_memb"]) {
-    cat(cli::col_red("\u2717 Membership values <0 or >1\n"))
+    cli::cli_alert_danger(cli::col_red(
+      "Membership values <0 or >1"
+    ))
   } else {
-    cat(cli::col_blue("\u2713 Membership values are within [0,1]\n"))
+    cli::cli_alert_success(cli::col_blue("Membership values are within [0,1]"))
+  }
+  if (x$checks["source_missing"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "No lookup table for source classification provided"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue(
+      "Lookup table for source classification provided"
+    ))
+  }
+  if (x$checks["source_eligibility"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "Problems with eligibility of source ids"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue("All source ids are eligible"))
+  }
+  if (x$checks["target_missing"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "No lookup table for target classification provided"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue(
+      "Lookup table for target classification provided"
+    ))
+  }
+  if (x$checks["target_valid"]) {
+    cli::cli_alert_danger(cli::col_red(
+      "Problems with validity of target ids"
+    ))
+  } else {
+    cli::cli_alert_success(cli::col_blue("All target ids are valid"))
   }
   if (x$valid) {
-    cat("All checks passed, Membership table is valid.")
+    cli::cli_alert_success(cli::col_green(
+      "All checks passed, Membership table is valid."
+    ))
   } else {
-    cat(
-      "Please fix errors and check data before using other package functions.\n"
-    )
+    cli::cli_alert_info(cli::col_yellow(
+      "Please fix errors and check data before using other package functions."
+    ))
   }
 }
-
 
 #' Validate a membership table
 #'
@@ -120,6 +210,7 @@ print.membership_check <- function(x, ...) {
 #'
 #' @return Invisibly returns x
 #' @export
+#' @author JR Ferrer-Paris
 validate_membership <- function(x) {
   stopifnot(inherits(x, "membership_tbl"))
   res <- check_membership(x)
@@ -137,8 +228,8 @@ validate_membership <- function(x) {
 #' @param x the membership_tbl
 #' @param ... further arguments passed to or from other methods.
 #' @import cli
-#' @import dplyr
 #' @export
+#' @author JR Ferrer-Paris
 print.membership_tbl <- function(x, ...) {
   source_id <- attr(x, "source_id")
   target_id <- attr(x, "target_id")
@@ -168,23 +259,8 @@ print.membership_tbl <- function(x, ...) {
 #' @param round Round column
 #'
 #' @return A validated membership_tbl
-#' @import tibble
 #' @export
-#' @examples
-#' xref <- tibble::tibble(
-#'   source = c("A", "A", "B"),
-#'   target = c("EFG1", "EFG2", "EFG3"),
-#'   membership = c(0.8, 0.2, 1),
-#'   interpreter = c("Worrisome Wren","Worrisome Wren","Worrisome Wren")
-#' )
-#' x <- as_membership_tbl(
-#'   xref,
-#'   source_id = "source",
-#'   target_id = "target",
-#'   membership = "membership",
-#'   interpreter = "interpreter"
-#' )
-#' x
+#' @author JR Ferrer-Paris
 as_membership_tbl <- function(
   x,
   source_id,
@@ -216,9 +292,8 @@ as_membership_tbl <- function(
 #' @param interpreter Name of the interpreter
 #'
 #' @return A membership table in long format
-#' @import dplyr
-#' @import tidyr
 #' @export
+#' @author JR Ferrer-Paris
 #' @examples
 #' input_table <- data.frame(
 #'  re1 = c(
@@ -253,7 +328,7 @@ import_paired_membership <- function(
       dplyr::any_of(membership_values)
     ) |>
     tidyr::pivot_longer(
-      cols = c(target_names, membership_values),
+      cols = dplyr::all_of(c(target_names, membership_values)),
       names_to = c(".value", "pair"),
       names_sep = "_"
     )
@@ -263,5 +338,5 @@ import_paired_membership <- function(
     interpreter <- "Worrisome Wren"
   }
   out$interpreter <- interpreter
-  as_membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
+  membership_tbl(out, cols[1], cols[3], cols[4], "interpreter")
 }
