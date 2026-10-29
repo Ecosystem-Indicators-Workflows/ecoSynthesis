@@ -44,7 +44,7 @@ membership_matrix <- function(data) {
 
   n_missing <- sum(is.na(long$membership))
   if (n_missing > 0) {
-    cli::cli_warn("Dropped {n_missing} row{?s} with missing membership values.")
+    cli::cli_warn("Dropped {.val {n_missing}} row{?s} with missing membership values.")
     long <- dplyr::filter(long, !is.na(.data$membership))
   }
 
