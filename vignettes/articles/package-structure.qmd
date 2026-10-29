@@ -20,6 +20,40 @@ Here we want to summarise discussions about the structure of the package, design
   - Between rounds
 - Synthesis and outputs
 
+```{mermaid}
+flowchart TB
+    PREP["Data Preparation:\nimporting, joining, filtering, modifying datasets "]:::Data
+    VALID{"Data\nValidation"}:::InPkg
+    EXP[Exploration:\n Interpreters, rounds, membership values]:::InPkg
+    NINT{"Nr of interpreters\n and rounds"}:::Data
+    ELI[Expert elicitation\nWithin rounds\nagreemnet\nBetween rounds\nEntropy\nFiltering]:::InPkg
+    FILTER["Between rounds\nEntropy metrics\nFiltering"]:::InPkg
+    SYNT[Synthesis]:::InPkg
+    OUTP[Outputs]:::Mixed
+
+    subgraph FIRST["Data preparation and exploration"]
+        direction LR
+        PREP --> VALID
+        VALID -->|no| PREP
+        VALID -->|yes| EXP -->|improvements needed| PREP
+    end
+    FIRST --> SECOND
+    subgraph SECOND["Aggregation"]
+        direction LR
+        NINT -->|"1 interp and round"| THIRD;
+        NINT -->|"1 interp and >1 round"| FILTER --> THIRD ;
+        NINT -->|>1 interp| ELI --> THIRD;
+        subgraph THIRD["Synthesis"]
+            direction TB
+            SYNT --> OUTP;
+        end
+    end
+
+    classDef Data fill:#f8f9fa,stroke:#1A1A1A,color:#1A1A1A,stroke-width:2px
+    classDef InPkg fill:#dfd,stroke:#040,color:#040,stroke-width:2px
+    classDef Mixed fill:#fff,stroke:#853E90,color:#853E90,stroke-width:2px,stroke-dasharray:5 5
+```
+
 ## Functions, classes and methods  
 
 This package includes functions, classes and methods. Some functionality has been **proposed** and tested outside the package development process. Some of these proposal are integrated in *development branches* before they are implemented in the *main branch*.
