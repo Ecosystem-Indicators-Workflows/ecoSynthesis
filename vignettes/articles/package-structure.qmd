@@ -40,7 +40,7 @@ flowchart TB
         direction LR
         NINT -->|"1 interpreter <br> round"| THIRD;
         NINT -->|"1 interpreter <br> >1 round"| FILTER -->|Filtering| THIRD ;
-        NINT -->|"multiple interpreters"| FOURTH:::Mixed -->|Filtering| THIRD:::Steps;
+        NINT -->|">1 interpreter"| FOURTH:::Mixed -->|Filtering| THIRD:::Steps;
     end
     subgraph THIRD["Synthesis"]
         direction TB
