@@ -104,7 +104,8 @@ print.membership_matrix <- function(x, ...) {
     rep("*", length(n_assessed))
   ))
   cli::cli_text(
-    "Use {.code unclass(x)[source, target, interpreter]} to view values."
+  cli::cli_inform(
+    "Use {.code unclass({.field data})[{.field source}, {.field target}, {.field interpreter}]} to view values."
   )
   invisible(x)
 }
