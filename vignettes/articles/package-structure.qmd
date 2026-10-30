@@ -12,7 +12,7 @@ Here we want to summarise discussions about the structure of the package, design
 
 ## User journey
 
-For the package desing we distinguish two main stages of the cross-referencing process. The first is dedicated to data preparation, validation and exploration. The second is dedicated to analysis and synthesis. See @fig-userjourney for an overview.
+For the package design we distinguish two main stages of the cross-referencing process. The first is dedicated to data preparation, validation and exploration. The second is dedicated to analysis and synthesis. See @fig-userjourney for an overview.
 
 ```{mermaid}
 %%| label: fig-userjourney
