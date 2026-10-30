@@ -169,7 +169,7 @@ Two proposed functions *membership_clean()* and *read_membership()*.
 
 ```{dot}
 //| label: fig-preparation
-//| fig-cap: "Data preparation: functions, classes, methods and their relationship during a cycle of data preparation."
+//| fig-cap: "Data preparation: functions (blue), classes (gold), methods (green) and their relationship during a cycle of data preparation."
 digraph membership {
 
 // classes
