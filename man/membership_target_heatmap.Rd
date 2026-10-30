@@ -28,7 +28,7 @@ data("TASVEG_xref")
 TASVEG_memb <- membership_tbl(
   TASVEG_xref,
   source_id = "VEGCODE",
-  target_id = "efg",plot
+  target_id = "efg",
   membership = "memb",
   interpreter = "interp"
 )

@@ -14,3 +14,4 @@ articles:
   desc: Vignettes about general topics
   contents:
   - articles/membership-tbl-example
+  - articles/package-structure

@@ -4,14 +4,21 @@
 \alias{check_membership}
 \title{Performs checks on a membership table}
 \usage{
-check_membership(x)
+check_membership(x, source = NULL, target = NULL)
 }
 \arguments{
 \item{x}{A membership_tbl}
+
+\item{source}{Lookup table for the source classification}
+
+\item{target}{Lookup table for the target classification}
 }
 \value{
 List with checks results
 }
 \description{
 Performs checks on a membership table
+}
+\author{
+JR Ferrer-Paris
 }

@@ -1,52 +1,84 @@
 #' Create a tile plot of membership data
 #'
-#' @param data A data frame containing membership data in long format, with columns for interpreter, target, and membership values.
+#' @param data A data frame of class `membership_tbl` containing membership data for a single `source` and a single round of elicitation.
+#' @param round The round of elicitation to plot. If NULL, all rounds are plotted.
 #'
 #' @returns A ggplot object representing the tile plot of membership data.
 #'
 #' @details
-#' Returns a tile plot of membership functions among interpreters for a single `source` for a single round of elicitation. The plot uses a color gradient to represent membership values, with tiles colored according to the membership value for each interpreter-target pair. The plot includes labels for each tile showing the rounded membership value.
+#' The data frame should include columns for interpreters, targets, and membership values.
+#' The function generates a tile plot where each tile represents the membership value for a specific interpreter-target pair. The tiles are colored according to the membership value, with a color gradient indicating the strength of membership. The plot also includes labels on each tile showing the rounded membership value.
 #'
+#' Returns a tile plot of membership functions among interpreters for a single `source` for a single round of elicitation. The plot uses a color gradient to represent membership values, with tiles colored according to the membership value for each interpreter-target pair. The plot includes labels for each tile showing the rounded membership value.
 #'
 #' ## Future Enhancements
 #' The function is designed to be flexible and can be extended in the future to include additional customization options. Users may specify theme options, text color, label aesthetics, geom_tile options, axis labels, title, and subtitle to tailor the plot to their specific needs. These enhancements will allow for greater control over the visual presentation of the membership data.
-#'
 #'
 #' @export
 #' @author Elliot Gould
 #' @family visualisation
 #' @examples
-#' #' # Example usage with the TASVEG_mini dataset
-#' data("TASVEG_mini")
-#' TASVEG_mini |> dplyr::filter(source == "AAP") |> membership_tile_plot()
-#' TASVEG_mini |> dplyr::filter(source == "OAQ") |> membership_tile_plot()
+#' # Example usage with the [TASVEG_xref] dataset
+#' data("TASVEG_xref")
 #'
-membership_tile_plot <- function(data) {
-  #TODO filter by round once included in example data
-  #TODO ensure interoperable with membership classes
+#' # Create a tile plot for a specific source
+#' TASVEG_xref |>
+#' membership_tbl(
+#'   source_id = "VEGCODE",
+#'   target_id = "efg",
+#'   membership = "memb",
+#'   interpreter = "interp"
+#' ) |>
+#' dplyr::filter(VEGCODE == "HSW") |>
+#'   membership_tile_plot()
+#'
+membership_tile_plot <- function(data, round = NULL) {
+  # Checks
+  checkmate::assert(
+    checkmate::checkClass(data, "membership_tbl")
+  )
 
-  #TODO allow user to specify theme options
-  #TODO allow user to specify text color
-  #TODO allow user to specify label aesthetics
-  #TODO allow user to specify geom_tile options
-  #TODO allow user to specify axis labels
-  #TODO allow user to specify title
-  #TODO allow user to specify subtitle
+  checkmate::assert(
+    checkmate::checkNumber(round, null.ok = TRUE)
+  )
 
+  if (!is.null(round)) {
+    # Check that the specified round is within the range of available rounds in the data
+    checkmate::assert(
+      checkmate::checkNumber(
+        round,
+        na.ok = FALSE,
+        lower = 1,
+        upper = max(unique(data$round)),
+        null.ok = FALSE
+      )
+    )
+    # Filter by round if specified
+    data <- data |> dplyr::filter(round == round)
+  }
+
+  ## Extract col names from attributes for use in plot aesthetics
+  interp <- attr(data, "interpreter")
+  sid <- attr(data, "source_id")
+  tid <- attr(data, "target_id")
+  memb <- attr(data, "membership")
+
+  ## Set text color for plot elements and extract source label for subtitle
   textcol <- "grey40"
-  label_source <- data |> pluck("source", unique)
+  label_source <- data |> pluck(!!!sid, unique)
 
+  ## Plotting
   data |>
     ggplot(aes(
-      y = .data$interpreter,
-      x = .data$target,
-      fill = .data$membership,
+      y = .data[[interp]],
+      x = .data[[tid]],
+      fill = .data[[memb]],
       fill_alpha = 0.4
     )) +
     ggplot2::geom_tile(
       colour = "white",
       lwd = 1.5,
-      show.legend = T,
+      show.legend = TRUE,
       linetype = 1
     ) +
     ggplot2::scale_colour_continuous(
@@ -57,14 +89,14 @@ membership_tile_plot <- function(data) {
     ) +
     #remove axis labels, add title
     labs(
-      x = "target",
-      y = "interpreter",
+      x = "Target",
+      y = "Interpreter",
       title = "Round 1 Cross-Referencing", #TODO allow user to specify title
       subtitle = glue::glue("Source: {label_source}") #TODO allow user to specify subtitle
     ) +
     geom_label(
       #TODO allow user to specify label aesthetics
-      aes(label = round(.data$membership, 2)),
+      aes(label = round(.data[[memb]], 2)),
       color = "black",
       size = 4,
       fill = "white"
@@ -106,4 +138,12 @@ membership_tile_plot <- function(data) {
       #remove plot border
       panel.border = element_blank()
     )
+
+  #TODO allow user to specify theme options
+  #TODO allow user to specify text color
+  #TODO allow user to specify label aesthetics
+  #TODO allow user to specify geom_tile options
+  #TODO allow user to specify axis labels
+  #TODO allow user to specify title
+  #TODO allow user to specify subtitle
 }

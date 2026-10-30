@@ -15,3 +15,6 @@ Invisibly returns x
 \description{
 Validate a membership table
 }
+\author{
+JR Ferrer-Paris
+}

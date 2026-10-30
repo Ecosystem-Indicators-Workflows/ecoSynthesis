@@ -1,0 +1,110 @@
+#' Create a membership matrix
+#'
+#' @param data A `membership_tbl` object containing membership data in long format, with columns for source, target, membership and interpreter values.
+#'
+#' @returns A `membership_matrix` object: a numeric array with dimensions `[source, target, interpreter]`.
+#'
+#' @details
+#' Returns the membership values as one `source` by `target` matrix per interpreter, ready for `calc_similarity()`. Targets an interpreter did not use for a `source` they assessed are filled with 0, and `source` units an interpreter did not assess are left as `NA`. Repeated targets for the same `source` and interpreter are summed. Rows with missing membership values are dropped with a warning.
+#'
+#'
+#' ## Future Enhancements
+#' The function is designed to be flexible and can be extended in the future. Users may filter by round of elicitation, or add round as a fourth dimension.
+#'
+#'
+#' @export
+#' @author Abhimanyu Raj Singh
+#' @family similarity
+#' @examples
+#' # Example usage with the TASVEG_xref dataset
+#' data("TASVEG_xref")
+#' TASVEG_memb <- membership_tbl(
+#'   TASVEG_xref,
+#'   source_id = "VEGCODE",
+#'   target_id = "efg",
+#'   membership = "memb",
+#'   interpreter = "interp"
+#' )
+#' membership_matrix(TASVEG_memb)
+#'
+membership_matrix <- function(data) {
+  #TODO filter by round once included in membership_tbl
+  checkmate::assert_class(data, "membership_tbl")
+  checkmate::assert_numeric(
+    data[[attributes(data)$membership]],
+    .var.name = attributes(data)$membership
+  )
+  checkmate::assert_character(
+    data[[attributes(data)$source_id]],
+    .var.name = attributes(data)$source_id
+  )
+  checkmate::assert_character(
+    data[[attributes(data)$target_id]],
+    .var.name = attributes(data)$target_id
+  )
+  checkmate::assert_character(
+    data[[attributes(data)$interpreter]],
+    .var.name = attributes(data)$interpreter
+  )
+  memb_long <- data |>
+    dplyr::select(
+      source = attr(data, "source_id"),
+      target = attr(data, "target_id"),
+      membership = attr(data, "membership"),
+      interpreter = attr(data, "interpreter")
+    )
+
+  n_missing <- sum(is.na(memb_long$membership))
+  if (n_missing > 0) {
+    cli::cli_warn(
+      "Dropped {.val {n_missing}} row{?s} with missing membership values."
+    )
+    memb_long <- dplyr::filter(memb_long, !is.na(.data$membership))
+  }
+
+  memb_long <- dplyr::summarise(
+    memb_long,
+    membership = sum(.data$membership),
+    .by = c("source", "target", "interpreter")
+  )
+
+  dims <- list(
+    source = sort(unique(memb_long$source)),
+    target = sort(unique(memb_long$target)),
+    interpreter = sort(unique(memb_long$interpreter))
+  )
+  m <- array(NA_real_, dim = lengths(dims), dimnames = dims)
+
+  # sources an interpreter assessed get 0 for unused targets, the rest stay NA
+  assessed <- dplyr::distinct(memb_long, .data$source, .data$interpreter)
+  n_targets <- length(dims$target)
+  m[cbind(
+    rep(assessed$source, each = n_targets),
+    dims$target,
+    rep(assessed$interpreter, each = n_targets)
+  )] <- 0
+  m[cbind(
+    memb_long$source,
+    memb_long$target,
+    memb_long$interpreter
+  )] <- memb_long$membership
+
+  structure(m, class = "membership_matrix")
+}
+
+#' @export
+print.membership_matrix <- function(x, ...) {
+  d <- dim(x)
+  cli::cli_text(
+    "{.cls membership_matrix} {.val {d[1]}} source{?s} x {.val {d[2]}} target{?s} x {.val {d[3]}} interpreter{?s}"
+  )
+  n_assessed <- apply(!is.na(unclass(x)[, 1, , drop = FALSE]), 3, sum)
+  cli::cli_bullets(stats::setNames(
+    paste0(names(n_assessed), ": ", n_assessed, " source units assessed"),
+    rep("*", length(n_assessed))
+  ))
+  cli::cli_inform(
+    "Use {.code unclass({.field data})[{.field source}, {.field target}, {.field interpreter}]} to view values."
+  )
+  invisible(x)
+}
