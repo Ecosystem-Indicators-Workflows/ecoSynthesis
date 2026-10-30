@@ -83,7 +83,11 @@ membership_matrix <- function(data) {
     dims$target,
     rep(assessed$interpreter, each = n_targets)
   )] <- 0
-  m[cbind(memb_long$source, memb_long$target, memb_long$interpreter)] <- memb_long$membership
+  m[cbind(
+    memb_long$source,
+    memb_long$target,
+    memb_long$interpreter
+  )] <- memb_long$membership
 
   structure(m, class = "membership_matrix")
 }

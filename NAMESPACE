@@ -8,8 +8,8 @@ export("%nin%")
 export(as_membership_tbl)
 export(check_membership)
 export(import_paired_membership)
-export(membership_matrix)
 export(lookup_tbl)
+export(membership_matrix)
 export(membership_target_heatmap)
 export(membership_tbl)
 export(membership_tile_plot)
@@ -17,41 +17,51 @@ export(standardise_xref_pairs)
 export(validate_membership)
 import(cli)
 import(rlang)
-importFrom(checkmate,assert)
-importFrom(checkmate,assert_data_frame)
-importFrom(checkmate,assert_logical)
-importFrom(checkmate,assert_string)
-importFrom(checkmate,checkClass)
-importFrom(cli,cli_alert_danger)
-importFrom(cli,cli_alert_info)
-importFrom(cli,cli_alert_success)
-importFrom(cli,cli_div)
-importFrom(cli,cli_end)
-importFrom(cli,cli_rule)
-importFrom(cli,col_blue)
-importFrom(cli,col_green)
-importFrom(cli,col_red)
-importFrom(cli,col_yellow)
-importFrom(dplyr,all_of)
-importFrom(dplyr,any_of)
-importFrom(dplyr,filter)
-importFrom(dplyr,if_else)
-importFrom(dplyr,select)
-importFrom(ggplot2,.data)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,coord_fixed)
-importFrom(ggplot2,coord_flip)
-importFrom(ggplot2,element_blank)
-importFrom(ggplot2,element_line)
-importFrom(ggplot2,element_text)
-importFrom(ggplot2,geom_label)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,waiver)
+importFrom(checkmate,
+  assert,
+  assert_data_frame,
+  assert_logical,
+  assert_string,
+  checkClass
+)
+importFrom(cli,
+  cli_alert_danger,
+  cli_alert_info,
+  cli_alert_success,
+  cli_div,
+  cli_end,
+  cli_rule,
+  col_blue,
+  col_green,
+  col_red,
+  col_yellow
+)
+importFrom(dplyr,
+  all_of,
+  any_of,
+  filter,
+  if_else,
+  select
+)
+importFrom(ggplot2,
+  .data,
+  aes,
+  coord_fixed,
+  coord_flip,
+  element_blank,
+  element_line,
+  element_text,
+  geom_label,
+  ggplot,
+  labs,
+  theme,
+  waiver
+)
 importFrom(glue,glue)
 importFrom(lifecycle,deprecated)
 importFrom(purrr,pluck)
-importFrom(stringr,str_remove)
-importFrom(stringr,str_subset)
+importFrom(stringr,
+  str_remove,
+  str_subset
+)
 importFrom(tidyr,pivot_longer)

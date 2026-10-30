@@ -28,7 +28,8 @@ Imports:
     ggplot2,
     tibble,
     tidyr,
-    checkmate
+    checkmate,
+    stats
 Suggests: 
     testthat (>= 3.0.0),
     quarto
