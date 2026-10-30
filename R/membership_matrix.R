@@ -46,7 +46,7 @@ membership_matrix <- function(data) {
     data[[attributes(data)$interpreter]],
     .var.name = attributes(data)$interpreter
   )
-  long <- data |>
+  memb_long <- data |>
     dplyr::select(
       source = attr(data, "source_id"),
       target = attr(data, "target_id"),
@@ -54,36 +54,36 @@ membership_matrix <- function(data) {
       interpreter = attr(data, "interpreter")
     )
 
-  n_missing <- sum(is.na(long$membership))
+  n_missing <- sum(is.na(memb_long$membership))
   if (n_missing > 0) {
     cli::cli_warn(
       "Dropped {.val {n_missing}} row{?s} with missing membership values."
     )
-    long <- dplyr::filter(long, !is.na(.data$membership))
+    memb_long <- dplyr::filter(memb_long, !is.na(.data$membership))
   }
 
-  long <- dplyr::summarise(
-    long,
+  memb_long <- dplyr::summarise(
+    memb_long,
     membership = sum(.data$membership),
     .by = c("source", "target", "interpreter")
   )
 
   dims <- list(
-    source = sort(unique(long$source)),
-    target = sort(unique(long$target)),
-    interpreter = sort(unique(long$interpreter))
+    source = sort(unique(memb_long$source)),
+    target = sort(unique(memb_long$target)),
+    interpreter = sort(unique(memb_long$interpreter))
   )
   m <- array(NA_real_, dim = lengths(dims), dimnames = dims)
 
   # sources an interpreter assessed get 0 for unused targets, the rest stay NA
-  assessed <- dplyr::distinct(long, .data$source, .data$interpreter)
+  assessed <- dplyr::distinct(memb_long, .data$source, .data$interpreter)
   n_targets <- length(dims$target)
   m[cbind(
     rep(assessed$source, each = n_targets),
     dims$target,
     rep(assessed$interpreter, each = n_targets)
   )] <- 0
-  m[cbind(long$source, long$target, long$interpreter)] <- long$membership
+  m[cbind(memb_long$source, memb_long$target, memb_long$interpreter)] <- memb_long$membership
 
   structure(m, class = "membership_matrix")
 }
