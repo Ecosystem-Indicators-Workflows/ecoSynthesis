@@ -38,7 +38,7 @@ flowchart TB
     FIRST:::Steps --> SECOND:::Steps
     subgraph SECOND["Analysis"]
         direction LR
-        NINT -->|"1 interpreter and round"| THIRD;
+        NINT -->|"1 interpreter <br> round"| THIRD;
         NINT -->|"1 interp and >1 round"| FILTER -->|Filtering| THIRD ;
         NINT -->|"multiple interpreters"| FOURTH:::Mixed -->|Filtering| THIRD:::Steps;
     end
