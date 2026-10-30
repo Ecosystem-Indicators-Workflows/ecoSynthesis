@@ -25,11 +25,12 @@ Imports:
     stringr,
     ggplot2,
     tibble,
-    tidyr
+    tidyr,
+    <pkg>
 Suggests: 
     testthat (>= 3.0.0),
     quarto
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
 Config/testthat/edition: 3
 Config/Needs/website: rmarkdown, quarto
 Config/usethis/last-upkeep: 2026-10-09
@@ -37,4 +38,3 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LazyData: true
 VignetteBuilder: quarto
-RoxygenNote: 7.3.2
