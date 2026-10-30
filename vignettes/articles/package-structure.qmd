@@ -60,7 +60,7 @@ The ecoSynthesis package aims to facilitate the tasks related to these stages of
 
 ## Functions, classes and methods  
 
-This package includes functions, classes and methods. Some functionality has been **proposed** and tested outside the package development process. Some of these proposal are integrated in **development branches** before they are implemented in the **main branch**.
+This package includes functions, classes and methods. Some functionality has been **proposed** and tested outside the package development process. Some of these proposals are integrated in **development branches** before they are implemented in the **main branch**.
 
 We use a consistent key to refer to these in all figures [@fig-legend].
 
