@@ -1,4 +1,4 @@
-#' Calculate similarity between interpreters
+#' Calculate agreement between interpreters
 #'
 #' @param data A `membership_matrix` object returned by [membership_matrix()].
 #' @param sources A character vector of `source` units to compare. If `NULL` (default), all `source` units are used.
@@ -36,13 +36,13 @@
 #' TASVEG_mat <- membership_matrix(TASVEG_memb)
 #'
 #' # global similarity across all source units
-#' calc_similarity(TASVEG_mat)
+#' calc_agreement(TASVEG_mat)
 #'
 #' # similarity within a single source unit, or a subset of related units
-#' calc_similarity(TASVEG_mat, sources = "HSW")
-#' calc_similarity(TASVEG_mat, sources = c("AHF", "AHL"), by_source = TRUE)
+#' calc_agreement(TASVEG_mat, sources = "HSW")
+#' calc_agreement(TASVEG_mat, sources = c("AHF", "AHL"), by_source = TRUE)
 #'
-calc_similarity <- function(
+calc_agreement <- function(
   data,
   sources = NULL,
   targets = NULL,
