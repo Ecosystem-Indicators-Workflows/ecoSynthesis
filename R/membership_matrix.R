@@ -96,14 +96,13 @@ membership_matrix <- function(data) {
 print.membership_matrix <- function(x, ...) {
   d <- dim(x)
   cli::cli_text(
-    "{.cls <membership_matrix>} {.val {d[1]}} source{?s} x {.val {d[2]}} target{?s} x {.val {d[3]}} interpreter{?s}"
+    "{.cls membership_matrix} {.val {d[1]}} source{?s} x {.val {d[2]}} target{?s} x {.val {d[3]}} interpreter{?s}"
   )
   n_assessed <- apply(!is.na(unclass(x)[, 1, , drop = FALSE]), 3, sum)
   cli::cli_bullets(stats::setNames(
     paste0(names(n_assessed), ": ", n_assessed, " source units assessed"),
     rep("*", length(n_assessed))
   ))
-  cli::cli_text(
   cli::cli_inform(
     "Use {.code unclass({.field data})[{.field source}, {.field target}, {.field interpreter}]} to view values."
   )
