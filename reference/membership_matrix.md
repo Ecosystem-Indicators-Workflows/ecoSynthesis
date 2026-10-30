@@ -58,5 +58,5 @@ membership_matrix(TASVEG_memb)
 #> • Pointless Panda: 156 source units assessed
 #> • Tantalising Tarantula: 156 source units assessed
 #> • Worrysome Wren: 156 source units assessed
-#> Use `unclass(x)[source, target, interpreter]` to view values.
+#> Use `unclass(data)[source, target, interpreter]` to view values.
 ```

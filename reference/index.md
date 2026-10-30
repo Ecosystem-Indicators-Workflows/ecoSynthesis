@@ -21,6 +21,8 @@
   : Reshape membership table from paired columns to long format
 - [`lookup_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/lookup_tbl.md)
   : Create a lookup table for a classification
+- [`membership_matrix()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_matrix.md)
+  : Create a membership matrix
 - [`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md)
   : Create a heatmap of target use by interpreter
 - [`membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.md)
