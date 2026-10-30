@@ -37,6 +37,7 @@ membership_target_heatmap(TASVEG_memb)
 }
 \seealso{
 Other visualisation:
+\code{\link[=membership_target_pair_heatmap]{membership_target_pair_heatmap()}},
 \code{\link[=membership_tile_plot]{membership_tile_plot()}}
 }
 \author{
