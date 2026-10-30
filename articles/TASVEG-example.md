@@ -72,7 +72,7 @@ TASVEG are probably not eligible for cross-referencing.
 ``` r
 
 TASVEG_LUT |>
-  dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
+    dplyr::filter(VEGCODE %in% c("OAQ", "ORO", "OSM"))
 #> # A tibble: 3 × 3
 #>   VEG_GROUP                  VEGCODE VEGCODE_D             
 #>   <chr>                      <chr>   <chr>                 
@@ -86,8 +86,8 @@ Here, we create a lookup table with explicit eligible units:
 ``` r
 
 TASVEG_LUT_SS <- TASVEG_LUT |>
-  dplyr::mutate(elig = !VEGCODE %in% c("OAQ", "ORO", "OSM")) |>
-  lookup_tbl(id = "VEGCODE", name = "VEGCODE_D", eligible = "elig")
+    dplyr::mutate(elig = !VEGCODE %in% c("OAQ", "ORO", "OSM")) |>
+    lookup_tbl(id = "VEGCODE", name = "VEGCODE_D", eligible = "elig")
 ```
 
 ## Interpretation of classifications
@@ -129,11 +129,11 @@ membership values and interpreter info.
 ``` r
 
 TASVEG_memb <- membership_tbl(
-  TASVEG_xref,
-  source_id = "VEGCODE",
-  target_id = "efg",
-  membership = "memb",
-  interpreter = "interp"
+    TASVEG_xref,
+    source_id = "VEGCODE",
+    target_id = "efg",
+    membership = "memb",
+    interpreter = "interp"
 )
 TASVEG_memb
 #> <membership_tbl>
@@ -214,12 +214,12 @@ sid <- rlang::sym(attr(TASVEG_memb, "source_id"))
 tid <- rlang::sym(attr(TASVEG_memb, "target_id"))
 memb <- rlang::sym(attr(TASVEG_memb, "membership"))
 TASVEG_memb |>
-  group_by(interpreter = !!interp) |>
-  summarise(
-    n_sources = n_distinct(!!sid),
-    n_targets = n_distinct(!!tid),
-    merbership_sum = sum(!!memb, na.rm = TRUE)
-  )
+    group_by(interpreter = !!interp) |>
+    summarise(
+        n_sources = n_distinct(!!sid),
+        n_targets = n_distinct(!!tid),
+        merbership_sum = sum(!!memb, na.rm = TRUE)
+    )
 #> # A tibble: 4 × 4
 #>   interpreter           n_sources n_targets merbership_sum
 #>   <chr>                     <int>     <int>          <dbl>
@@ -241,7 +241,7 @@ We will use a tile plot, and select the following unit:
 ``` r
 
 TASVEG_LUT |>
-  dplyr::filter(VEGCODE == "HSW")
+    dplyr::filter(VEGCODE == "HSW")
 #> # A tibble: 1 × 3
 #>   VEG_GROUP                    VEGCODE VEGCODE_D                              
 #>   <chr>                        <chr>   <chr>                                  
@@ -255,8 +255,8 @@ TASVEG_LUT |>
 ``` r
 
 TASVEG_memb |>
-  dplyr::filter(VEGCODE == "HSW") |>
-  membership_tile_plot()
+    dplyr::filter(VEGCODE == "HSW") |>
+    membership_tile_plot()
 ```
 
 ![](TASVEG-example_files/figure-html/tile%20plot-1.png)
@@ -264,7 +264,7 @@ TASVEG_memb |>
 ``` r
 
 
-#Alternatively, code the filter in the function:
+# Alternatively, code the filter in the function:
 membership_tile_plot(TASVEG_memb, select_source = "HSW")
 #> Error in `membership_tile_plot()`:
 #> ! unused argument (select_source = "HSW")

@@ -52,7 +52,6 @@
 <!-- badges: start -->
 
 <p><em>This package is a work in progress and is not yet ready for use. Please check back later for updates.</em></p>
-<p>Please find more information about the Environmental Indicators Initiative here; <a href="https://ardc.edu.au/project/environmental-indicators-initiative/" class="external-link uri">https://ardc.edu.au/project/environmental-indicators-initiative/</a>, and the Ecosystem Indicator Workflows project here; <a href="https://ardc.edu.au/project/ecosystem-indicator-workflows/" class="external-link uri">https://ardc.edu.au/project/ecosystem-indicator-workflows/</a>.</p>
 <hr>
 <p>The goal of <code>ecoSynthesis</code> is to assist users in the synthesis of cross-referencing information between two classification systems. The examples in this package focus on ecosystem classifications, and specifically on cross-referencing from local classifications to a global standard classification, but functions are designed to work with any pair of classification systems.</p>
 <p>The process of cross-reference implies a source classification and a target classification, where the target classification might have a broader scope than the source. Elements in the source classification can be interpreted as directly related to one or more elements in the target classification. This relationship can be quantified as membership values, where the source element has memberships between 0 and 100% to each element of the target classification.</p>
@@ -100,30 +99,44 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis" class="external-link">ecoSynthesis</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">input_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  re1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Semi-deciduous Forest"</span>,</span>
-<span>    <span class="st">"Deciduous Forest"</span>,</span>
-<span>    <span class="st">"Wet Montane Forest"</span>,</span>
-<span>    <span class="st">"Dry Montane Forest"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  efg1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T1.1"</span>, <span class="st">"T1.2"</span>, <span class="st">"T1.1"</span>, <span class="st">"T1.2"</span><span class="op">)</span>,</span>
-<span>  memb1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">80</span>, <span class="fl">70</span>, <span class="fl">50</span><span class="op">)</span>,</span>
-<span>  efg2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T1.2"</span>, <span class="st">"T1.1"</span>, <span class="st">"T1.3"</span>, <span class="st">"T1.3"</span><span class="op">)</span>,</span>
-<span>  memb2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">30</span>, <span class="fl">50</span><span class="op">)</span></span>
+<span>    types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Semi-deciduous Forest"</span>,</span>
+<span>        <span class="st">"Deciduous Forest"</span>,</span>
+<span>        <span class="st">"Wet Montane Forest"</span>,</span>
+<span>        <span class="st">"Dry Montane Forest"</span></span>
+<span>    <span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T1.1"</span>, <span class="st">"T1.2"</span>, <span class="st">"T1.1"</span>, <span class="st">"T1.2"</span>, <span class="st">"T1.2"</span>, <span class="st">"T1.1"</span>, <span class="st">"T1.3"</span>, <span class="st">"T1.3"</span><span class="op">)</span>,</span>
+<span>    memb <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.80</span>, <span class="fl">0.70</span>, <span class="fl">0.50</span>, <span class="fl">0.20</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>, <span class="fl">0.50</span><span class="op">)</span>,</span>
+<span>    name <span class="op">=</span> <span class="st">"Parched Porcupine"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">membership_table</span><span class="op">(</span></span>
-<span>  <span class="va">input_table</span>,</span>
-<span>  <span class="st">"re1"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"efg1"</span>, <span class="st">"efg2"</span>, <span class="st">"efg3"</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"memb1"</span>, <span class="st">"memb2"</span><span class="op">)</span>,</span>
-<span>  target <span class="op">=</span> <span class="st">"T1.3"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/membership_tbl.html">membership_tbl</a></span><span class="op">(</span></span>
+<span>    <span class="va">input_table</span>,</span>
+<span>    source <span class="op">=</span> <span class="st">"types"</span>, target <span class="op">=</span> <span class="st">"groups"</span>, membership <span class="op">=</span> <span class="st">"memb"</span>, interpreter <span class="op">=</span> <span class="st">"name"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;membership_tbl&gt;</span></span>
+<span><span class="co">#&gt; source_id column: types</span></span>
+<span><span class="co">#&gt; target_id column: groups</span></span>
+<span><span class="co">#&gt; membership column: memb</span></span>
+<span><span class="co">#&gt; interpreter column: name</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 8 × 4</span></span>
+<span><span class="co">#&gt;   types                 groups  memb name             </span></span>
+<span><span class="co">#&gt; * &lt;chr&gt;                 &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;            </span></span>
+<span><span class="co">#&gt; 1 Semi-deciduous Forest T1.1     0.8 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 2 Deciduous Forest      T1.2     0.8 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 3 Wet Montane Forest    T1.1     0.7 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 4 Dry Montane Forest    T1.2     0.5 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 5 Semi-deciduous Forest T1.2     0.2 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 6 Deciduous Forest      T1.1     0.2 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 7 Wet Montane Forest    T1.3     0.3 Parched Porcupine</span></span>
+<span><span class="co">#&gt; 8 Dry Montane Forest    T1.3     0.5 Parched Porcupine</span></span></code></pre></div>
 <p>This package implements recommended methods from:</p>
 <blockquote>
 <p>IUCN (2025). Standards, methods and guidelines for cross-referencing ecosystem classifications and maps to the IUCN Global Ecosystem Typology. Version 1.0. Keith, D. A., Dayaram, A., Driver, A., Ferrer-Paris, J. R., Francis, R., Hay, S., Murray, N. J., Nicholson, E., Santos, J., Skowno, A. L. &amp; Tozer, M. G. (Eds.). Gland, Switzerland: IUCN. ISBN: 978-2-8317-2348-8. <a href="DOI:10.2305/CPPC6126" class="uri">DOI:10.2305/CPPC6126</a>.</p>
 </blockquote>
 <p>This package in in the very early stages of development.</p>
+<p>Please find more information about the Environmental Indicators Initiative here; <a href="https://ardc.edu.au/project/environmental-indicators-initiative/" class="external-link uri">https://ardc.edu.au/project/environmental-indicators-initiative/</a>, and the Ecosystem Indicator Workflows project here; <a href="https://ardc.edu.au/project/ecosystem-indicator-workflows/" class="external-link uri">https://ardc.edu.au/project/ecosystem-indicator-workflows/</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

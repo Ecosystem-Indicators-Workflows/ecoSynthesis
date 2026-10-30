@@ -3,12 +3,6 @@
 *This package is a work in progress and is not yet ready for use. Please
 check back later for updates.*
 
-Please find more information about the Environmental Indicators
-Initiative here;
-<https://ardc.edu.au/project/environmental-indicators-initiative/>, and
-the Ecosystem Indicator Workflows project here;
-<https://ardc.edu.au/project/ecosystem-indicator-workflows/>.
-
 ------------------------------------------------------------------------
 
 The goal of `ecoSynthesis` is to assist users in the synthesis of
@@ -59,25 +53,38 @@ This is a basic example which shows you how to solve a common problem:
 library(ecoSynthesis)
 
 input_table <- data.frame(
-  re1 = c(
-    "Semi-deciduous Forest",
-    "Deciduous Forest",
-    "Wet Montane Forest",
-    "Dry Montane Forest"
-  ),
-  efg1 = c("T1.1", "T1.2", "T1.1", "T1.2"),
-  memb1 = c(80, 80, 70, 50),
-  efg2 = c("T1.2", "T1.1", "T1.3", "T1.3"),
-  memb2 = c(20, 20, 30, 50)
+    types = rep(c(
+        "Semi-deciduous Forest",
+        "Deciduous Forest",
+        "Wet Montane Forest",
+        "Dry Montane Forest"
+    ), 2),
+    groups = c("T1.1", "T1.2", "T1.1", "T1.2", "T1.2", "T1.1", "T1.3", "T1.3"),
+    memb = c(0.80, 0.80, 0.70, 0.50, 0.20, 0.20, 0.30, 0.50),
+    name = "Parched Porcupine"
 )
 
-membership_table(
-  input_table,
-  "re1",
-  c("efg1", "efg2", "efg3"),
-  c("memb1", "memb2"),
-  target = "T1.3"
+membership_tbl(
+    input_table,
+    source = "types", target = "groups", membership = "memb", interpreter = "name"
 )
+#> <membership_tbl>
+#> source_id column: types
+#> target_id column: groups
+#> membership column: memb
+#> interpreter column: name
+#> 
+#> # A tibble: 8 × 4
+#>   types                 groups  memb name             
+#> * <chr>                 <chr>  <dbl> <chr>            
+#> 1 Semi-deciduous Forest T1.1     0.8 Parched Porcupine
+#> 2 Deciduous Forest      T1.2     0.8 Parched Porcupine
+#> 3 Wet Montane Forest    T1.1     0.7 Parched Porcupine
+#> 4 Dry Montane Forest    T1.2     0.5 Parched Porcupine
+#> 5 Semi-deciduous Forest T1.2     0.2 Parched Porcupine
+#> 6 Deciduous Forest      T1.1     0.2 Parched Porcupine
+#> 7 Wet Montane Forest    T1.3     0.3 Parched Porcupine
+#> 8 Dry Montane Forest    T1.3     0.5 Parched Porcupine
 ```
 
 This package implements recommended methods from:
@@ -90,3 +97,9 @@ This package implements recommended methods from:
 > Switzerland: IUCN. ISBN: 978-2-8317-2348-8. <DOI:10.2305/CPPC6126>.
 
 This package in in the very early stages of development.
+
+Please find more information about the Environmental Indicators
+Initiative here;
+<https://ardc.edu.au/project/environmental-indicators-initiative/>, and
+the Ecosystem Indicator Workflows project here;
+<https://ardc.edu.au/project/ecosystem-indicator-workflows/>.

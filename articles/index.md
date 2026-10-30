@@ -16,3 +16,5 @@ Vignettes about general topics
 
 - [Working with membership
   tables](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/articles/membership-tbl-example.md):
+- [Package
+  structure](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/articles/package-structure.md):
