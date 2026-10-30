@@ -213,7 +213,7 @@ Data validation allows the user to check if the data is valid for further proces
 
 ```{dot}
 //| label: fig-validation
-//| fig-cap: "Validation pipeline: functions, classes, methods and their relationship during a cycle of validation."
+//| fig-cap: "Validation pipeline: functions (blue), classes (gold), methods (green) and their relationship during a cycle of validation."
 digraph membership {
 
 // classes
