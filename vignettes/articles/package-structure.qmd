@@ -257,7 +257,7 @@ Positive results of validation means that the process can move to the step of da
 
 ### Exploration
 
-Data exploration includes calculating basic statistics to understand the shape of the data, for example the nr. of interpreters and rounds, or the distribution of membership values.
+Data exploration includes calculating basic statistics to understand the shape of the data, for example the No. of interpreters and rounds, or the distribution of membership values.
 
 
 :::{.callout-important}
