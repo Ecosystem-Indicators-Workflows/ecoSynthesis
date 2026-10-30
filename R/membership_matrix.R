@@ -30,10 +30,22 @@
 membership_matrix <- function(data) {
   #TODO filter by round once included in membership_tbl
   checkmate::assert_class(data, "membership_tbl")
-  checkmate::assert_numeric(data[[attributes(data)$membership]], .var.name = attributes(data)$membership)
-  checkmate::assert_character(data[[attributes(data)$source_id]], .var.name = attributes(data)$source_id)
-  checkmate::assert_character(data[[attributes(data)$target_id]], .var.name = attributes(data)$target_id)
-  checkmate::assert_character(data[[attributes(data)$interpreter]], .var.name = attributes(data)$interpreter)
+  checkmate::assert_numeric(
+    data[[attributes(data)$membership]],
+    .var.name = attributes(data)$membership
+  )
+  checkmate::assert_character(
+    data[[attributes(data)$source_id]],
+    .var.name = attributes(data)$source_id
+  )
+  checkmate::assert_character(
+    data[[attributes(data)$target_id]],
+    .var.name = attributes(data)$target_id
+  )
+  checkmate::assert_character(
+    data[[attributes(data)$interpreter]],
+    .var.name = attributes(data)$interpreter
+  )
   long <- data |>
     dplyr::select(
       source = attr(data, "source_id"),
