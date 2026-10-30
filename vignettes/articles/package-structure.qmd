@@ -129,7 +129,7 @@ Documentation of the classes is missing in the R files!
 
 ```{dot}
 //| label: fig-core
-//| fig-cap: "Core functions, classes, methods and their relationships."
+//| fig-cap: "Core functions (blue), classes (gold), methods (green) and their relationships."
 digraph membership {
 
 // classes
