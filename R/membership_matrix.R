@@ -96,7 +96,7 @@ membership_matrix <- function(data) {
 print.membership_matrix <- function(x, ...) {
   d <- dim(x)
   cli::cli_text(
-    "<membership_matrix> {d[1]} source{?s} x {d[2]} target{?s} x {d[3]} interpreter{?s}"
+    "{.cls <membership_matrix>} {.val {d[1]}} source{?s} x {.val {d[2]}} target{?s} x {.val {d[3]}} interpreter{?s}"
   )
   n_assessed <- apply(!is.na(unclass(x)[, 1, , drop = FALSE]), 3, sum)
   cli::cli_bullets(stats::setNames(
