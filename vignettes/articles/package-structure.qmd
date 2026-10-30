@@ -21,7 +21,7 @@ flowchart TB
     PREP["Data Preparation:<br/>importing, joining, filtering, modifying datasets "]:::Mixed
     VALID{"Data<br/>Validation"}:::InPkg
     EXP[Exploration:<br/> Interpreters, rounds, membership values]:::InPkg
-    NINT{"Nr of interpreters<br/> and rounds"}:::InPkg
+    NINT{"No. interpreters<br/> and rounds"}:::InPkg
     ELI1[Within rounds<br/>agreemnet]:::InPkg
     ELI2[Between rounds<br/>entropy metrics]:::InPkg
     
