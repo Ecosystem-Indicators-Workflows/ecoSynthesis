@@ -21,7 +21,7 @@
 #'
 #'
 #' @export
-#' @author Abhimanyu Raj Singh
+#' @author Abhimanyu Raj Singh and JR Ferrer-Paris
 #' @family similarity
 #' @examples
 #' # Example usage with the TASVEG_xref dataset
@@ -84,69 +84,47 @@ calc_agreement <- function(
   }
 
   interp_pairs <- tidyr::expand_grid(
-    interpreter_a = interpreters,
-    interpreter_b = interpreters
-  ) |>
-    dplyr::filter(interpreter_a < interpreter_b)
+    interpreter_x = interpreters,
+    interpreter_y = interpreters
+  )
 
   # half L1 similarity per source, NA where either interpreter did not assess it
   sim_by_source <- purrr::map2(
-    interp_pairs$interpreter_a,
-    interp_pairs$interpreter_b,
+    interp_pairs$interpreter_x,
+    interp_pairs$interpreter_y,
     \(a, b) {
+      dissimilarity <- 0.5 *
+        unname(rowSums(abs(
+          memb_array[,, a, drop = FALSE] - memb_array[,, b, drop = FALSE]
+        )))
+      similarity <- 1 - dissimilarity
       tibble::tibble(
         source = dimnames(memb_array)$source,
-        interpreter_a = a,
-        interpreter_b = b,
-        similarity = 1 -
-          0.5 *
-            unname(rowSums(abs(
-              memb_array[,, a, drop = FALSE] - memb_array[,, b, drop = FALSE]
-            )))
+        interpreter_x = a,
+        interpreter_y = b,
+        similarity,
+        dissimilarity
       )
     }
   ) |>
     dplyr::bind_rows() |>
-    dplyr::filter(!is.na(similarity)) |>
-    dplyr::mutate(dissimilarity = 1 - similarity)
+    dplyr::filter(!is.na(.data$similarity))
 
   if (by_source) {
+    sim_by_source <- sim_by_source |>
+      dplyr::filter(.data$interpreter_x > .data$interpreter_y)
     return(sim_by_source)
   }
 
   sim_pairs <- sim_by_source |>
     dplyr::summarise(
       n_units = dplyr::n(),
-      median_similarity = stats::median(similarity),
-      share_identical = mean(dissimilarity < 0.001),
-      similarity = mean(similarity),
-      .by = c("interpreter_a", "interpreter_b")
+      similarity = mean(.data$similarity),
+      median_similarity = stats::median(.data$similarity),
+      share_identical = mean(.data$dissimilarity < 0.001),
+      dissimilarity = mean(.data$dissimilarity),
+      .by = c("interpreter_x", "interpreter_y")
     )
 
-  # each interpreter compared with themself, n_units is the units they assessed
-  sim_diagonal <- tibble::tibble(
-    interpreter_a = interpreters,
-    interpreter_b = interpreters,
-    n_units = unname(apply(!is.na(memb_array[, 1, , drop = FALSE]), 3, sum)),
-    median_similarity = 1,
-    share_identical = 1,
-    similarity = 1
-  )
-
-  # mirror pairs so the matrix is symmetric, then add the diagonal
-  sim_pairs |>
-    dplyr::bind_rows(
-      sim_pairs |>
-        dplyr::rename(
-          interpreter_a = "interpreter_b",
-          interpreter_b = "interpreter_a"
-        ),
-      sim_diagonal
-    ) |>
-    dplyr::rename(
-      interpreter_x = "interpreter_a",
-      interpreter_y = "interpreter_b"
-    ) |>
-    dplyr::relocate("similarity", .after = "n_units") |>
-    dplyr::mutate(dissimilarity = 1 - similarity)
+  return(sim_pairs)
 }

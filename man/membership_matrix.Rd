@@ -35,6 +35,10 @@ TASVEG_memb <- membership_tbl(
 membership_matrix(TASVEG_memb)
 
 }
+\seealso{
+Other similarity:
+\code{\link[=calc_agreement]{calc_agreement()}}
+}
 \author{
 Abhimanyu Raj Singh
 }

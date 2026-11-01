@@ -60,7 +60,11 @@ calc_agreement(TASVEG_mat, sources = "HSW")
 calc_agreement(TASVEG_mat, sources = c("AHF", "AHL"), by_source = TRUE)
 
 }
+\seealso{
+Other similarity:
+\code{\link[=membership_matrix]{membership_matrix()}}
+}
 \author{
-Abhimanyu Raj Singh
+Abhimanyu Raj Singh and JR Ferrer-Paris
 }
 \concept{similarity}
