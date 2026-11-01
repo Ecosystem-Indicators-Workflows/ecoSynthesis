@@ -84,7 +84,7 @@ test_that("calc_agreement by_source returns one row per source and pair", {
 
   expect_named(
     out,
-    c("source", "interpreter_a", "interpreter_b", "similarity", "dissimilarity")
+    c("source", "interpreter_x", "interpreter_y", "similarity", "dissimilarity")
   )
   expect_equal(out$source, c("S1", "S2"))
   expect_equal(out$similarity, c(0.5, 1))
