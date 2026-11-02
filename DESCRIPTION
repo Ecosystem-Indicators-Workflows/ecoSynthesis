@@ -29,7 +29,9 @@ Imports:
     tibble,
     tidyr,
     checkmate,
-    stats
+    stats,
+    <pkg>,
+    ecoSynthesis
 Suggests: 
     testthat (>= 3.0.0),
     quarto

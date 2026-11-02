@@ -6,7 +6,7 @@
 #' @param round The round of elicitation to compare. Not used yet, as round is not included in `membership_tbl`.
 #' @param by_source Logical. If `FALSE` (default), returns one row per interpreter pair summarised across `source` units. If `TRUE`, returns one row per `source` unit and interpreter pair.
 #'
-#' @returns A tibble. With `by_source = FALSE`, columns `interpreter_x`, `interpreter_y`, `n_units`, `similarity`, `median_similarity`, `share_identical` and `dissimilarity`, with one row per interpreter pair in both directions plus the diagonal. With `by_source = TRUE`, columns `source`, `interpreter_a`, `interpreter_b`, `similarity` and `dissimilarity`.
+#' @returns A tibble. With `by_source = FALSE`, columns `interpreter_x`, `interpreter_y`, `n_units`, `similarity`, `median_similarity`, `share_identical` and `dissimilarity`, with one row per interpreter pair in both directions plus the diagonal. With `by_source = TRUE`, columns `source`, `interpreter_x`, `interpreter_y`, `similarity` and `dissimilarity`, with each interpreter pair once.
 #'
 #' @details
 #' Returns the similarity between each pair of interpreters as `1 - 0.5 * sum(|a - b|)`, where `a` and `b` are the membership vectors of two interpreters for the same `source` unit. When membership values for a `source` sum to 1, this is the share of membership the two interpreters agree on: 1 means identical membership and 0 means no target in common. Only `source` units assessed by both interpreters are compared. Dissimilarity is calculated as `1 - similarity`.
@@ -111,20 +111,19 @@ calc_agreement <- function(
     dplyr::filter(!is.na(.data$similarity))
 
   if (by_source) {
-    sim_by_source <- sim_by_source |>
+    sim_by_source |>
       dplyr::filter(.data$interpreter_x > .data$interpreter_y)
-    return(sim_by_source)
+  } else {
+    # median and share before similarity, which replaces the per-source column
+    sim_by_source |>
+      dplyr::summarise(
+        n_units = dplyr::n(),
+        median_similarity = stats::median(.data$similarity),
+        share_identical = mean(.data$dissimilarity < 0.001),
+        similarity = mean(.data$similarity),
+        dissimilarity = mean(.data$dissimilarity),
+        .by = c("interpreter_x", "interpreter_y")
+      ) |>
+      dplyr::relocate("similarity", .after = "n_units")
   }
-
-  sim_pairs <- sim_by_source |>
-    dplyr::summarise(
-      n_units = dplyr::n(),
-      similarity = mean(.data$similarity),
-      median_similarity = stats::median(.data$similarity),
-      share_identical = mean(.data$dissimilarity < 0.001),
-      dissimilarity = mean(.data$dissimilarity),
-      .by = c("interpreter_x", "interpreter_y")
-    )
-
-  return(sim_pairs)
 }

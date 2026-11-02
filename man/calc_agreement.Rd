@@ -24,7 +24,7 @@ calc_agreement(
 \item{by_source}{Logical. If \code{FALSE} (default), returns one row per interpreter pair summarised across \code{source} units. If \code{TRUE}, returns one row per \code{source} unit and interpreter pair.}
 }
 \value{
-A tibble. With \code{by_source = FALSE}, columns \code{interpreter_x}, \code{interpreter_y}, \code{n_units}, \code{similarity}, \code{median_similarity}, \code{share_identical} and \code{dissimilarity}, with one row per interpreter pair in both directions plus the diagonal. With \code{by_source = TRUE}, columns \code{source}, \code{interpreter_a}, \code{interpreter_b}, \code{similarity} and \code{dissimilarity}.
+A tibble. With \code{by_source = FALSE}, columns \code{interpreter_x}, \code{interpreter_y}, \code{n_units}, \code{similarity}, \code{median_similarity}, \code{share_identical} and \code{dissimilarity}, with one row per interpreter pair in both directions plus the diagonal. With \code{by_source = TRUE}, columns \code{source}, \code{interpreter_x}, \code{interpreter_y}, \code{similarity} and \code{dissimilarity}, with each interpreter pair once.
 }
 \description{
 Calculate agreement between interpreters

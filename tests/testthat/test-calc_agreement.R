@@ -111,3 +111,24 @@ test_that("calc_agreement warns that round is not used yet", {
 test_that("calc_agreement checks by_source is a flag", {
   expect_error(calc_agreement(test_mat(), by_source = "yes"))
 })
+
+test_that("calc_agreement median_similarity is the median over source units", {
+  # A vs B: S1 = 0.5, S2 = 1, S3 = 1 -> mean 5/6, median 1
+  mat <- membership_tbl(
+    data.frame(
+      source = c("S1", "S1", "S1", "S2", "S2", "S3", "S3"),
+      target = c("X", "Y", "X", "X", "X", "X", "X"),
+      membership = c(0.5, 0.5, 1, 1, 1, 1, 1),
+      interpreter = c("A", "A", "B", "A", "B", "A", "B")
+    ),
+    source_id = "source",
+    target_id = "target"
+  ) |>
+    membership_matrix()
+
+  ab <- calc_agreement(mat) |>
+    dplyr::filter(interpreter_x == "A", interpreter_y == "B")
+
+  expect_equal(ab$similarity, 5 / 6)
+  expect_equal(ab$median_similarity, 1)
+})
