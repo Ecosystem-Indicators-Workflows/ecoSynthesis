@@ -303,17 +303,58 @@ Discuss functions and their relationship
 
 :::
 
-### Synthesis
+### Synthesis & outputs
+
+For each unit in the source classification, what is the support for candidates in the target classification? The number of interpreters supporting a relationship, and the proportion of all membership values.
+
+```{dot}
+//| label: fig-synthesis
+//| fig-cap: "Synthesis of membership values: functions (blue), classes (gold), methods (green) and their relationship during a cycle of validation."
+digraph membership {
+
+// classes
+node [shape=record fillcolor="#fff4d6", color="#8a5a00", fontcolor="#8a5a00", penwidth=2];
+MT[label=<{Class <i>membership_tbl</i>|(not documented)}>]
+node [style=dashed];
+MS[label=<{Class <i>membership_summary</i>|(not documented)}>]
+
+// methods
+node [shape=box fillcolor="#ddffdd", color="#004400", fontcolor="#004400", penwidth=2];
+node [style=dashed];
+MSP[label=<print(<i>membership_summary</i>)>] 
+// 
+
+node [shape=record fillcolor="#e3edfb", color="#1f4e99", fontcolor="#1f4e99", penwidth=2 style=solid];
+MTF[label=<{<i>membership_tbl()</i>|Create a membership table}>];
+
+node [style=dashed];
+MSF[label=<{<i>summarise_membership()</i>|Summarise a membership matrix}>];
 
 
-:::{.callout-important}
-## TO DO
+subgraph cluster_prep {
+    label="Synthesis"; 
+    MT -> MSF [label=input];
+    MS -> MSP [label=<has method>]
+    MSF -> MS [label=creates];
+    subgraph cluster_main {
+        label="Core functions" style=dashed;
+        MTF -> MT [label=creates];
+    }
+}
 
-Discuss functions and their relationship
+node [shape=record fillcolor="#e3edeb", color="#1f1e19", fontcolor="#1f1e19", penwidth=2 style=filled];
+OTHERSF[label=<{Custom scripts|spatial feature output}>]
+OTHERXLSX[label=<{Custom scripts|output table CSV or XLSX}>]
 
-:::
+subgraph cluster_out {
+    label="Other R packages";
+    MS -> OTHERSF;
+    MS -> OTHERXLSX;
+    OTHERXLSX -> OTHERSF
+}
+}
+```
 
-### Outputs
 
 
 :::{.callout-important}
