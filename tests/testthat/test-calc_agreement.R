@@ -3,20 +3,6 @@
 # S2: A and B both put 1 on X -> similarity 1
 # S3: only A assessed it -> not compared
 
-test_mat <- function() {
-  membership_tbl(
-    data.frame(
-      source = c("S1", "S1", "S1", "S2", "S2", "S3"),
-      target = c("X", "Y", "X", "X", "X", "X"),
-      membership = c(0.5, 0.5, 1, 1, 1, 1),
-      interpreter = c("A", "A", "B", "A", "B", "A")
-    ),
-    source_id = "source",
-    target_id = "target"
-  ) |>
-    membership_matrix()
-}
-
 test_that("calc_agreement fails when data is not membership_matrix", {
   expect_error(calc_agreement(data.frame(a = 1)))
 })
@@ -38,7 +24,7 @@ test_that("calc_agreement needs at least two interpreters", {
 })
 
 test_that("calc_agreement returns the documented columns", {
-  out <- calc_agreement(test_mat())
+  out <- calc_agreement(make_test_membership_mtx())
 
   expect_s3_class(out, "tbl_df")
   expect_named(
@@ -58,7 +44,7 @@ test_that("calc_agreement returns the documented columns", {
 })
 
 test_that("calc_agreement gives the expected values", {
-  out <- calc_agreement(test_mat())
+  out <- calc_agreement(make_test_membership_mtx())
   ab <- out[out$interpreter_x == "A" & out$interpreter_y == "B", ]
   ba <- out[out$interpreter_x == "B" & out$interpreter_y == "A", ]
 
@@ -71,7 +57,7 @@ test_that("calc_agreement gives the expected values", {
 })
 
 test_that("calc_agreement sets the diagonal to 1 with units assessed", {
-  out <- calc_agreement(test_mat())
+  out <- calc_agreement(make_test_membership_mtx())
   diag <- out[out$interpreter_x == out$interpreter_y, ]
 
   expect_equal(diag$similarity, c(1, 1))
@@ -80,7 +66,7 @@ test_that("calc_agreement sets the diagonal to 1 with units assessed", {
 })
 
 test_that("calc_agreement by_source returns one row per source and pair", {
-  out <- calc_agreement(test_mat(), by_source = TRUE)
+  out <- calc_agreement(make_test_membership_mtx(), by_source = TRUE)
 
   expect_named(
     out,
@@ -91,25 +77,36 @@ test_that("calc_agreement by_source returns one row per source and pair", {
 })
 
 test_that("calc_agreement filters by sources", {
-  out <- calc_agreement(test_mat(), sources = "S1", by_source = TRUE)
+  out <- calc_agreement(
+    make_test_membership_mtx(),
+    sources = "S1",
+    by_source = TRUE
+  )
 
   expect_equal(out$source, "S1")
-  expect_error(calc_agreement(test_mat(), sources = "NOPE"))
+  expect_error(calc_agreement(make_test_membership_mtx(), sources = "NOPE"))
 })
 
 test_that("calc_agreement filters by targets", {
-  out <- calc_agreement(test_mat(), targets = "X", by_source = TRUE)
+  out <- calc_agreement(
+    make_test_membership_mtx(),
+    targets = "X",
+    by_source = TRUE
+  )
 
   expect_equal(out$similarity, c(0.75, 1))
-  expect_error(calc_agreement(test_mat(), targets = "NOPE"))
+  expect_error(calc_agreement(make_test_membership_mtx(), targets = "NOPE"))
 })
 
 test_that("calc_agreement warns that round is not used yet", {
-  expect_warning(calc_agreement(test_mat(), round = 1), "not used yet")
+  expect_warning(
+    calc_agreement(make_test_membership_mtx(), round = 1),
+    "not used yet"
+  )
 })
 
 test_that("calc_agreement checks by_source is a flag", {
-  expect_error(calc_agreement(test_mat(), by_source = "yes"))
+  expect_error(calc_agreement(make_test_membership_mtx(), by_source = "yes"))
 })
 
 test_that("calc_agreement median_similarity is the median over source units", {
