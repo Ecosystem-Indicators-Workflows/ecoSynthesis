@@ -33,10 +33,10 @@ test_that("calc_agreement returns the documented columns", {
       "interpreter_x",
       "interpreter_y",
       "n_units",
-      "similarity",
+      "mean_similarity",
       "median_similarity",
       "share_identical",
-      "dissimilarity"
+      "mean_dissimilarity"
     )
   )
   # A-B, B-A, A-A, B-B
@@ -45,24 +45,26 @@ test_that("calc_agreement returns the documented columns", {
 
 test_that("calc_agreement gives the expected values", {
   out <- calc_agreement(make_test_membership_mtx())
-  ab <- out[out$interpreter_x == "A" & out$interpreter_y == "B", ]
-  ba <- out[out$interpreter_x == "B" & out$interpreter_y == "A", ]
+  ab <- out |> dplyr::filter(interpreter_x == "A", interpreter_y == "B")
+  ba <- out |> dplyr::filter(interpreter_x == "B", interpreter_y == "A")
 
   expect_equal(ab$n_units, 2)
-  expect_equal(ab$similarity, 0.75)
+  expect_equal(ab$mean_similarity, 0.75)
   expect_equal(ab$median_similarity, 0.75)
   expect_equal(ab$share_identical, 0.5)
-  expect_equal(ab$dissimilarity, 0.25)
-  expect_equal(ba$similarity, ab$similarity)
+  expect_equal(ab$mean_dissimilarity, 0.25)
+  expect_equal(ba$mean_similarity, ab$mean_similarity)
 })
 
 test_that("calc_agreement sets the diagonal to 1 with units assessed", {
   out <- calc_agreement(make_test_membership_mtx())
-  diag <- out[out$interpreter_x == out$interpreter_y, ]
+  diag <- out |> dplyr::filter(interpreter_x == interpreter_y)
 
-  expect_equal(diag$similarity, c(1, 1))
+  expect_equal(diag$mean_similarity, c(1, 1))
   expect_equal(diag$n_units[diag$interpreter_x == "A"], 3)
   expect_equal(diag$n_units[diag$interpreter_x == "B"], 2)
+  expect_equal(diag$share_identical, c(1, 1))
+  expect_equal(diag$mean_dissimilarity, c(0, 0))
 })
 
 test_that("calc_agreement by_source returns one row per source and pair", {
@@ -70,7 +72,13 @@ test_that("calc_agreement by_source returns one row per source and pair", {
 
   expect_named(
     out,
-    c("source", "interpreter_x", "interpreter_y", "similarity", "dissimilarity")
+    c(
+      "source",
+      "interpreter_x",
+      "interpreter_y",
+      "similarity",
+      "dissimilarity"
+    )
   )
   expect_equal(out$source, c("S1", "S2"))
   expect_equal(out$similarity, c(0.5, 1))
@@ -126,6 +134,7 @@ test_that("calc_agreement median_similarity is the median over source units", {
   ab <- calc_agreement(mat) |>
     dplyr::filter(interpreter_x == "A", interpreter_y == "B")
 
-  expect_equal(ab$similarity, 5 / 6)
+  expect_equal(ab$mean_similarity, 5 / 6)
   expect_equal(ab$median_similarity, 1)
+  #TODO add a test for share_identical and mean_dissimilarity
 })

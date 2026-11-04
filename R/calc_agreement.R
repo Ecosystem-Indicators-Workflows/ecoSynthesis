@@ -4,24 +4,26 @@
 #' @param sources A character vector of `source` units to compare. If `NULL` (default), all `source` units are used.
 #' @param targets A character vector of `target` units to compare. If `NULL` (default), all `target` units are used.
 #' @param round The round of elicitation to compare. Not used yet, as round is not included in `membership_tbl`.
-#' @param by_source Logical. If `FALSE` (default), returns one row per interpreter pair summarised across `source` units. If `TRUE`, returns one row per `source` unit and interpreter pair.
+#' @param by_source Logical. If `FALSE` (default), returns one row per interpreter pair summarised across `source` units, i.e., the mean pairwise (dis)similarity across the `source` units. If `TRUE`, returns one row per `source` unit and interpreter pair, i.e., the pairwise (dis)similarity for each `source` unit.
 #'
-#' @returns A tibble. With `by_source = FALSE`, columns `interpreter_x`, `interpreter_y`, `n_units`, `similarity`, `median_similarity`, `share_identical` and `dissimilarity`, with one row per interpreter pair in both directions plus the diagonal. With `by_source = TRUE`, columns `source`, `interpreter_x`, `interpreter_y`, `similarity` and `dissimilarity`, with each interpreter pair once.
+#' @returns A tibble. With `by_source = FALSE`, columns `interpreter_x`, `interpreter_y`, `n_units`, `mean_similarity`, `median_similarity`, `share_identical` and `mean_dissimilarity`, with one row per interpreter pair in both directions plus the diagonal. With `by_source = TRUE`, columns `source`, `interpreter_x`, `interpreter_y`, `similarity` and `dissimilarity`, with each interpreter pair once.
 #'
 #' @details
 #' Returns the similarity between each pair of interpreters as `1 - 0.5 * sum(|a - b|)`, where `a` and `b` are the membership vectors of two interpreters for the same `source` unit. When membership values for a `source` sum to 1, this is the share of membership the two interpreters agree on: 1 means identical membership and 0 means no target in common. Only `source` units assessed by both interpreters are compared. Dissimilarity is calculated as `1 - similarity`.
 #'
-#' By default similarity is calculated globally, across all `source` units, to track change across rounds and report final round values. Use `sources` to calculate similarity within a subset of `source` units, such as a single unit or a handful of related units. Use `targets` to compare only some `target` units: membership vectors are then not complete, so similarity measures agreement on those targets only, and `source` units where neither interpreter used those targets count as identical.
+#' By default pairwise similarity is calculated globally, across all `source` units, to track change across rounds and report final round values. `mean_similarity` is the mean across `source` units, `share_identical` is the share of `source` units with identical membership, and `n_units` counts the units compared. Pairs of interpreters are mirrored so the matrix is symmetrical, and the diagonal is set to 1 with `n_units` representing the number of units each interpreter assessed. This makes it easy to visualize the agreement between interpreters using [membership_target_pair_heatmap()].
 #'
-#' In the summary, `similarity` is the mean across `source` units, `share_identical` is the share of `source` units with identical membership, and `n_units` counts the units compared. Pairs are mirrored so the matrix is symmetric, and the diagonal is set to 1 with `n_units` as the number of units each interpreter assessed. The summary is ready to plot as a heatmap of interpreter pairs.
+#' ## Filtering by `sources` and `targets`
+#' Use `sources` to calculate similarity within a subset of `source` units, such as a single unit or a handful of related units. Use `targets` to compare only some `target` units; in which case, membership vectors are then incomplete, so pairwise `similarity` measures agreement on selected `targets` only, and `source` units where neither interpreter used those targets count as identical.
 #'
 #'
 #' ## Future Enhancements
 #' The function is designed to be flexible and can be extended in the future. Users may filter by round of elicitation once round is included in `membership_tbl`, and choose from additional similarity measures, such as the normalised Euclidean distance and the fuzzy Jaccard (Ruzicka) index.
 #'
+#' To discuss: add flag to return a non-symmetrical matrix with only one row per pair of interpreters, or a symmetrical matrix with the diagonal set to NA for easier plotting / analysis.
 #'
 #' @export
-#' @author Abhimanyu Raj Singh and JR Ferrer-Paris
+#' @author Abhimanyu Raj Singh, JR Ferrer-Paris and Elliot Gould
 #' @family similarity
 #' @examples
 #' # Example usage with the TASVEG_xref dataset
@@ -58,7 +60,7 @@ calc_agreement <- function(
     cli::cli_warn("{.arg round} is not used yet, all rounds are compared.")
   }
 
-  memb_array <- unclass(data)
+  memb_array <- unclass(data) #TODO format of membership_matrix should change so we do not have to call unclass to work with it
   if (!is.null(sources)) {
     checkmate::assert_subset(
       sources,
@@ -120,10 +122,10 @@ calc_agreement <- function(
         n_units = dplyr::n(),
         median_similarity = stats::median(.data$similarity),
         share_identical = mean(.data$dissimilarity < 0.001),
-        similarity = mean(.data$similarity),
-        dissimilarity = mean(.data$dissimilarity),
+        mean_similarity = mean(.data$similarity),
+        mean_dissimilarity = mean(.data$dissimilarity),
         .by = c("interpreter_x", "interpreter_y")
       ) |>
-      dplyr::relocate("similarity", .after = "n_units")
+      dplyr::relocate("mean_similarity", .after = "n_units")
   }
 }
