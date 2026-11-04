@@ -21,10 +21,10 @@ calc_agreement(
 
 \item{round}{The round of elicitation to compare. Not used yet, as round is not included in \code{membership_tbl}.}
 
-\item{by_source}{Logical. If \code{FALSE} (default), returns one row per interpreter pair summarised across \code{source} units. If \code{TRUE}, returns one row per \code{source} unit and interpreter pair.}
+\item{by_source}{Logical. If \code{FALSE} (default), returns one row per interpreter pair summarised across \code{source} units, i.e., the mean pairwise (dis)similarity across the \code{source} units. If \code{TRUE}, returns one row per \code{source} unit and interpreter pair, i.e., the pairwise (dis)similarity for each \code{source} unit.}
 }
 \value{
-A tibble. With \code{by_source = FALSE}, columns \code{interpreter_x}, \code{interpreter_y}, \code{n_units}, \code{similarity}, \code{median_similarity}, \code{share_identical} and \code{dissimilarity}, with one row per interpreter pair in both directions plus the diagonal. With \code{by_source = TRUE}, columns \code{source}, \code{interpreter_x}, \code{interpreter_y}, \code{similarity} and \code{dissimilarity}, with each interpreter pair once.
+A tibble. With \code{by_source = FALSE}, columns \code{interpreter_x}, \code{interpreter_y}, \code{n_units}, \code{mean_similarity}, \code{median_similarity}, \code{share_identical} and \code{mean_dissimilarity}, with one row per interpreter pair in both directions plus the diagonal. With \code{by_source = TRUE}, columns \code{source}, \code{interpreter_x}, \code{interpreter_y}, \code{similarity} and \code{dissimilarity}, with each interpreter pair once.
 }
 \description{
 Calculate agreement between interpreters
@@ -32,12 +32,17 @@ Calculate agreement between interpreters
 \details{
 Returns the similarity between each pair of interpreters as \verb{1 - 0.5 * sum(|a - b|)}, where \code{a} and \code{b} are the membership vectors of two interpreters for the same \code{source} unit. When membership values for a \code{source} sum to 1, this is the share of membership the two interpreters agree on: 1 means identical membership and 0 means no target in common. Only \code{source} units assessed by both interpreters are compared. Dissimilarity is calculated as \code{1 - similarity}.
 
-By default similarity is calculated globally, across all \code{source} units, to track change across rounds and report final round values. Use \code{sources} to calculate similarity within a subset of \code{source} units, such as a single unit or a handful of related units. Use \code{targets} to compare only some \code{target} units: membership vectors are then not complete, so similarity measures agreement on those targets only, and \code{source} units where neither interpreter used those targets count as identical.
+By default pairwise similarity is calculated globally, across all \code{source} units, to track change across rounds and report final round values. \code{mean_similarity} is the mean across \code{source} units, \code{share_identical} is the share of \code{source} units with identical membership, and \code{n_units} counts the units compared. Pairs of interpreters are mirrored so the matrix is symmetrical, and the diagonal is set to 1 with \code{n_units} representing the number of units each interpreter assessed. This makes it easy to visualize the agreement between interpreters using \code{\link[=membership_target_pair_heatmap]{membership_target_pair_heatmap()}}.
+\subsection{Filtering by \code{sources} and \code{targets}}{
 
-In the summary, \code{similarity} is the mean across \code{source} units, \code{share_identical} is the share of \code{source} units with identical membership, and \code{n_units} counts the units compared. Pairs are mirrored so the matrix is symmetric, and the diagonal is set to 1 with \code{n_units} as the number of units each interpreter assessed. The summary is ready to plot as a heatmap of interpreter pairs.
+Use \code{sources} to calculate similarity within a subset of \code{source} units, such as a single unit or a handful of related units. Use \code{targets} to compare only some \code{target} units; in which case, membership vectors are then incomplete, so pairwise \code{similarity} measures agreement on selected \code{targets} only, and \code{source} units where neither interpreter used those targets count as identical.
+}
+
 \subsection{Future Enhancements}{
 
 The function is designed to be flexible and can be extended in the future. Users may filter by round of elicitation once round is included in \code{membership_tbl}, and choose from additional similarity measures, such as the normalised Euclidean distance and the fuzzy Jaccard (Ruzicka) index.
+
+To discuss: add flag to return a non-symmetrical matrix with only one row per pair of interpreters, or a symmetrical matrix with the diagonal set to NA for easier plotting / analysis.
 }
 }
 \examples{
@@ -65,6 +70,6 @@ Other similarity:
 \code{\link[=membership_matrix]{membership_matrix()}}
 }
 \author{
-Abhimanyu Raj Singh and JR Ferrer-Paris
+Abhimanyu Raj Singh, JR Ferrer-Paris and Elliot Gould
 }
 \concept{similarity}
