@@ -2,7 +2,7 @@
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
-# ecoSynthesis (0.0.0.9002)
+# ecoSynthesis (0.0.0.9003)
 
 <!-- badges: start -->
 
@@ -60,12 +60,15 @@ This is a basic example which shows you how to solve a common problem:
 library(ecoSynthesis)
 
 input_table <- data.frame(
-    types = rep(c(
-        "Semi-deciduous Forest",
-        "Deciduous Forest",
-        "Wet Montane Forest",
-        "Dry Montane Forest"
-    ), 2),
+    types = rep(
+        c(
+            "Semi-deciduous Forest",
+            "Deciduous Forest",
+            "Wet Montane Forest",
+            "Dry Montane Forest"
+        ),
+        2
+    ),
     groups = c("T1.1", "T1.2", "T1.1", "T1.2", "T1.2", "T1.1", "T1.3", "T1.3"),
     memb = c(0.80, 0.80, 0.70, 0.50, 0.20, 0.20, 0.30, 0.50),
     name = "Parched Porcupine"
@@ -73,7 +76,10 @@ input_table <- data.frame(
 
 membership_tbl(
     input_table,
-    source = "types", target = "groups", membership = "memb", interpreter = "name"
+    source = "types",
+    target = "groups",
+    membership = "memb",
+    interpreter = "name"
 )
 #> <membership_tbl>
 #> source_id column: types
