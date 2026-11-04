@@ -57,13 +57,13 @@ membership_target_pair_heatmap <- function(data) {
     dplyr::inner_join(
       used,
       by = c("source", "target"),
-      suffix = c("_a", "_b"),
+      suffix = c("_x", "_y"),
       relationship = "many-to-many"
     ) |>
-    dplyr::filter(.data$interpreter_a < .data$interpreter_b) |>
+    dplyr::filter(.data$interpreter_x < .data$interpreter_y) |>
     dplyr::count(
       .data$target,
-      pair = paste(.data$interpreter_a, "vs", .data$interpreter_b, sep = "\n"),
+      pair = paste(.data$interpreter_x, "vs", .data$interpreter_y, sep = "\n"),
       name = "n_sources"
     ) |>
     ggplot2::ggplot(ggplot2::aes(
