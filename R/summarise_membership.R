@@ -62,10 +62,10 @@ summarise_membership <- function(data, which_round = NULL) {
 
   if (is.null(which_round)) {
     which_round <- max(data[[rval]])
-    message(sprintf("No round selected, defaults to round %s", which_round))
+    cli::cli_inform("No round selected, defaults to round {.val {which_round}}.")
   } else {
     checkmate::assertTRUE(which_round %in% data[[rval]])
-    message(sprintf("Round nr. %s selected", which_round))
+    cli::cli_inform("Round nr. {.val {which_round}} selected.")
   }
   out <-
     data |>
