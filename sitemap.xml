@@ -18,6 +18,7 @@
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_mini_expert_wide.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/TASVEG_xref.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/as_membership_tbl.html</loc></url>
+<url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_agreement.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/check_membership.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/ecoSynthesis-package.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/import_paired_membership.html</loc></url>
@@ -25,6 +26,7 @@
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/lookup_tbl.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_matrix.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.html</loc></url>
+<url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_pair_heatmap.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tile_plot.html</loc></url>
 <url><loc>https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.lookup_tbl.html</loc></url>

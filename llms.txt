@@ -1,4 +1,4 @@
-# ecoSynthesis (0.0.0.9002)
+# ecoSynthesis (0.0.0.9003)
 
 *This package is a work in progress and is not yet ready for use. Please
 check back later for updates.*
@@ -53,12 +53,15 @@ This is a basic example which shows you how to solve a common problem:
 library(ecoSynthesis)
 
 input_table <- data.frame(
-    types = rep(c(
-        "Semi-deciduous Forest",
-        "Deciduous Forest",
-        "Wet Montane Forest",
-        "Dry Montane Forest"
-    ), 2),
+    types = rep(
+        c(
+            "Semi-deciduous Forest",
+            "Deciduous Forest",
+            "Wet Montane Forest",
+            "Dry Montane Forest"
+        ),
+        2
+    ),
     groups = c("T1.1", "T1.2", "T1.1", "T1.2", "T1.2", "T1.1", "T1.3", "T1.3"),
     memb = c(0.80, 0.80, 0.70, 0.50, 0.20, 0.20, 0.30, 0.50),
     name = "Parched Porcupine"
@@ -66,7 +69,10 @@ input_table <- data.frame(
 
 membership_tbl(
     input_table,
-    source = "types", target = "groups", membership = "memb", interpreter = "name"
+    source = "types",
+    target = "groups",
+    membership = "memb",
+    interpreter = "name"
 )
 #> <membership_tbl>
 #> source_id column: types
@@ -121,6 +127,8 @@ the Ecosystem Indicator Workflows project here;
   : TASVEG cross-reference dataset for development and testing
 - [`as_membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/as_membership_tbl.md)
   : Coerce a data frame to membership_tbl
+- [`calc_agreement()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_agreement.md)
+  : Calculate agreement between interpreters
 - [`check_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/check_membership.md)
   : Performs checks on a membership table
 - [`import_paired_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/import_paired_membership.md)
@@ -131,6 +139,8 @@ the Ecosystem Indicator Workflows project here;
   : Create a membership matrix
 - [`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md)
   : Create a heatmap of target use by interpreter
+- [`membership_target_pair_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_pair_heatmap.md)
+  : Create a heatmap of shared target use by pairs of interpreters
 - [`membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.md)
   : Create a membership table
 - [`membership_tile_plot()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tile_plot.md)

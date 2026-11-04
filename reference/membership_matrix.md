@@ -35,6 +35,11 @@ The function is designed to be flexible and can be extended in the
 future. Users may filter by round of elicitation, or add round as a
 fourth dimension.
 
+## See also
+
+Other similarity:
+[`calc_agreement()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_agreement.md)
+
 ## Author
 
 Abhimanyu Raj Singh

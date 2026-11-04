@@ -15,6 +15,8 @@
   : TASVEG cross-reference dataset for development and testing
 - [`as_membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/as_membership_tbl.md)
   : Coerce a data frame to membership_tbl
+- [`calc_agreement()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_agreement.md)
+  : Calculate agreement between interpreters
 - [`check_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/check_membership.md)
   : Performs checks on a membership table
 - [`import_paired_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/import_paired_membership.md)
@@ -25,6 +27,8 @@
   : Create a membership matrix
 - [`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md)
   : Create a heatmap of target use by interpreter
+- [`membership_target_pair_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_pair_heatmap.md)
+  : Create a heatmap of shared target use by pairs of interpreters
 - [`membership_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tbl.md)
   : Create a membership table
 - [`membership_tile_plot()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tile_plot.md)

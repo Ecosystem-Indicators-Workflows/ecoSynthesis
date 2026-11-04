@@ -41,6 +41,7 @@ specific needs.
 ## See also
 
 Other visualisation:
+[`membership_target_pair_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_pair_heatmap.md),
 [`membership_tile_plot()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_tile_plot.md)
 
 ## Author

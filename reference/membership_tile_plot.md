@@ -50,7 +50,8 @@ presentation of the membership data.
 ## See also
 
 Other visualisation:
-[`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md)
+[`membership_target_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_heatmap.md),
+[`membership_target_pair_heatmap()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/membership_target_pair_heatmap.md)
 
 ## Author
 
