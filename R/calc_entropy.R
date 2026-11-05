@@ -53,6 +53,19 @@ calc_entropy_matrix <- function(
   }
 }
 
+#' Calculate the entropy of a membership function represented as a probability vector
+#'
+#' @param data A `membership_tbl` object returned by [membership_tbl()].
+#' @param sources A character vector of `source` units to compare. If `NULL` (default), all `source` units are used.
+#' @param targets A character vector of `target` units to compare. If `NULL` (default), all `target` units are used.
+#' @param round A numeric value representing the round to consider. If `NULL` (default), all rounds are considered.
+#' @param level A character string specifying the level of analysis. Can be "interpreter", "source", or "overall".
+#' @param weighting A character string specifying the weighting method. Can be "observations" or "sources".
+#'
+#' @returns
+#'
+#' @export
+#' @examples
 calc_entropy_tbl <- function(
   data,
   sources = NULL,
