@@ -28,6 +28,28 @@ test_that("calc_shannons_entropy returns mathematically correct values", {
   )
 })
 
+test_that("calc_shannons_entropy handles dynamic normalisation boundaries correctly", {
+  # Estimand 1: Local Certainty (Normalising by individual active targets)
+  expect_equal(calc_shannons_entropy(test_membership_vectors$interp_1), 0)
+  expect_equal(calc_shannons_entropy(test_membership_vectors$interp_2), 1) # S=2, max evenness = 1
+
+  # Estimand 2 & 3: Normalising by an explicit system ceiling N
+  # Assuming 3 total target options available globally or per source
+  expect_equal(
+    calc_shannons_entropy(test_membership_vectors$interp_2, N = 3),
+    0.6309298,
+    tolerance = 1e-7
+  )
+
+  # Estimand 3: Normalising by the total number of targets in the cross-map
+  # Checking Option 3 with the three-target vector
+  expect_equal(
+    calc_shannons_entropy(test_membership_vectors$interp_4_approx, N = 3),
+    1,
+    tolerance = 1e-3 # Loosened slightly to accommodate the user's manual 0.33/0.34 rounding
+  )
+})
+
 # Test that `calc_shannons_entropy` throws errors for invalid inputs
 test_that("calc_shannons_entropy correctly validates malformed inputs", {
   # Check for lack of data error
