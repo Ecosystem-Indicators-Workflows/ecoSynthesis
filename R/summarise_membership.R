@@ -1,6 +1,7 @@
 #' Summarise a membership matrix
 #'
 #' @param data A `membership_tbl` object containing membership data in long format, with columns for source, target, membership, interpreter, and round values.
+#' @param keep_best Logical, defaults to TRUE (keep only the best candidate). If FALSE the result will keep all candidates.
 #' @param which_round A numeric value matching the selected round in `data`. Defaults to NULL, which matches the highest round available in `data`.
 #'
 #' @returns A `membership_summary` object.
@@ -30,7 +31,7 @@
 #' res <- summarise_membership(TASVEG_memb)
 #' subset(res,total_memb > total_interp)
 #' subset(res,total_memb < total_interp * 0.99)
-summarise_membership <- function(data, which_round = NULL) {
+summarise_membership <- function(data, keep_best = TRUE, which_round = NULL) {
   the_call <- match.call()
   checkmate::assert_class(data, "membership_tbl")
   sid <- attr(data, "source_id")
@@ -85,14 +86,16 @@ summarise_membership <- function(data, which_round = NULL) {
       .by = all_of(c(sid, tid, rval))
     )
 
-  out <-
-    out |>
-    dplyr::slice_max(
-      .data[["prop_memb"]],
-      by = all_of(sid),
-      with_ties = FALSE,
-      n = 1
-    )
+  if (keep_best) {
+    out <-
+      out |>
+      dplyr::slice_max(
+        .data[["prop_memb"]],
+        by = all_of(sid),
+        with_ties = FALSE,
+        n = 1
+      )
+  }
 
   structure(
     out,
