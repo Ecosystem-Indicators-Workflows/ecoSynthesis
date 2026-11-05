@@ -142,6 +142,12 @@ calc_shannons_entropy <- function(
     )
   }
 
+  if (!is.null(N) && N > length(p)) {
+    cli::cli_abort(
+      "Provided normalisation base N ({N}) cannot be greater than the membership function length ({length(p)}). All N targets must be represented in the membership function, even if their probabilities are 0."
+    )
+  }
+
   # Remove zero probabilities to avoid log(0) = NaN
   p_nonzero <- p[p > 0]
   S <- length(p_nonzero) # Number of non-zero probabilities
