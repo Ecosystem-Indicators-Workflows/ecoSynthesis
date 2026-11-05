@@ -1,10 +1,10 @@
 # Membership functions for testing helper `function calc_shannons_entropy`
 
 test_membership_vectors <- list(
-  interp_1 = c(1, 0, 0), # concentrated on one target, should have entropy of 0
-  interp_2 = c(0.5, 0.5, 0), # Perfectly even across selected targets, should have entropy of 1
-  interp_3 = c(1 / 3, 1 / 3, 1 / 3), # Perfectly even across selected targets, should have entropy of 1
-  interp_4_approx = c(0.33, 0.33, 0.34), # Close to 1, but with minor rounding skew
+  interp_1 = c(1, 0, 0), # concentrated on one target
+  interp_2 = c(0.5, 0.5, 0), # Perfectly even across 2 targets
+  interp_3 = c(1 / 3, 1 / 3, 1 / 3), # Perfectly even across 3 targets
+  interp_4_approx = c(0.33, 0.33, 0.34), # Close to 1, but with minor rounding skew, spread across 3 targets
   interp_5_error = c(0, 0, 0), # no non-zero values, should throw an error
   interp_6_error = c(0.5, 0.5, 0.7), # sum is > 1, should throw an error
   interp_7_error = c(-0.1, 0.5, 0.6) # negative probability, should throw an error
