@@ -77,7 +77,7 @@ calc_entropy_tbl <- function(
   # Check that sources and targets are valid - i.e. they are present in the membership_tbl
 }
 
-#' Calculate Shannon's entropy for a membership function
+#' Internal function that calculate Shannon's entropy for a membership function
 #'
 #' @param p a numeric vector of probabilities (non-negative values that sum to 1)
 #' @param tol a numeric value representing the tolerance for checking if the sum of probabilities is equal to 1 (default is 1e-9)
@@ -85,9 +85,15 @@ calc_entropy_tbl <- function(
 #' @returns A numeric value representing the Shannon's entropy of the input probability vector, normalised by the number of non-zero probabilities.
 #'
 #' @details
+#'
+#' ## Shannon's entropy
+#'
 #' Shannon's entropy is a measure of uncertainty or information content in a probability distribution. It is calculated as the negative sum of the probabilities multiplied by their logarithm (base 2), normalised by the logarithm of the number of non-zero probabilities.
 #'
 #' The function handles cases where the input vector has no non-zero values or only one non-zero value, returning an error or zero, respectively.
+#'
+#' ## Relation to other functions
+#' This function is used internally by [calc_entropy_matrix()] and [calc_entropy_tbl()] to compute the entropy of membership functions represented as probability vectors.
 #'
 #' @keywords internal
 #'
