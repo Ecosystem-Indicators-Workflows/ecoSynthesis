@@ -100,6 +100,62 @@ calc_entropy_tbl <- function(
       msg = "Some targets are not present in the membership_tbl"
     )
   }
+
+  # ----- Calculate Entropy based on the specified level and weighting -----
+
+  # %%%%%%%%%%%%%%%%%% SANDBOX TESTING %%%%%%%%%%%%%%%%%%
+  # This code runs outside of function, and is used to test the entropy calculations on the TASVEG dataset and needs to be rewritten to work with the function arguments and return a tibble
+  # ---- Source-localised entropy -----
+
+  data("TASVEG_xref")
+  TASVEG_memb <- membership_tbl(
+    TASVEG_xref,
+    source_id = "VEGCODE",
+    target_id = "efg",
+    membership = "memb",
+    interpreter = "interp"
+  ) |>
+    filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD"))
+
+  interpreter_entropy_by_source <- TASVEG_memb |>
+    group_by(VEGCODE, round) |>
+    complete(
+      nesting(interp),
+      efg,
+      fill = list(memb = 0),
+      explicit = FALSE
+    ) |>
+    ungroup() |>
+    summarise(
+      membership_fn = map2(list(memb), list(efg), setNames),
+      .by = c(VEGCODE, round, interp)
+    ) |>
+    mutate(
+      N_targets_interp = map_int(membership_fn, ~ .x[.x > 0] |> length()),
+      .by = c(VEGCODE, round, interp)
+    ) |>
+    mutate(
+      N_targets_source = map_int(membership_fn, ~ length(.x)),
+      .by = c(VEGCODE, round)
+    ) |>
+    mutate(
+      entropy_source_normalised = map_dbl(
+        membership_fn,
+        calc_shannons_entropy,
+        N = N_targets_source
+      ),
+      entropy_interpreter = map_dbl(
+        membership_fn,
+        calc_shannons_entropy
+      ),
+      .keep = "unused",
+      .by = c(VEGCODE, round, interp)
+    )
+
+  overall_interpreter_entropy_by_source <-
+    interpreter_entropy_by_source |>
+    ungroup() |>
+    summarise(across(contains("entropy"), .fns = mean), .by = c(VEGCODE))
 }
 
 #' Internal function that calculates Shannon's entropy for a membership function
