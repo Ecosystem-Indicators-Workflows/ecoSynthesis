@@ -176,14 +176,14 @@ calc_shannons_entropy <- function(
   p_nonzero <- p_nonzero / p_sum
 
   # 3. Determine the value used for normalising (the denominator)
-  # Option 1: Default to active categories if N is not provided
+  # Estimand 1: Default to active targets if N is not provided
   denom_targets <- if (is.null(N)) S else N
 
   # Validate N if provided by the user
   if (!is.null(N)) {
     if (N < S) {
       cli::cli_abort(
-        "Provided normalisation base N ({N}) cannot be less than the active category count S ({S})."
+        "Provided normalisation base N ({N}) cannot be less than the active target count S ({S})."
       )
     }
   }
