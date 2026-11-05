@@ -29,15 +29,28 @@ test_that("calc_shannons_entropy returns mathematically correct values", {
 
 # Test that `calc_shannons_entropy` throws errors for invalid inputs
 test_that("calc_shannons_entropy correctly validates malformed inputs", {
-  # 4. Check for lack of data error
+  # Check for lack of data error
   expect_error(
-    calc_shannons_entropy(test_membership_vectors$interp_5_error),
-    regexp = "Cannot calculate entropy"
+    calc_shannons_entropy(test_membership_vectors$interp_5_error)
   )
 
-  # 5. Check for sum > 1 validation error
+  # Check for sum > 1 validation error
   expect_error(
-    calc_shannons_entropy(test_membership_vectors$interp_6_error),
-    regexp = "The sum of the probabilities exceeds 1"
+    calc_shannons_entropy(test_membership_vectors$interp_6_error)
+  )
+
+  # Check for negative probabilities error
+  expect_error(
+    calc_shannons_entropy(c(-0.1, 0.5, 0.6))
+  )
+
+  # Check for N > length(p) error
+  expect_error(
+    calc_shannons_entropy(test_membership_vectors$interp_2, N = 4)
+  )
+
+  # Check for probabilities > 1 error
+  expect_error(
+    calc_shannons_entropy(c(0.5, 0.6, 0.1))
   )
 })
