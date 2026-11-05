@@ -88,6 +88,18 @@ calc_entropy_tbl <- function(
   }
 
   # Check that sources and targets are valid - i.e. they are present in the membership_tbl
+  if (!is.null(sources)) {
+    checkmate::assert_true(
+      all(sources %in% unique(data$source)),
+      msg = "Some sources are not present in the membership_tbl"
+    )
+  }
+  if (!is.null(targets)) {
+    checkmate::assert_true(
+      all(targets %in% unique(data$target)),
+      msg = "Some targets are not present in the membership_tbl"
+    )
+  }
 }
 
 #' Internal function that calculates Shannon's entropy for a membership function
