@@ -80,6 +80,7 @@ calc_entropy_tbl <- function(
 #' Calculate Shannon's entropy for a membership function
 #'
 #' @param p a numeric vector of probabilities (non-negative values that sum to 1)
+#' @param tol a numeric value representing the tolerance for checking if the sum of probabilities is equal to 1 (default is 1e-9)
 #'
 #' @returns A numeric value representing the Shannon's entropy of the input probability vector, normalised by the number of non-zero probabilities.
 #'
@@ -91,39 +92,52 @@ calc_entropy_tbl <- function(
 #' @keywords internal
 #'
 #' @examples
-calc_shannons_entropy <- function(p = numeric(length = 0L)) {
+calc_shannons_entropy <- function(p = numeric(length = 0L), tol = 1e-9) {
+  # 1. Validation Checks (Value boundaries)
+  if (any(p < 0)) {
+    cli::cli_abort(
+      "Negative probabilities are not allowed in a membership function"
+    )
+  }
+  if (any(p > 1)) {
+    cli::cli_abort(
+      "Probabilities greater than 1 are not allowed in a membership function"
+    )
+  }
+
   # Remove zero probabilities to avoid log(0) = NaN
   p_nonzero <- p[p > 0]
   S <- length(p_nonzero) # Number of non-zero probabilities
 
-  # Validate the input probability vector
   if (S == 0) {
     cli::cli_abort(
       "Cannot calculate entropy for a membership function with no non-zero values."
     )
-  } else if (sum(p) > 1) {
+  }
+
+  # 2. Vector Sum Validation (Using Tolerance)
+  p_sum <- sum(p)
+
+  if (p_sum > (1 + tol)) {
     cli::cli_abort(
-      "The sum of the probabilities exceeds 1, which is invalid for a membership function"
+      "The sum of the probabilities exceeds 1 ({p_sum}), which is invalid for a membership function"
     )
-  } else if (sum(p) < 1) {
+  } else if (p_sum < (1 - tol)) {
     cli::cli_warn(
-      "The sum of the probabilities is less than 1, which may indicate an incomplete membership function"
-    )
-  } else if (any(p < 0)) {
-    cli::cli_abort(
-      "Negative probabilities are not allowed in a membership function"
-    )
-  } else if (any(p > 1)) {
-    cli::cli_abort(
-      "Probabilities greater than 1 are not allowed in a membership function"
+      "The sum of the probabilities is less than 1 ({p_sum}), which may indicate an incomplete membership function"
     )
   } else if (S < length(p)) {
+    # This warning only fires if the sum is effectively 1, but structural zeros exist
     cli::cli_warn(
       "The number of non-zero probabilities is less than the total number of probabilities, which may indicate an incomplete membership function"
     )
   }
 
-  # Calculate normalised Shannon's entropy
+  # 3. Normalise Vector internally to fix minor floating-point skew
+  # This guarantees -sum(p * log(p)) won't drift due to p_sum being 1.0000001
+  p_nonzero <- p_nonzero / p_sum
+
+  # 4. Calculate normalised Shannon's entropy
   if (S <= 1) {
     entropy <- 0 # Entropy is 0 when there's only one non-zero probability
   } else {
