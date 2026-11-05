@@ -6,7 +6,8 @@ test_membership_vectors <- list(
   interp_3 = c(1 / 3, 1 / 3, 1 / 3), # Perfectly even across selected targets, should have entropy of 1
   interp_4_approx = c(0.33, 0.33, 0.34), # Close to 1, but with minor rounding skew
   interp_5_error = c(0, 0, 0), # no non-zero values, should throw an error
-  interp_6_error = c(0.5, 0.5, 0.7) # sum is > 1, should throw an error
+  interp_6_error = c(0.5, 0.5, 0.7), # sum is > 1, should throw an error
+  interp_7_error = c(-0.1, 0.5, 0.6) # negative probability, should throw an error
 )
 
 # Test that `calc_shannons_entropy` returns expected values for valid inputs
@@ -41,7 +42,7 @@ test_that("calc_shannons_entropy correctly validates malformed inputs", {
 
   # Check for negative probabilities error
   expect_error(
-    calc_shannons_entropy(c(-0.1, 0.5, 0.6))
+    calc_shannons_entropy(test_membership_vectors$interp_7_error)
   )
 
   # Check for N > length(p) error
@@ -51,6 +52,6 @@ test_that("calc_shannons_entropy correctly validates malformed inputs", {
 
   # Check for probabilities > 1 error
   expect_error(
-    calc_shannons_entropy(c(0.5, 0.6, 0.1))
+    calc_shannons_entropy(test_membership_vectors$interp_6_error)
   )
 })
