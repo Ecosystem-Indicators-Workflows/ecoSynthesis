@@ -4,12 +4,12 @@
 \alias{summarise_membership}
 \title{Summarise a membership matrix}
 \usage{
-summarise_membership(data, keep_best = TRUE, which_round = NULL)
+summarise_membership(data, keep_all = TRUE, which_round = NULL)
 }
 \arguments{
 \item{data}{A \code{membership_tbl} object containing membership data in long format, with columns for source, target, membership, interpreter, and round values.}
 
-\item{keep_best}{Logical, defaults to TRUE (keep only the best candidate). If FALSE the result will keep all candidates.}
+\item{keep_all}{Logical, defaults to FALSE (keep only the best candidate). If TRUE the result will keep all candidates.}
 
 \item{which_round}{A numeric value matching the selected round in \code{data}. Defaults to NULL, which matches the highest round available in \code{data}.}
 }
