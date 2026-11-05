@@ -57,6 +57,7 @@ calc_agreement <- function(
   checkmate::assert_flag(by_source)
 
   if (!is.null(round)) {
+    #TODO remove this once round is included in membership_tbl
     cli::cli_warn("{.arg round} is not used yet, all rounds are compared.")
   }
 
