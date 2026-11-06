@@ -52,4 +52,17 @@ test_memb <- function() {
     interpreter = "interpreter",
     round = "roundnr"
   )
+
+make_test_membership_mtx <- function() {
+  membership_tbl(
+    data.frame(
+      source = c("S1", "S1", "S1", "S2", "S2", "S3"),
+      target = c("X", "Y", "X", "X", "X", "X"),
+      membership = c(0.5, 0.5, 1, 1, 1, 1),
+      interpreter = c("A", "A", "B", "A", "B", "A")
+    ),
+    source_id = "source",
+    target_id = "target"
+  ) |>
+    membership_matrix()
 }

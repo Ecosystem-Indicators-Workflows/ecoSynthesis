@@ -45,7 +45,8 @@ dplyr::filter(VEGCODE == "HSW") |>
 }
 \seealso{
 Other visualisation:
-\code{\link[=membership_target_heatmap]{membership_target_heatmap()}}
+\code{\link[=membership_target_heatmap]{membership_target_heatmap()}},
+\code{\link[=membership_target_pair_heatmap]{membership_target_pair_heatmap()}}
 }
 \author{
 Elliot Gould
