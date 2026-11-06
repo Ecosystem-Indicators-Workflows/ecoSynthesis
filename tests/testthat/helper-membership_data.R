@@ -52,6 +52,7 @@ test_memb <- function() {
     interpreter = "interpreter",
     round = "roundnr"
   )
+}
 
 make_test_membership_mtx <- function() {
   membership_tbl(
