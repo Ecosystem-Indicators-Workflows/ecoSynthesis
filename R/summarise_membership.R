@@ -90,7 +90,7 @@ summarise_membership <- function(data, keep_all = TRUE, which_round = NULL) {
     out <-
       out |>
       dplyr::slice_max(
-        .data[["prop_memb"]],
+        prop_memb,
         by = all_of(sid),
         with_ties = FALSE,
         n = 1
