@@ -2,7 +2,7 @@
 #'
 #' @param data A `membership_tbl` object containing membership data in long format, with columns for source, target, membership, interpreter, and round values.
 #' @param keep_all Logical, defaults to FALSE (keep only the best candidate). If TRUE the result will keep all candidates.
-#' @param which_round A numeric value matching the selected round in `data`. Defaults to NULL, which matches the highest round available in `data`.
+#' @param which_round A numeric value of length 1 matching the selected round in `data`. Defaults to NULL, which matches the highest round available in `data`.
 #'
 #' @returns A `membership_summary` object.
 #'
@@ -67,6 +67,7 @@ summarise_membership <- function(data, keep_all = TRUE, which_round = NULL) {
       "No round selected, defaults to last round {.val {which_round}}."
     )
   } else {
+    checkmate::assert_numeric(which_round, len = 1)
     checkmate::assertTRUE(which_round %in% data[[rval]])
     cli::cli_inform("Round nr. {.val {which_round}} selected.")
   }
