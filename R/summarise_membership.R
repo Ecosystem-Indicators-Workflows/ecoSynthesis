@@ -125,7 +125,7 @@ print.membership_summary <- function(x, ...) {
 
   cli_end()
 
-  print(the_call)
+  cli::cli_alert_success("{.code {as_label(the_call)}}")
   NextMethod("print", x, ...)
   invisible(x)
 }
