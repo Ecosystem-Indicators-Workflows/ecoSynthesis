@@ -11,7 +11,7 @@ summarise_membership(data, keep_all = TRUE, which_round = NULL)
 
 \item{keep_all}{Logical, defaults to FALSE (keep only the best candidate). If TRUE the result will keep all candidates.}
 
-\item{which_round}{A numeric value matching the selected round in \code{data}. Defaults to NULL, which matches the highest round available in \code{data}.}
+\item{which_round}{A numeric value of length 1 matching the selected round in \code{data}. Defaults to NULL, which matches the highest round available in \code{data}.}
 }
 \value{
 A \code{membership_summary} object.
