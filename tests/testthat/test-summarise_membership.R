@@ -15,3 +15,15 @@ test_that("print.summarise_membership prints a summary", {
     "membership_summary"
   )
 })
+
+test_that("summarise_membership errors when passed multiple round values", {
+  m <- test_memb()
+  round_arg <- c(1, 1)
+  expect_error(summarise_membership(m, which_round = round_arg))
+})
+
+test_that("summarise_membership errors when passed a round value not in the data", {
+  m <- test_memb()
+  round_arg <- 2
+  expect_error(summarise_membership(m, which_round = round_arg))
+})
