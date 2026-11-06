@@ -11,8 +11,9 @@
 coverage](https://codecov.io/gh/Ecosystem-Indicators-Workflows/ecoSynthesis/graph/badge.svg)](https://app.codecov.io/gh/Ecosystem-Indicators-Workflows/ecoSynthesis)
 <!-- badges: end -->
 
-*This package is still work in progress, but it is ready for testing! Please provide feedback on any issues, and 
-check back regularly for updates.*
+*This package is still work in progress, but it is ready for testing!
+Please provide feedback on any issues, and check back regularly for
+updates.*
 
 ------------------------------------------------------------------------
 
