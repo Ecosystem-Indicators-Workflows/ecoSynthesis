@@ -20,13 +20,13 @@ Source:
 
 Ferrer-Paris J, Gould E, Singh A (2026). *ecoSynthesis: Synthesis of
 cross-referencing information between two classification systems*. R
-package version 0.0.0.9003,
+package version 0.0.0.9004,
 <https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis>.
 
     @Manual{,
       title = {ecoSynthesis: Synthesis of cross-referencing information between two classification systems},
       author = {José R. Ferrer-Paris and Elliot Gould and Abhimanyu Raj Singh},
       year = {2026},
-      note = {R package version 0.0.0.9003},
+      note = {R package version 0.0.0.9004},
       url = {https://github.com/Ecosystem-Indicators-Workflows/ecoSynthesis},
     }

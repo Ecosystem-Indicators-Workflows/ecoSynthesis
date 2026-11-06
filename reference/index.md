@@ -37,10 +37,14 @@
   : Print method for lookup_tbl
 - [`print(`*`<membership_check>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_check.md)
   : Print method for membership_check
+- [`print(`*`<membership_summary>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_summary.md)
+  : Print method for membership_summary
 - [`print(`*`<membership_tbl>`*`)`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/print.membership_tbl.md)
   : Print method for membership_tbl
 - [`standardise_xref_pairs()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/standardise_xref_pairs.md)
   : Standardise column names for expert cross-reference data in
   paired-columns format.
+- [`summarise_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/summarise_membership.md)
+  : Summarise a membership matrix
 - [`validate_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/validate_membership.md)
   : Validate a membership table
