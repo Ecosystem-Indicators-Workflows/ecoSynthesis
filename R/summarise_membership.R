@@ -79,10 +79,10 @@ summarise_membership <- function(data, keep_all = TRUE, which_round = NULL) {
       .by = all_of(sid)
     ) |>
     dplyr::summarise(
-      prop_memb = sum(.data[[mval]] / .data[["total_memb"]]),
-      total_memb = unique(.data[["total_memb"]]),
+      prop_memb = sum(.data[[mval]] / total_memb),
+      total_memb = unique(total_memb),
       supporting = dplyr::n_distinct(.data[[inam]]),
-      total_interp = unique(.data[["total_interp"]]),
+      total_interp = unique(total_interp),
       .by = all_of(c(sid, tid, rval))
     )
 
