@@ -214,7 +214,7 @@ calc_entropy_tbl <- function(
       entropy_set_normalised,
       by = join_vars
     ) |>
-    select(-dplyr::starts_with("membership_fn")) |>
+    dplyr::select(-dplyr::starts_with("membership_fn")) |>
     dplyr::relocate(
       dplyr::starts_with(
         "entropy_",
