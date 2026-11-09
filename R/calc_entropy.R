@@ -172,7 +172,7 @@ calc_entropy_tbl <- function(
       .by = dplyr::any_of(c(sid, rval, inam))
     )
 
-  targets_in_set <- out |> pull(.data[[tid]]) |> unique() |> length()
+  targets_in_set <- out[[tid]] |> unique() |> length()
 
   entropy_set_normalised <- out |>
     dplyr::group_by(dplyr::pick(dplyr::all_of(rval))) |>
