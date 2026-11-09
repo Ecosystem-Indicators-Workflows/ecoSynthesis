@@ -26,6 +26,8 @@
 #' TASVEG_memb |> calc_entropy_tbl(overall = "by_interpreter")
 #' TASVEG_memb |> calc_entropy_tbl(overall = "by_target")
 #' TASVEG_memb |> calc_entropy_tbl(overall = "overall")
+#' TASVEG_memb |> calc_entropy_tbl(sources = c("AHL", "WVI"))
+#' TASVEG_memb |> calc_entropy_tbl(targets = c("MT1.4"))
 calc_entropy_tbl <- function(
   data,
   sources = NULL,
