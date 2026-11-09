@@ -174,12 +174,7 @@ calc_entropy_tbl <- function(
     interpreter_entropy_by_source |>
     dplyr::ungroup() |>
     dplyr::summarise(
-      across(contains("entropy"), .fns = mean),
-      .by = dplyr::any_of(c(sid))
-    )
-}
-
-#' Internal function that calculates Shannon's entropy for a membership function
+#' Calculate Shannon's entropy for a membership function or vector of probabilities
 #'
 #' @param p a numeric vector of probabilities (non-negative values that sum to 1)
 #' @param N an optional numeric value representing the number of categories (targets) for normalisation. If not provided, the function will use the number of non-zero probabilities in `p` as the baseline for normalisation
@@ -207,13 +202,21 @@ calc_entropy_tbl <- function(
 #' When `N` is set to the total targets in the cross-map dataset, it standardises every observation (i.e., a membership function) against the entire cross-map to highlight overall noise.
 #'
 #' ## Relation to other functions
-#' This function is used internally by [calc_entropy_matrix()] and [calc_entropy_tbl()] to compute the entropy of membership functions represented as probability vectors.
+#' This function is used internally by [calc_entropy_tbl()] to compute the entropy of membership functions represented as probability vectors.
 #'
 #' @keywords 'membership uncertainty'
 #'
 #' @returns A numeric value representing the Shannon's entropy of the input probability vector. See details for interpretation depending on the value of `N`.
 #'
 #' @examples
+#' # Example 1: Calculate entropy for a simple probability vector (interpreter-normalised calculation)
+#' p <- c(0.5, 0.5, 0, 0)
+#' calc_shannons_entropy(p)
+#' # Example 2: Calculate entropy for a probability vector with a specified N (simulating source- and set-normalised calculation)
+#' p <- c(0.5, 0.5, 0, 0)
+#' N <- 4
+#' calc_shannons_entropy(p, N)
+#' calc_shannons_entropy(p, N)
 calc_shannons_entropy <- function(
   p = numeric(length = 0L),
   N = NULL,
