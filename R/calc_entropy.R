@@ -1,58 +1,3 @@
-#' Calculate the entropy of a membership matrix
-#'
-#' @param data A `membership_matrix` object returned by [membership_matrix()].
-#' @param sources A character vector of `source` units to compare. If `NULL` (default), all `source` units are used.
-#' @param targets A character vector of `target` units to compare. If `NULL` (default), all `target` units are used.
-#' @param round
-#' @param level
-#' @param weighting
-#'
-#' @returns
-#'
-#' @export
-#' @examples
-calc_entropy_matrix <- function(
-  data,
-  sources = NULL,
-  targets = NULL,
-  round = NULL,
-  level = c("interpreter", "source", "overall"),
-  weighting = c("observations", "sources")
-) {
-  # Argument Checks
-  checkmate::assert_class(data, "membership_matrix")
-  checkmate::assert_number(round, null.ok = TRUE)
-  checkmate::assert_character(sources, null.ok = TRUE)
-  checkmate::assert_character(targets, null.ok = TRUE)
-  checkmate::assert_choice(level, c("interpreter", "source", "overall"))
-  checkmate::assert_choice(weighting, c("observations", "sources"))
-
-  #TODO remove this once round is included in membership_matrix
-  if (!is.null(round)) {
-    cli::cli_warn("{.arg round} is not used yet, all rounds are considered.")
-  }
-
-  # Check that sources and targets are valid - i.e. they are present in the membership matrix
-  memb_array <- unclass(data) #TODO format of membership_matrix should change so we do not have to call unclass to work with it
-  if (!is.null(sources)) {
-    checkmate::assert_subset(
-      sources,
-      dimnames(memb_array)$source,
-      empty.ok = FALSE
-    )
-    memb_array <- memb_array[sources, , , drop = FALSE]
-  }
-
-  if (!is.null(targets)) {
-    checkmate::assert_subset(
-      targets,
-      dimnames(memb_array)$target,
-      empty.ok = FALSE
-    )
-    memb_array <- memb_array[, targets, , drop = FALSE]
-  }
-}
-
 #' Calculate the entropy of a membership function represented as a probability vector
 #'
 #' @param data A `membership_tbl` object returned by [membership_tbl()].
@@ -60,9 +5,8 @@ calc_entropy_matrix <- function(
 #' @param targets A character vector of `target` units to compare. If `NULL` (default), all `target` units are used.
 #' @param round A numeric value representing the round to consider. If `NULL` (default), all rounds are considered.
 #' @param level A character string specifying the level of analysis. Can be "interpreter", "source", or "overall".
-#' @param weighting A character string specifying the weighting method. Can be "observations" or "sources".
 #'
-#' @returns
+#' @returns A data frame with interpreter-normalised, source-normalised and set-normalised entropy values. Defaults to source-interpreter entropy (averaged across interpreters for each source unit per round) if `overall` is `NULL`. If `overall` is specified, returns the mean entropy values based on the specified level.
 #'
 #' @export
 #' @examples
@@ -76,42 +20,35 @@ calc_entropy_matrix <- function(
 #'   interpreter = "interp"
 #' ) |>
 #'   filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD")) #TODO rm filter
-#' # Note these are placeholder args for level and weighting, flags are currently not implemented
-#' TASVEG_memb  |> calc_entropy_tbl(level = "source", weighting = "observations")
+#' # Note the following uses placeholder args for level and weighting, flags are currently not implemented
+#' TASVEG_memb  |> calc_entropy_tbl()
+#' TASVEG_memb  |> calc_entropy_tbl(overall = "by_source")
+#' TASVEG_memb |> calc_entropy_tbl(overall = "by_interpreter")
+#' TASVEG_memb |> calc_entropy_tbl(overall = "by_target")
+#' TASVEG_memb |> calc_entropy_tbl(overall = "overall")
 calc_entropy_tbl <- function(
   data,
   sources = NULL,
   targets = NULL,
   round = NULL,
-  level = c("interpreter", "source", "overall"),
-  weighting = c("observations", "sources")
+  overall = NULL
 ) {
   # -----Argument Checks -----
   checkmate::assert_class(data, "membership_tbl")
   checkmate::assert_number(round, null.ok = TRUE)
   checkmate::assert_character(sources, null.ok = TRUE)
   checkmate::assert_character(targets, null.ok = TRUE)
-  checkmate::assert_choice(level, c("interpreter", "source", "overall"))
-  checkmate::assert_choice(weighting, c("observations", "sources"))
+  checkmate::assert_choice(
+    overall,
+    c("by_source", "by_target", "by_interpreter", "overall"),
+    null.ok = TRUE
+  )
 
   #TODO remove this once round is included in membership_tbl
   if (!is.null(round)) {
     cli::cli_warn("{.arg round} is not used yet, all rounds are considered.")
   }
 
-  # Check that sources and targets are valid - i.e. they are present in the membership_tbl
-  if (!is.null(sources)) {
-    checkmate::assert_true(
-      all(sources %in% unique(data$source)),
-      msg = "Some sources are not present in the membership_tbl"
-    )
-  }
-  if (!is.null(targets)) {
-    checkmate::assert_true(
-      all(targets %in% unique(data$target)),
-      msg = "Some targets are not present in the membership_tbl"
-    )
-  }
   # ----- Capture attributes -----
   sid <- attr(data, "source_id")
   tid <- attr(data, "target_id")
@@ -120,13 +57,25 @@ calc_entropy_tbl <- function(
   #rval <- attr(data, "round")
   rval <- "round" #TODO remove this once round is included in membership_tbl
 
+  # Check that sources and targets are valid - i.e. they are present in the membership_tbl
+  if (!is.null(sources)) {
+    checkmate::assert_true(
+      all(sources %in% unique(data[[sid]])),
+      msg = "Some sources are not present in the membership_tbl"
+    )
+  }
+  if (!is.null(targets)) {
+    checkmate::assert_true(
+      all(targets %in% unique(data[[tid]])),
+      msg = "Some targets are not present in the membership_tbl"
+    )
+  }
+
   # ----- Calculate Entropy based on the specified level and weighting -----
 
-  # %%%%%%%%%%%%%%%%%% SANDBOX TESTING %%%%%%%%%%%%%%%%%%
-  # This code runs outside of function, and is used to test the entropy calculations on the TASVEG dataset and needs to be rewritten to work with the function arguments and return a tibble
-  # ---- Source-localised entropy -----
+  ## Source-interpreter entropy - source & interpreter normalised
 
-  interpreter_entropy_by_source <- data |>
+  entropy_by_source <- data |>
     dplyr::group_by(dplyr::pick(dplyr::any_of(c(sid, rval)))) |> #use pick when passing vector of strings
     tidyr::complete(
       tidyr::nesting(dplyr::pick(dplyr::all_of(c(inam)))),
@@ -162,18 +111,141 @@ calc_entropy_tbl <- function(
         calc_shannons_entropy,
         N = N_targets_source
       ),
-      entropy_interpreter = purrr::map_dbl(
+      entropy_interpreter_normalised = purrr::map_dbl(
         membership_fn,
         calc_shannons_entropy
       ),
-      .keep = "unused",
+      .keep = "all",
       .by = dplyr::any_of(c(sid, rval, inam))
     )
 
-  overall_interpreter_entropy_by_source <-
-    interpreter_entropy_by_source |>
+  targets_in_set <- data |> pull(.data[[tid]]) |> unique() |> length()
+
+  entropy_set_normalised <- data |>
+    dplyr::group_by(dplyr::pick(dplyr::all_of(rval))) |>
+    complete(
+      nesting(dplyr::pick(dplyr::all_of(c(sid, inam)))),
+      .data[[tid]],
+      fill = rlang::list2(
+        !!mval := 0
+      ),
+      explicit = FALSE
+    ) |>
     dplyr::ungroup() |>
     dplyr::summarise(
+      membership_fn = purrr::map2(
+        list(.data[[mval]]),
+        list(.data[[tid]]),
+        stats::setNames
+      ),
+      .by = c(sid, rval, inam)
+    ) |>
+    dplyr::mutate(
+      N_targets_set = purrr::map_int(membership_fn, ~ length(.x)),
+      .by = c(sid, rval)
+    ) |>
+    dplyr::mutate(
+      entropy_set_normalised = purrr::map_dbl(
+        membership_fn,
+        calc_shannons_entropy,
+        N = N_targets_set
+      ),
+      .keep = "all",
+      .by = c(sid, rval, inam)
+    )
+
+  join_vars <- rlang::enexprs(sid, rval, inam) |> as.character()
+
+  # by source and interpreter
+
+  entropy_interpreter <- entropy_by_source |>
+    dplyr::left_join(
+      entropy_set_normalised,
+      by = join_vars
+    ) |>
+    select(-dplyr::starts_with("membership_fn")) |>
+    relocate(
+      dplyr::starts_with(
+        "entropy_",
+      ),
+      .after = dplyr::starts_with(
+        "N_targets",
+      )
+    ) |>
+    arrange(across(contains("entropy"), dplyr::desc))
+
+  ## Overall entropy calculations based on the specified level
+
+  if (!is.null(overall) && overall == "by_source") {
+    # overall source-interpreter entropy:
+    # mean interpreter entropy by source (averaged across interpreters for each source unit per round)
+    entropy_by_source <- entropy_interpreter |>
+      dplyr::ungroup() |>
+      dplyr::summarise(
+        across(
+          dplyr::contains("entropy"),
+          .fns = mean,
+          .names = "mean_by_source_{.col}"
+        ),
+        .by = dplyr::all_of(c(sid, rval))
+      ) |>
+      arrange(across(contains("entropy"), dplyr::desc))
+    return(entropy_by_source)
+  } else if (!is.null(overall) && overall == "by_interpreter") {
+    # overall interpreter entropy:
+    # mean interpreter entropy across all source units (averaged across sources for each round)
+    overall_entropy_by_interpreter <- entropy_interpreter |>
+      dplyr::ungroup() |>
+      dplyr::summarise(
+        across(
+          dplyr::contains("entropy"),
+          .fns = mean,
+          .names = "mean_by_interpreter_{.col}"
+        ),
+        .by = dplyr::all_of(c(inam, rval))
+      ) |>
+      arrange(across(contains("entropy"), dplyr::desc))
+    return(overall_entropy_by_interpreter)
+  } else if (!is.null(overall) && overall == "overall") {
+    # overall source-interpreter entropy:
+    # averaged over all source units and interpreters for each round
+    overall_entropy <- entropy_interpreter |>
+      dplyr::ungroup() |>
+      dplyr::summarise(
+        across(
+          dplyr::contains("entropy"),
+          .fns = mean,
+          .names = "mean_{.col}"
+        ),
+        .by = dplyr::all_of(rval)
+      ) |>
+      arrange(across(contains("entropy"), dplyr::desc))
+    return(overall_entropy)
+  } else if (!is.null(overall) && overall == "by_target") {
+    # overall target-interpreter entropy:
+    # mean interpreter entropy by target (averaged across interpreters for each target unit per round)
+    entropy_by_target <- data |>
+      dplyr::distinct(!!!ensyms(rval, sid, tid)) |>
+      dplyr::left_join(
+        entropy_interpreter |>
+          select(-dplyr::starts_with("membership_fn")) |>
+          ungroup(),
+        by = c(sid, rval)
+      ) |>
+      dplyr::summarise(
+        across(
+          dplyr::contains("entropy"),
+          .fns = mean,
+          .names = "mean_by_target_{.col}"
+        ),
+        .by = dplyr::all_of(c(tid, rval))
+      ) |>
+      arrange(across(contains("entropy"), dplyr::desc))
+    return(entropy_by_target)
+  }
+  return(entropy_interpreter) #default
+}
+
 #' Calculate Shannon's entropy for a membership function or vector of probabilities
 #'
 #' @param p a numeric vector of probabilities (non-negative values that sum to 1)
@@ -290,3 +362,7 @@ calc_shannons_entropy <- function(
 
   return(entropy)
 }
+
+# ----- Placeholder for validation function -----
+
+# ----- Placeholder for method and printing function ------
