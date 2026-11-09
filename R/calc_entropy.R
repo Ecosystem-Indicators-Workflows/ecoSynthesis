@@ -10,17 +10,14 @@
 #'
 #' @export
 #' @examples
-#' library(ecoSynthesis)
 #' data("TASVEG_xref")
-#' TASVEG_memb <- membership_tbl(
-#'   TASVEG_xref,
+#' TASVEG_memb <- TASVEG_xref |> dplyr::filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD")) |> membership_tbl(
 #'   source_id = "VEGCODE",
 #'   target_id = "efg",
 #'   membership = "memb",
 #'   interpreter = "interp"
-#' ) |>
-#'   dplyr::filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD")) #TODO rm filter
-#' # Note the following uses placeholder args for level and weighting, flags are currently not implemented
+#' )
+#'   #TODO rm filter
 #' TASVEG_memb  |> calc_entropy_tbl()
 #' TASVEG_memb  |> calc_entropy_tbl(overall = "by_source")
 #' TASVEG_memb |> calc_entropy_tbl(overall = "by_interpreter")
