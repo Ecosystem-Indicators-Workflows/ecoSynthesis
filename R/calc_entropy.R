@@ -4,7 +4,7 @@
 #' @param sources A character vector of `source` units to compare. If `NULL` (default), all `source` units are used.
 #' @param targets A character vector of `target` units to compare. If `NULL` (default), all `target` units are used.
 #' @param round A numeric value representing the round to consider. If `NULL` (default), all rounds are considered.
-#' @param level A character string specifying the level of analysis. Can be "interpreter", "source", or "overall".
+#' @param overall A character string specifying the level at which to calculate overall entropy. Options are "by_source", "by_target", "by_interpreter", or "overall". If `NULL` (default), entropy is calculated for each source-interpreter combination.
 #'
 #' @returns A data frame with interpreter-normalised, source-normalised and set-normalised entropy values. Defaults to source-interpreter entropy (averaged across interpreters for each source unit per round) if `overall` is `NULL`. If `overall` is specified, returns the mean entropy values based on the specified level.
 #'
