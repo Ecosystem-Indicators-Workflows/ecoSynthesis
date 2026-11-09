@@ -146,30 +146,28 @@ calc_entropy_tbl <- function(
     ) |>
     dplyr::mutate(
       N_targets_interp = purrr::map_int(
-        membership_fn,
+        .data$membership_fn,
         ~ .x[.x > 0] |> length()
       ),
       .by = dplyr::any_of(c(sid, rval, inam))
     ) |>
     dplyr::mutate(
-      N_targets_source = purrr::map_int(membership_fn, ~ length(.x)),
+      N_targets_source = purrr::map_int(.data$membership_fn, ~ length(.x)),
       .by = dplyr::any_of(c(sid, rval))
     ) |>
     dplyr::mutate(
       entropy_source_normalised = purrr::map_dbl(
-        membership_fn,
+        .data$membership_fn,
         calc_shannons_entropy,
-        N = N_targets_source
+        N = .data$N_targets_source
       ),
       entropy_interpreter_normalised = purrr::map_dbl(
-        membership_fn,
+        .data$membership_fn,
         calc_shannons_entropy
       ),
       .keep = "all",
       .by = dplyr::any_of(c(sid, rval, inam))
     )
-
-  targets_in_set <- out[[tid]] |> unique() |> length()
 
   entropy_set_normalised <- out |>
     dplyr::group_by(!!ensym(rval)) |>
@@ -191,15 +189,15 @@ calc_entropy_tbl <- function(
       .by = c(sid, rval, inam)
     ) |>
     dplyr::mutate(
-      N_targets_set = purrr::map_int(membership_fn, ~ length(.x)),
+      N_targets_set = purrr::map_int(.data$membership_fn, ~ length(.x)),
       .by = c(sid, rval)
     ) |>
     dplyr::mutate(
       tidyr::nesting(!!!ensyms(sid, inam)),
       entropy_set_normalised = purrr::map_dbl(
-        membership_fn,
+        .data$membership_fn,
         calc_shannons_entropy,
-        N = N_targets_set
+        N = .data$N_targets_set
       ),
       .keep = "all",
       .by = c(sid, rval, inam)
