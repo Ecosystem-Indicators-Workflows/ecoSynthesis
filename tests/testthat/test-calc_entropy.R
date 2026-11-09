@@ -77,3 +77,24 @@ test_that("calc_shannons_entropy correctly validates malformed inputs", {
     calc_shannons_entropy(test_membership_vectors$interp_6_error)
   )
 })
+
+# ----- Testing the `calc_entropy` function with a small example dataset -----
+
+test_tbl <- test_memb() |> rename(round = roundr) #TODO rm and insert inline when round is added to the test_memb() helper function
+
+# Argument validation tests for `calc_entropy` function
+
+test_that("calc_entropy correctly validates its arguments", {
+  # Check for absent sources error
+  expect_error(
+    calc_entropy_tbl(test_tbl, sources = LETTERS[1:4])
+  )
+  # Check for absent targets error
+  expect_error(
+    calc_entropy_tbl(test_tbl, targets = letters[1:4])
+  )
+  # check for invalid combinations of sources and targets that do not exist in the membership_tbl
+  expect_error(
+    calc_entropy_tbl(test_tbl, sources = "S2", targets = "Y") # S2 has no membership for Y
+  )
+})

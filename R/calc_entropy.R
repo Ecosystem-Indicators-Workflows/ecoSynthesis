@@ -57,25 +57,76 @@ calc_entropy_tbl <- function(
   #rval <- attr(data, "round")
   rval <- "round" #TODO remove this once round is included in membership_tbl
 
-  # Check that sources and targets are valid - i.e. they are present in the membership_tbl
+  # ----- Filter the data based on the specified sources and targets -----
+  ## Check that sources and targets are valid - i.e. they are present in the membership_tbl
   if (!is.null(sources)) {
-    checkmate::assert_true(
-      all(sources %in% unique(data[[sid]])),
-      msg = "Some sources are not present in the membership_tbl"
-    )
+    if (!all(sources %in% data[[sid]])) {
+      n_targets <- length(sources)
+      n_targets_missing <- sum(sources %nin% data[[sid]])
+      cli::cli_abort(
+        message = c(
+          "{.arg sources} must be present in the membership_tbl",
+          "x" = "{.val {n_targets_missing}} of {.val {n_targets}} selected {qty(n_targets_missing)}  target{?s} are not present in {.arg data}:",
+          "{.val {sources[sources %nin% data[[sid]]]}}"
+        )
+      )
+    }
   }
   if (!is.null(targets)) {
-    checkmate::assert_true(
-      all(targets %in% unique(data[[tid]])),
-      msg = "Some targets are not present in the membership_tbl"
-    )
+    if (!all(targets %in% data[[tid]])) {
+      n_targets <- length(targets)
+      n_targets_missing <- sum(targets %nin% data[[tid]])
+      cli::cli_abort(
+        message = c(
+          "{.arg targets} must be present in the membership_tbl",
+          "x" = "{.val {n_targets_missing}} of {.val {n_targets}} selected {qty(n_targets_missing)}  target{?s} are not present in {.arg data}:",
+          "{.val {targets[targets %nin% data[[tid]]]}}"
+        )
+      )
+    }
+  }
+  # check for combination of sources and targets being present in the membership_tbl, i.e. if a source is selected, it must have at least one of the selected targets present in the membership_tbl and vice versa
+  if (!is.null(sources) && !is.null(targets)) {
+    # Check that each selected source has at least one selected target
+    for (source in sources) {
+      if (!any(data[[sid]] == source & data[[tid]] %in% targets)) {
+        cli::cli_abort(
+          message = c(
+            "Each selected source must cross-reference at least one selected target",
+            "x" = "Source {.val {source}} does not cross-reference any of the selected targets"
+          )
+        )
+      }
+    }
+    # Check that each selected target has at least one selected source
+    for (target in targets) {
+      if (!any(data[[tid]] == target & data[[sid]] %in% sources)) {
+        cli::cli_abort(
+          message = c(
+            "Each selected target must cross-reference at least one selected source",
+            "x" = "Target {.val {target}} does not cross-reference any of the selected sources"
+          )
+        )
+      }
+    }
+  }
+
+  ## Filter data based on the specified sources and targets
+  out <- data
+  if (!is.null(sources)) {
+    out <- out |>
+      dplyr::filter(.data[[sid]] %in% sources)
+  }
+  if (!is.null(targets)) {
+    out <- out |>
+      dplyr::filter(any(.data[[tid]] %in% targets), .by = c(rval, sid)) # must retain whole source group for entropy calculation
   }
 
   # ----- Calculate Entropy based on the specified level and weighting -----
 
   ## Source-interpreter entropy - source & interpreter normalised
 
-  entropy_by_source <- data |>
+  entropy_by_source <- out |>
     dplyr::group_by(dplyr::pick(dplyr::any_of(c(sid, rval)))) |> #use pick when passing vector of strings
     tidyr::complete(
       tidyr::nesting(dplyr::pick(dplyr::all_of(c(inam)))),
@@ -119,9 +170,9 @@ calc_entropy_tbl <- function(
       .by = dplyr::any_of(c(sid, rval, inam))
     )
 
-  targets_in_set <- data |> pull(.data[[tid]]) |> unique() |> length()
+  targets_in_set <- out |> pull(.data[[tid]]) |> unique() |> length()
 
-  entropy_set_normalised <- data |>
+  entropy_set_normalised <- out |>
     dplyr::group_by(dplyr::pick(dplyr::all_of(rval))) |>
     complete(
       nesting(dplyr::pick(dplyr::all_of(c(sid, inam)))),
@@ -224,7 +275,7 @@ calc_entropy_tbl <- function(
   } else if (!is.null(overall) && overall == "by_target") {
     # overall target-interpreter entropy:
     # mean interpreter entropy by target (averaged across interpreters for each target unit per round)
-    entropy_by_target <- data |>
+    entropy_by_target <- out |>
       dplyr::distinct(!!!ensyms(rval, sid, tid)) |>
       dplyr::left_join(
         entropy_interpreter |>
