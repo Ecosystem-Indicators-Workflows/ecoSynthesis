@@ -19,7 +19,7 @@
 #'   membership = "memb",
 #'   interpreter = "interp"
 #' ) |>
-#'   filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD")) #TODO rm filter
+#'   dplyr::filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD")) #TODO rm filter
 #' # Note the following uses placeholder args for level and weighting, flags are currently not implemented
 #' TASVEG_memb  |> calc_entropy_tbl()
 #' TASVEG_memb  |> calc_entropy_tbl(overall = "by_source")
