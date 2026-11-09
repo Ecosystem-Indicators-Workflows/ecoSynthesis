@@ -126,9 +126,9 @@ calc_entropy_tbl <- function(
   ## Source-interpreter entropy - source & interpreter normalised
 
   entropy_by_source <- out |>
-    dplyr::group_by(dplyr::pick(dplyr::any_of(c(sid, rval)))) |> #use pick when passing vector of strings
+    dplyr::group_by(!!!ensyms(sid, rval)) |> #use pick when passing vector of strings
     tidyr::complete(
-      tidyr::nesting(dplyr::pick(dplyr::all_of(c(inam)))),
+      tidyr::nesting(!!ensym(inam)),
       .data[[tid]],
       fill = rlang::list2(
         !!mval := 0
@@ -172,9 +172,9 @@ calc_entropy_tbl <- function(
   targets_in_set <- out[[tid]] |> unique() |> length()
 
   entropy_set_normalised <- out |>
-    dplyr::group_by(dplyr::pick(dplyr::all_of(rval))) |>
-    complete(
-      nesting(dplyr::pick(dplyr::all_of(c(sid, inam)))),
+    dplyr::group_by(!!ensym(rval)) |>
+    tidyr::complete(
+      tidyr::nesting(!!!ensyms(sid, inam)),
       .data[[tid]],
       fill = rlang::list2(
         !!mval := 0
@@ -195,6 +195,7 @@ calc_entropy_tbl <- function(
       .by = c(sid, rval)
     ) |>
     dplyr::mutate(
+      tidyr::nesting(!!!ensyms(sid, inam)),
       entropy_set_normalised = purrr::map_dbl(
         membership_fn,
         calc_shannons_entropy,
@@ -214,7 +215,7 @@ calc_entropy_tbl <- function(
       by = join_vars
     ) |>
     select(-dplyr::starts_with("membership_fn")) |>
-    relocate(
+    dplyr::relocate(
       dplyr::starts_with(
         "entropy_",
       ),
@@ -222,7 +223,7 @@ calc_entropy_tbl <- function(
         "N_targets",
       )
     ) |>
-    arrange(across(contains("entropy"), dplyr::desc))
+    dplyr::arrange(dplyr::across(dplyr::contains("entropy"), dplyr::desc))
 
   ## Overall entropy calculations based on the specified level
 
@@ -232,14 +233,14 @@ calc_entropy_tbl <- function(
     entropy_by_source <- entropy_interpreter |>
       dplyr::ungroup() |>
       dplyr::summarise(
-        across(
+        dplyr::across(
           dplyr::contains("entropy"),
           .fns = mean,
           .names = "mean_by_source_{.col}"
         ),
         .by = dplyr::all_of(c(sid, rval))
       ) |>
-      arrange(across(contains("entropy"), dplyr::desc))
+      dplyr::arrange(dplyr::across(dplyr::contains("entropy"), dplyr::desc))
     return(entropy_by_source)
   } else if (!is.null(overall) && overall == "by_interpreter") {
     # overall interpreter entropy:
@@ -247,14 +248,14 @@ calc_entropy_tbl <- function(
     overall_entropy_by_interpreter <- entropy_interpreter |>
       dplyr::ungroup() |>
       dplyr::summarise(
-        across(
+        dplyr::across(
           dplyr::contains("entropy"),
           .fns = mean,
           .names = "mean_by_interpreter_{.col}"
         ),
         .by = dplyr::all_of(c(inam, rval))
       ) |>
-      arrange(across(contains("entropy"), dplyr::desc))
+      dplyr::arrange(dplyr::across(dplyr::contains("entropy"), dplyr::desc))
     return(overall_entropy_by_interpreter)
   } else if (!is.null(overall) && overall == "overall") {
     # overall source-interpreter entropy:
@@ -262,14 +263,14 @@ calc_entropy_tbl <- function(
     overall_entropy <- entropy_interpreter |>
       dplyr::ungroup() |>
       dplyr::summarise(
-        across(
+        dplyr::across(
           dplyr::contains("entropy"),
           .fns = mean,
           .names = "mean_{.col}"
         ),
         .by = dplyr::all_of(rval)
       ) |>
-      arrange(across(contains("entropy"), dplyr::desc))
+      dplyr::arrange(dplyr::across(contains("entropy"), dplyr::desc))
     return(overall_entropy)
   } else if (!is.null(overall) && overall == "by_target") {
     # overall target-interpreter entropy:
@@ -278,19 +279,19 @@ calc_entropy_tbl <- function(
       dplyr::distinct(!!!ensyms(rval, sid, tid)) |>
       dplyr::left_join(
         entropy_interpreter |>
-          select(-dplyr::starts_with("membership_fn")) |>
-          ungroup(),
+          dplyr::select(-dplyr::starts_with("membership_fn")) |>
+          dplyr::ungroup(),
         by = c(sid, rval)
       ) |>
       dplyr::summarise(
-        across(
+        dplyr::across(
           dplyr::contains("entropy"),
           .fns = mean,
           .names = "mean_by_target_{.col}"
         ),
         .by = dplyr::all_of(c(tid, rval))
       ) |>
-      arrange(across(contains("entropy"), dplyr::desc))
+      dplyr::arrange(dplyr::across(dplyr::contains("entropy"), dplyr::desc))
     return(entropy_by_target)
   }
   return(entropy_interpreter) #default
