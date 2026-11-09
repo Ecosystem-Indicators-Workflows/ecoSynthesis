@@ -66,6 +66,18 @@ calc_entropy_matrix <- function(
 #'
 #' @export
 #' @examples
+#' library(ecoSynthesis)
+#' data("TASVEG_xref")
+#' TASVEG_memb <- membership_tbl(
+#'   TASVEG_xref,
+#'   source_id = "VEGCODE",
+#'   target_id = "efg",
+#'   membership = "memb",
+#'   interpreter = "interp"
+#' ) |>
+#'   filter(VEGCODE %nin% c("AHF", "DOW", "MBS", "OAQ", "NAD")) #TODO rm filter
+#' # Note these are placeholder args for level and weighting, flags are currently not implemented
+#' TASVEG_memb  |> calc_entropy_tbl(level = "source", weighting = "observations")
 calc_entropy_tbl <- function(
   data,
   sources = NULL,
