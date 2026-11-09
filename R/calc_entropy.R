@@ -329,6 +329,7 @@ calc_entropy_tbl <- function(
 #'
 #' @returns A numeric value representing the Shannon's entropy of the input probability vector. See details for interpretation depending on the value of `N`.
 #'
+#' @export
 #' @examples
 #' # Example 1: Calculate entropy for a simple probability vector (interpreter-normalised calculation)
 #' p <- c(0.5, 0.5, 0, 0)
