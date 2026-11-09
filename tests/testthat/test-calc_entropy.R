@@ -80,7 +80,7 @@ test_that("calc_shannons_entropy correctly validates malformed inputs", {
 
 # ----- Testing the `calc_entropy` function with a small example dataset -----
 
-test_tbl <- test_memb() |> rename(round = roundr) #TODO rm and insert inline when round is added to the test_memb() helper function
+test_tbl <- test_memb() |> dplyr::rename(round = roundr) #TODO rm and insert inline when round is added to the test_memb() helper function
 
 # Argument validation tests for `calc_entropy` function
 
