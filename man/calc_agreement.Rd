@@ -19,7 +19,7 @@ calc_agreement(
 
 \item{targets}{A character vector of \code{target} units to compare. If \code{NULL} (default), all \code{target} units are used.}
 
-\item{round}{The round of elicitation to compare. Not used yet, as round is not included in \code{membership_tbl}.}
+\item{round}{A numeric vector of length 1 representing the round of elicitation to filter. Not used yet, as round is not included in \code{membership_tbl}.}
 
 \item{by_source}{Logical. If \code{FALSE} (default), returns one row per interpreter pair summarised across \code{source} units, i.e., the mean pairwise (dis)similarity across the \code{source} units. If \code{TRUE}, returns one row per \code{source} unit and interpreter pair, i.e., the pairwise (dis)similarity for each \code{source} unit.}
 }
