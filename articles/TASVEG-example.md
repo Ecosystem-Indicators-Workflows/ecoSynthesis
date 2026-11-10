@@ -1,5 +1,11 @@
 # Crossreferencing Tasmanian vegetation communities
 
+> **Work in Progress**
+>
+> *This package is still work in progress, but it is ready for testing!
+> Please provide feedback on any issues, and check back regularly for
+> updates.*
+
 This article describes steps for cross-referencing using a real example
 from the state of Tasmania, Australia. Example data is provided as part
 of the package `ecoSynthesis`.

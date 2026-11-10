@@ -1,7 +1,8 @@
 # ecoSynthesis (0.0.0.9005)
 
-*This package is a work in progress and is not yet ready for use. Please
-check back later for updates.*
+*This package is still work in progress, but it is ready for testing!
+Please provide feedback on any issues, and check back regularly for
+updates.*
 
 ------------------------------------------------------------------------
 

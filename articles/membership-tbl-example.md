@@ -1,5 +1,11 @@
 # Working with membership tables
 
+> **Work in Progress**
+>
+> *This package is still work in progress, but it is ready for testing!
+> Please provide feedback on any issues, and check back regularly for
+> updates.*
+
 This is an example with our internal dataset, first take a look at the
 data structure
 

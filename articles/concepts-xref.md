@@ -1,5 +1,11 @@
 # Key concepts of cross-referencing
 
+> **Work in Progress**
+>
+> *This package is still work in progress, but it is ready for testing!
+> Please provide feedback on any issues, and check back regularly for
+> updates.*
+
 The need to cross-reference different classification systems arises
 frequently in ecology and conservation applications. The conceptual
 foundations for cross-referencing classifications are discussed in:

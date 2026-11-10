@@ -1,5 +1,11 @@
 # Package structure
 
+> **Work in Progress**
+>
+> *This package is still work in progress, but it is ready for testing!
+> Please provide feedback on any issues, and check back regularly for
+> updates.*
+
 Here we want to summarise discussions about the structure of the
 package, design decisions around functions, and their relationship with
 the cross-referencing process.
