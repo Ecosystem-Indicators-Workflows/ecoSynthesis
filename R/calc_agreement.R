@@ -3,7 +3,7 @@
 #' @param data A `membership_matrix` object returned by [membership_matrix()].
 #' @param sources A character vector of `source` units to compare. If `NULL` (default), all `source` units are used.
 #' @param targets A character vector of `target` units to compare. If `NULL` (default), all `target` units are used.
-#' @param round The round of elicitation to compare. Not used yet, as round is not included in `membership_tbl`.
+#' @param round A numeric vector of length 1 representing the round of elicitation to filter. Not used yet, as round is not included in `membership_tbl`.
 #' @param by_source Logical. If `FALSE` (default), returns one row per interpreter pair summarised across `source` units, i.e., the mean pairwise (dis)similarity across the `source` units. If `TRUE`, returns one row per `source` unit and interpreter pair, i.e., the pairwise (dis)similarity for each `source` unit.
 #'
 #' @returns A tibble. With `by_source = FALSE`, columns `interpreter_x`, `interpreter_y`, `n_units`, `mean_similarity`, `median_similarity`, `share_identical` and `mean_dissimilarity`, with one row per interpreter pair in both directions plus the diagonal. With `by_source = TRUE`, columns `source`, `interpreter_x`, `interpreter_y`, `similarity` and `dissimilarity`, with each interpreter pair once.
@@ -57,6 +57,7 @@ calc_agreement <- function(
   checkmate::assert_flag(by_source)
 
   if (!is.null(round)) {
+    #TODO remove this once round is included in membership_tbl
     cli::cli_warn("{.arg round} is not used yet, all rounds are compared.")
   }
 
