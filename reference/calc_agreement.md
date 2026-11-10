@@ -33,8 +33,8 @@ calc_agreement(
 
 - round:
 
-  The round of elicitation to compare. Not used yet, as round is not
-  included in `membership_tbl`.
+  A numeric vector of length 1 representing the round of elicitation to
+  filter. Not used yet, as round is not included in `membership_tbl`.
 
 - by_source:
 

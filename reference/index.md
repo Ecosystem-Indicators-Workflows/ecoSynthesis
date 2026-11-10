@@ -17,6 +17,12 @@
   : Coerce a data frame to membership_tbl
 - [`calc_agreement()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_agreement.md)
   : Calculate agreement between interpreters
+- [`calc_entropy_tbl()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_entropy_tbl.md)
+  : Calculate the entropy of a membership function represented as a
+  probability vector
+- [`calc_shannons_entropy()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/calc_shannons_entropy.md)
+  : Calculate Shannon's entropy for a membership function or vector of
+  probabilities
 - [`check_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/check_membership.md)
   : Performs checks on a membership table
 - [`import_paired_membership()`](https://ecosystem-indicators-workflows.github.io/ecoSynthesis/reference/import_paired_membership.md)
